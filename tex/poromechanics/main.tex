@@ -13,6 +13,14 @@
 \usepackage{amssymb}
 \usepackage{dsfont}
 
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={170mm, 257mm},
+left=20mm,
+top=20mm,
+}
+
 \usepackage{systeme}
 \usepackage{mathtools}
 \usepackage{unicode-math}
@@ -36,11 +44,16 @@
 \graphicspath{{./img/}}
 \newcommand{\myPictWidth}{.95\textwidth}
 \newcommand{\phm}{\phantom{-}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+
 
 \begin{document}
 	\title{Введение в механику пористых сред}
+	\author{}
 	\maketitle
 	\newpage
 	\subfile{parts/2022_02_05}
+	\newpage
 	\subfile{parts/2022_02_19}
 \end{document}
