@@ -1,0 +1,148 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\textcolor{red}{Лекция 26.02.2022.}
+
+Систематизируем полученные ранее замыкающие соотношения в таблицу.
+
+\begin{table}[h]
+\centering
+\caption{Замыкающие соотношения}
+\label{table:con}
+{\renewcommand{\arraystretch}{3}
+\begin{tabular}{ | c | c | c | c | }
+\hline
+Для скелета& $\displaystyle{}\varphi=-r_s\frac{\partial\Phi_s}{\partial p}$& $\displaystyle{}\eta_s=-\frac{\partial\Phi_s}{\partial\theta}$& $\displaystyle{}T_{ij}=r_s\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}$ \\
+\hline
+Для флюида& $\displaystyle{}\frac{1}{\rho_f}=\frac{\partial\Phi_f}{\partial p}$& $\displaystyle{}\eta_f=-\frac{\partial\Phi_f}{\partial\theta}$ &  \\
+\hline
+\end{tabular}}
+\end{table}
+
+\section{Линейное приближение}
+
+Начнём для флюида.
+
+Представим $\Phi_f$ в виде частичных сумм ряда Тейлора по всем переменным.
+\begin{multline}\label{PhiFTaylor}
+\Phi_f\approx\Phi_f^0+\frac{\partial\Phi_f}{\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)+\frac{\partial\Phi_f}{\partial\theta}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)+\\+\frac{1}{2}\left(\frac{\partial^2\Phi_f}{\partial p^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)^2+2\frac{\partial^2\Phi_f}{\partial\theta\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)\left(\theta-\theta_0\right)+\frac{\partial^2\Phi_f}{\partial\theta^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)^2\right)
+\end{multline}
+
+Условие существования такого разложения: $\Phi_f\in C_2$ (вторые производные $\Phi_f$ не только существуют, но и непрерывны)
+
+Заметим, что во всех замыкающих соотношениях важны только производные, поэтому значение первого слагаемого в разложении может быть любым (другими словами, потенциальную и внутреннюю энергии можно отмерять от любого уровня)
+
+Перепишем замыкающее соотношение из таблицы \ref{table:con}, подставив разложение \ref{PhiFTaylor}:
+\beq\label{LinCon}
+\eta_f=-\frac{\partial\Phi_f}{\partial\theta}\approx -\frac{\partial\Phi_f}{\partial\theta}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}-\frac{\partial^2\Phi_f}{\partial\theta\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)-\frac{\partial^2\Phi_f}{\partial\theta^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)
+\eeq
+(видим, что получили линейное приближение)
+
+Из термодинамики помним, что $dQ=TdS$ и теплоёмкость
+\beq
+C=\frac{dQ}{dt}=T\frac{dS}{dT}
+\eeq
+
+Таким образом, из \eqref{LinCon} удельная теплоёмкость флюида
+\beq\label{CF}
+c_f=\theta\frac{\partial\eta_f}{\partial\theta}\approx-\theta\frac{\partial^2\Phi_f}{\partial\theta^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}
+\eeq
+(получили первое замыкающее соотношение на удельную теплоёмкость флюида; ранее использовали удельную теплоёмкость при выводе уравнения теплопроводности \eqref{HT})
+
+Перепишем ещё одно замыкающее соотношение для флюида из таблицы \ref{table:con}:
+\beq
+\frac{1}{\rho_f}=\frac{\partial\Phi_f}{\partial p}\approx\frac{\partial\Phi_f}{\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}+\frac{\partial^2\Phi_f}{\partial p^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)+\frac{\partial^2\Phi_f}{\partial p\partial\theta}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)
+\eeq
+Обозначив $\displaystyle{}\frac{1}{\rho_{f0}}=\frac{\partial\Phi_f}{\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}$, перепишем в следующем виде
+\beq\label{RhoF}
+\frac{1}{\rho_f}\approx\frac{1}{\rho_{f0}}\left(1+\rho_{f0}\frac{\partial^2\Phi_f}{\partial p^2}\left(p-p_0\right)+\rho_{f0}\frac{\partial^2\Phi_f}{\partial p\partial\theta}\left(\theta-\theta_0\right)\right)
+\eeq
+
+Введём сжимаемость флюида
+\beq
+c_f=-\rho_{f0}\frac{\partial^2\Phi_f}{\partial p^2}
+\eeq
+% из второго начала термодинамики можно доказать, что производная в последнем равенстве отрицательна
+и коэффициент объёмного термического расширения флюида
+\beq
+\alpha_f=\rho_{f0}\frac{\partial^2\Phi_f}{\partial p\partial\theta}
+\eeq
+Тогда оборачивая обе части \eqref{RhoF} и вспоминая, что $\displaystyle{}\frac{1}{1+x}\approx 1-x$, получаем линейное замыкающее соотношение на плотность флюида:
+\beq\label{RhoF2}
+\rho_f=\rho_{f0}\left(1+c_f\left(p-p_0\right)-\alpha_f\left(\theta-\theta_0\right)\right)
+\eeq
+(заметим, что $c_f$ в \eqref{RhoF2} и в \eqref{CF} разные физические величины -- просто букв не хватает)
+
+Далее продолжим для скелета.
+
+Предполагаем, что в начальном (базовом) состоянии скелет не деформирован ($\varepsilon_{ij}=0$). Но напряжения в начальном состоянии могут быть (напряжения, присутствующие в материале при условии отсутствия деформаций -- могут быть при наличии включений или, например, при заморозке льда). Выпишем частичную сумму ряда Тейлора для $\Phi_s$:
+\begin{multline}\label{PhiSTaylor}
+\Phi_s\left(\theta,\varepsilon_{ij},p\right)\approx\Phi_{s}^0+\frac{\partial\Phi_s}{\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)+\frac{\partial\Phi_s}{\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)+\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{ij}+\\+\frac{1}{2}\frac{\partial^2\Phi_s}{\partial\theta^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)^2+\frac{1}{2}\frac{\partial^2\Phi_s}{\partial p^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)^2+\frac{1}{2}\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\varepsilon_{kl}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{ij}\varepsilon_{kl}+\\+\frac{\partial^2\Phi_s}{\partial\theta\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)\left(p-p_0\right)+\frac{\partial^2\Phi_s}{\partial\theta\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)\varepsilon_{ij}+\frac{\partial^2\Phi_s}{\partial p\partial\varepsilon_{ij}}\left(p-p_0\right)\varepsilon_{ij}
+\end{multline}
+
+Если бы пористость $\varphi=0$, то все слагаемые с давлением $p$ флюида обнуляются, и получили бы уравнения термоупругости. При ненулевой пористости можем получить уравнения термопороупругости (есть вклад связанный с порами и давлением флюида, которое передаётся только через поры).
+
+Перепишем скелетное замыкающее соотношение на энтропию из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
+\begin{multline}
+\eta_s=-\frac{\partial\Phi_s}{\partial\theta}=-\frac{\partial\Phi_s}{\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}-\frac{\partial^2\Phi_s}{\partial p\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)-\frac{\partial^2\Phi_s}{\partial\theta\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{ij}-\\-\frac{\partial^2\Phi_s}{\partial\theta^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)
+\end{multline}
+
+Удельная теплоёмкость скелета:
+\beq
+c_s=\theta\frac{\partial\eta_s}{\partial\theta}\approx -\theta\frac{\partial^2\Phi_s}{\partial\theta^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+Перепишем скелетное замыкающее соотношение на тензор эффективных напряжений из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
+\begin{multline}\label{TIJ}
+T_{ij}=r_s\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}=r_s\left(\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\varepsilon_{kl}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{kl}+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)+\right. \\ \left.+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)\right)
+\end{multline}
+Первое и второе слагаемые отвечают за упругость. Третье слагаемое -- за термоупругость. Четвёртое слагаемое -- за пороупругость.
+
+Посмотрим на физический смысл каждого из слагаемых.
+
+Начальное напряжение:
+\beq\label{1}
+T_{ij}^0=r_s\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+Тензор упругих коэффициентов (тензор жёсткости):
+\beq\label{2}
+L_{ijkl}=r_s\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\varepsilon_{kl}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+Тензор коэффициентов Био (показывает влияние давления флюида на полное напряжение в среде; например, влияние пластового давления на полное напряжение в породе):
+\beq\label{3}
+\alpha_{ij}=-r_s\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+С третьим слагаемым
+\beq
+X_{ij}=r_s\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+разобраться сложнее всего, так как обычно записывают зависимость от температуры в терминах деформаций:
+\beq
+\varepsilon_{ij}=\varepsilon_{ij}^0+\alpha_{ij}^\theta\left(\theta-\theta_0\right)
+\eeq
+Но у нас влияние температуры на напряжение при условии сохранения деформации.
+
+Можем выразить $\varepsilon_{kl}$ из \ref{TIJ}:
+\beq
+L_{ijkl}\varepsilon_{kl}=T_{ij}-T_{ij}^0-X_{ij}\left(\theta-\theta_0\right)+\alpha_{ij}\left(p-p_0\right)
+\eeq
+тогда
+\beq
+\varepsilon_{kl}=L_{ijkl}^{-1}\left(T_{ij}-T_{ij}^0-X_{ij}\left(\theta-\theta_0\right)+\alpha_{ij}\left(p-p_0\right)\right)
+\eeq
+и тензор термического расширения (не путать с тензором коэффициентов Био -- букв не хватает)
+\beq\label{4}
+\alpha_{kl}^\theta=-X_{ij}L_{ijkl}^{-1}
+\eeq
+
+Таким образом, подставляя \eqref{1}, \eqref{2}, \eqref{3} и \eqref{4} в \ref{TIJ}, получаем следующее замыкающее соотношение:
+\beq
+T_{ij}=T_{ij}^0+L_{ijkl}\varepsilon_{kl}-\alpha_{kl}^\theta L_{ijkl}\left(\theta-\theta_0\right)-\alpha_{ij}\left(p-p_0\right)
+\eeq
+Везде: положительные напряжения -- растягивающие, а отрицательные -- сжимающие. В геомеханике наоборот.
+
+\end{document}
