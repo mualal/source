@@ -145,4 +145,190 @@ T_{ij}=T_{ij}^0+L_{ijkl}\varepsilon_{kl}-\alpha_{kl}^\theta L_{ijkl}\left(\theta
 \eeq
 Везде: положительные напряжения -- растягивающие, а отрицательные -- сжимающие. В геомеханике наоборот.
 
+\begin{center}
+	Ход чёрных
+	\medskip
+	
+	\newgame
+	\fenboard{r2qnrk1/p3p3/2p3p1/3pb2P/6p1/2N1B3/PPPQ4/2KR3R w - - 0 20}
+	\showboard
+\end{center}
+
+Перепишем скелетное замыкающее соотношение на пористость из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
+\begin{multline}
+\varphi=-r_s\frac{\partial\Phi_s}{\partial p}=-r_s\left(\frac{\partial\Phi_s}{\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}+\frac{\partial^2\Phi_s}{\partial p^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)+\frac{\partial^2\Phi_s}{\partial p\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)+\right.\\+\left.\frac{\partial^2\Phi_s}{\partial p\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{ij}\right)
+\end{multline}
+
+Начальная пористость:
+\beq
+\varphi_0=-r_s\frac{\partial\Phi_s}{\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+Ведём модуль Био $N$ так, чтобы его обратный
+\beq
+\frac{1}{N}=-r_s\frac{\partial^2\Phi_s}{\partial p^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+Коэффициент термического расширения пор (как правило им пренебрегают):
+\beq
+\alpha_\theta^\varphi=-r_s\frac{\partial^2\Phi_s}{\partial p\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}
+\eeq
+
+Тензор коэффициентов Био $\alpha_{ij}$ ввели ранее \eqref{3}.
+
+Таким образом,
+\beq
+\varphi=\varphi_0+\frac{p-p_0}{N}+\alpha_\theta^\varphi\left(\theta-\theta_0\right)+\alpha_{ij}\varepsilon_{ij}
+\eeq
+
+Везде, где есть производная по $\varepsilon_{ij}$, симметричность относительно замены индексов $i$ и $j$ (например, тензор коэффициентов Био сииметричен относительно замены индексов)
+
+Теперь самое интересное: тензор упругих коэффициентов $L_{ijkl}$. У тензора четвёртого ранга 81 компонента. Но мы знаем, что для тензора $L_{ijkl}$ по определению верно равенство \eqref{2}: есть симметрия относительно замены индексов $i$ и $j$, относительно замены индексов $k$ и $l$, а также относительно замены $ij$ и $kl$. Таким образом, у тензора упругих коэффициентов 3 симметрии и, следовательно, $6+30/2=21$ независимая компонента в самом анизотропном случае.\\
+
+Модуль Био -- коэффициент передачи от давления в изменение пористости (величина, обратная сжимаемости пор).\\
+
+Тензор коэффициентов Био -- \\
+
+
+Мы разобрались с консервативными слагаемыми второго начала термодинамики в форме неравенства Клаузиуса-Дюгема \eqref{KlD}. Консервативные слагаемые работают в термодинамически обратимых процессах.
+
+Теперь разберёмся с диссипативными слагаемыми.
+
+Термическая диссипация (ввели при переписывании неравенства \eqref{KlD0}):
+\beq\label{ThermoDis}
+\delta_\theta=-\frac{q_i \partial_i\theta}{\theta}
+\eeq
+
+Механическая диссипация (ввели при переписывании неравенства \eqref{KlDFull}):
+\beq\label{MechDis}
+\delta_f=-b_i^{dis,f}W_i-T_{ij}^{dis,f}\partial_j W_i
+\eeq
+
+Из неравенства Клаузиуса-Дюгема:
+\beq\label{DisKlD}
+\delta_f+\delta_\theta\geqslant 0
+\eeq
+
+Диссипации \eqref{ThermoDis} и \eqref{MechDis} независимы (например, можем приложить градиент температуры, но флюид будет стоять на месте), следовательно, неравенство \eqref{DisKlD} распадается на 2 независимых неравенства:
+\beq\label{2InEq}
+\delta_f\geqslant0\text{ и }\delta_\theta\geqslant0
+\eeq
+
+Заметим, что при отсутствии градиента температуры, поток тепла равен нулю (из физических соображений) и термическая диссипация равна нулю:
+\beq\label{ZERO}
+\partial_i\theta=0\Rightarrow q_i=0\text{ и }\delta_\theta=0
+\eeq
+
+Представим термическую диссипацию в виде частичной суммы ряда Тейлора:
+\beq
+\delta_\theta\approx\delta_\theta^0\bigg|_{\nabla_i\theta=0}+\frac{\partial\delta_\theta}{\partial\left(\nabla_i\theta\right)}\bigg|_{\nabla_i\theta=0}\nabla_i\theta+\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\nabla_i\theta=0}\nabla_i\theta\nabla_j\theta
+\eeq
+
+Из следствия \eqref{ZERO} первое слагаемое равно нулю.
+
+Из следствия \eqref{ZERO} и неравенства \eqref{2InEq} производная во втором слагаемом тоже равна нулю (т.к. в этой точке достигается минимум $\delta_\theta$)
+
+Таким образом,
+\beq
+\delta_\theta\approx\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\nabla_i\theta=0}\nabla_i\theta\nabla_j\theta
+\eeq
+
+С другой стороны, раскрывая $\delta_\theta$ по определению \eqref{ThermoDis}, получаем:
+\beq
+-\frac{q_i\nabla_i\theta}{\theta}\approx\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\nabla_i\theta=0}\nabla_i\theta\nabla_j\theta
+\eeq
+
+Следовательно,
+\beq
+q_i\approx-\theta\cdot\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\nabla_i\theta=0}\nabla_j\theta
+\eeq
+Введём тензор теплопроводности:
+\beq
+\displaystyle{}\varkappa_{ij}=\theta\cdot\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\nabla_i\theta=0}
+\eeq
+тогда
+\beq
+q_i\approx-\varkappa_{ij}\nabla_j\theta
+\eeq
+(получили закон Фурье, который использовали при выводе уравнения теплопроводности \eqref{HeatTransfer})
+
+Но получили не только закон Фурье, но и симметричность и положительную определённость тензора теплопроводности $\varkappa_{ij}$.
+
+Далее будем работать с механической диссипацией \eqref{MechDis}, условие на которую распадается на 2 независимых условия:
+\beq\label{MechFirst}
+\delta_f^1=-b_i^{dis}W_i\geqslant0
+\eeq
+и
+\beq\label{MechSecond}
+\delta_f^2=-T_{ij}^{dis}\partial_jW_i\geqslant0
+\eeq
+
+Заметим, что верно следствие
+\beq\label{Important}
+W_i=0\Rightarrow\delta_f^1=0\text{ и }b_i^{dis}=0
+\eeq
+
+Представим $\delta_f^1$ в виде частичной суммы ряда Тейлора:
+\begin{multline}
+\delta_f^1\approx\delta_f^1\bigg|_{W_i=0}+\frac{\partial\delta_f^1}{\partial W_i}\bigg|_{W_i=0}W_i+\frac{1}{2}\frac{\partial^2\delta_f^1}{\partial W_i\partial W_j}\bigg|_{W_i=0}W_iW_j+\\+\frac{1}{6}\frac{\partial^3\delta_f^1}{\partial W_i\partial W_j \partial W_k}\bigg|_{W_i=0}W_iW_jW_k
+\end{multline}
+
+Из следствия \eqref{Important} первое слагаемое равно нулю.
+
+Из следствия \eqref{Important} и неравенства \eqref{MechFirst} производная во втором слагаемом тоже равна нулю (т.к. в этой точке достигается минимум $\delta_f^1$)
+
+Таким образом,
+\beq
+b_i^{dis}\approx-\frac{1}{2}\frac{\partial^2\delta_f^1}{\partial W_i\partial W_j}\bigg|_{W_i=0}W_j-\frac{1}{6}\frac{\partial^3\delta_f^1}{\partial W_i\partial W_j \partial W_k}\bigg|_{W_i=0}W_jW_k
+\eeq
+
+Обозначим
+\beq
+A_{ij}=-\frac{1}{2}\frac{\partial^2\delta_f^1}{\partial W_i\partial W_j}\bigg|_{W_i=0}
+\eeq
+
+Вспомним ЗСИ (в форме Лагранжа):
+\beq
+r_f\frac{d_fv_i^f}{dt}=f_i+b_i^{dis}+b_i^{eq}+\partial_jT_{ij}^f
+\eeq
+перепишем
+\beq
+r_f\frac{d_fv_i^f}{dt}=r_fg_i+A_{ij}W_j+p\partial_i\varphi-\varphi\partial_ip-p\partial_i\varphi
+\eeq
+и получаем уравнение Навье-Стокса для пористой среды:
+\beq
+\partial_ip=-\rho_f\frac{d_fv_i^f}{dt}+\rho_fg_i+A_{ij}W_j
+\eeq
+
+Далее рассматриваем стационарное течение $\displaystyle{}\left(\frac{d_fv_i^f}{dt}=0\right)$, тогда из предыдущего равенства
+\beq
+W_j=A_{ij}^{-1}\left(\partial_ip-\rho_fg_i\right)
+\eeq
+Получили закон Дарси.
+
+Аналогичным образом из \eqref{MechSecond}, учитывая равенство $\partial_jW_i=\dot{\varepsilon}_{ij}^f$ (в предположении $v_s=0$) получаем
+\beq
+T_{ij}^{dis}\approx-\frac{1}{2}\frac{\partial^2\delta_f^2}{\partial\dot{\varepsilon}_{ij}\partial\dot{\varepsilon}_{kl}}\bigg|_{\dot{\varepsilon}_{ij}=0}\dot{\varepsilon}_{kl}
+\eeq
+
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
