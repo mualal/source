@@ -104,7 +104,7 @@ r_a\frac{d_au_a}{dt}=T_{ij}^a\partial_jv_i^a+r_aQ^a+Q^{int,a}-\partial_jq_j^a-b_
 \eeq
 
 предполагая однородность $\left(\varkappa_{ij}=\text{const}\right)$
-\beq
+\beq\label{HeatTransfer}
 \sum\limits_{a}{r_ac_a\frac{\partial\theta}{\partial t}}-\varkappa_{ij}\partial_i\partial_j\theta=rQ
 \eeq
 
@@ -116,7 +116,7 @@ r_a\frac{d_au_a}{dt}=T_{ij}^a\partial_jv_i^a+r_aQ^a+Q^{int,a}-\partial_jq_j^a-b_
 Получили уравнение теплопроводности ($c$ -- удельная теплоёмкость смеси; $Q$ -- удельный источник тепла)
 
 \newpage
-\section{Второе начало термодинамики. Вывод замыкающих соотношений из неравенства Клаузиуса-Дюгема}
+\section{Второе начало термодинамики}
 
 Допустим у нас одна среда, тогда
 
@@ -170,7 +170,7 @@ rQ-\partial_iq_i=\sum\limits_a{r_a\frac{d_au_a}{dt}}-\sum\limits_a{T_{ij}^a\part
 \eeq
 
 умножая обе части неравенства на $\theta\,\,\left(\theta>0\right)$
-\beq
+\beq\label{KlD0}
 \sum\limits_a{r_a\left(\theta\frac{d_a\eta_a}{dt}-\frac{d_au_a}{dt}\right)}+\sum\limits_a{T_{ij}^a\left(\partial_j v_i^a\right)}-b_i^{int}W_i-\frac{q_i\partial_i\theta}{\theta}\geq 0
 \eeq
 

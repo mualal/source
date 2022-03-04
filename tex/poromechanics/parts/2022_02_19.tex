@@ -13,7 +13,7 @@
 \eeq
 
 вынося $\partial_jv_i^s$ за скобку, учитывая $T_{ij}^s+T_{ij}^f=T_{ij}$ и разбивая $T_{ij}^f=T_{ij}^{eq,f}+T_{ij}^{dis,f}$
-\beq
+\beq\label{KlDFull}
 -\sum\limits_a{r_a\left(\frac{d_a\Psi_a}{dt}+\eta_a\frac{d_a\theta}{dt}\right)}+T_{ij}\partial_jv_i^s+T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i+T_{ij}^{dis,f}\partial_j W_i+b_i^{dis}W_i+\delta_\theta\geq 0
 \eeq
 
@@ -73,8 +73,10 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 
 Достигли успеха: есть полная производная температуры, полная производная тензора малых деформаций (можно расписать как относительную производную плотностей скелета, но тензор  деформаций более общий вид), полная производная плотности флюида, полная производная пористости.
 
-Далее будем получать замыкающие соотношения.
-\beq
+\section{Вывод замыкающих соотношений из неравенства Клаузиуса-Дюгема}
+
+Далее будем получать замыкающие соотношения из неравенства Клаузиуса-Дюгема:
+\beq\label{KlD}
 -\sum\limits_a{r_a\left(\frac{d_a\Psi_a}{dt}+\eta_a\frac{d_a\theta}{dt}\right)}+\left(T_{ij}+p\varphi\delta_{ij}\right)\dot{\varepsilon}_{ij}^s+\frac{p\varphi}{\rho_f}\frac{d_f\rho_f}{dt}+p\frac{d_s\varphi}{dt}+\delta_f+\delta_\theta\geq 0
 \eeq
 
