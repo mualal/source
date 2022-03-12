@@ -13,6 +13,10 @@
 \usepackage{amssymb}
 \usepackage{dsfont}
 
+\makeatletter
+\let\@fnsymbol\@arabic
+\makeatother
+
 \usepackage{geometry}
 \geometry{
 a4paper,
@@ -51,12 +55,16 @@ top=20mm,
 
 \begin{document}
 	\tableofcontents
-	\title{Введение в механику пористых сред}
-	\author{Конспект лекций\\Высшая школа теоретической механики,\\Санкт-Петербургский Политехнический университет\\Составил Муравцев Александр Алексеевич\\по лекциям Шеля Егора Владимировича}
+	\title{Введение в механику пористых сред\\Конспект лекций}
+	\author{Муравцев А.А.\thanks{конспектирует; email: almuravcev@yandex.ru}
+	\and
+	Шель Е.В.\thanks{лектор, Высшая школа теоретической механики, Санкт-Петербургский Политехнический университет}}
 	\maketitle
 	\subfile{parts/2022_02_05}
 	\newpage
 	\subfile{parts/2022_02_19}
 	\newpage
 	\subfile{parts/2022_02_26}
+	\newpage
+	\subfile{parts/2022_03_12}
 \end{document}

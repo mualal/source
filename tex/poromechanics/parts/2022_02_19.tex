@@ -64,7 +64,7 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 \partial_i\left(\varphi W_i\right)=-\frac{\varphi}{\rho_f}\frac{d_f\rho_f}{dt}-\frac{d_s\varphi}{dt}-\varphi\delta_{ij}\dot{\varepsilon}_{ij}^s
 \eeq
 
-Видим, что $\partial_i\left(\varphi W_i\right)$ распадается на сумму трёх полных производных. И именно из этой составляющей "вылезут" все законы пороупругости.
+Видим, что $\partial_i\left(\varphi W_i\right)$ распадается на сумму трёх полных производных. И именно из этой составляющей "<вылезут"> все законы пороупругости.
 
 Подставляем в неравенство:
 \beq
@@ -80,7 +80,7 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 -\sum\limits_a{r_a\left(\frac{d_a\Psi_a}{dt}+\eta_a\frac{d_a\theta}{dt}\right)}+\left(T_{ij}+p\varphi\delta_{ij}\right)\dot{\varepsilon}_{ij}^s+\frac{p\varphi}{\rho_f}\frac{d_f\rho_f}{dt}+p\frac{d_s\varphi}{dt}+\delta_f+\delta_\theta\geq 0
 \eeq
 
-Мы знаем, что пористость и свободная энергия должны зависеть от температуры, от давления флюида (связано "намертво" неким замыкающим соотношением с плотностью флюида) и от деформации скелета:
+Мы знаем, что пористость и свободная энергия должны зависеть от температуры, от давления флюида (при фиксированной температуре связано "<намертво"> неким замыкающим соотношением с плотностью флюида) и от деформации скелета:
 \beq
 \Psi_a=\Psi_a\left(\theta,\varepsilon_{ij},\rho_f\right)
 \eeq
@@ -101,8 +101,11 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 \beq
 \frac{d_s\varphi}{dt}=\frac{\partial\varphi}{\partial\theta}\frac{d_s\theta}{dt}+\frac{\partial\varphi}{\partial \varepsilon_{ij}}\frac{d_s\varepsilon_{ij}}{dt}+\frac{\partial\varphi}{\partial\rho_f}\frac{d_s\rho_f}{dt}
 \eeq
+Далее полученные разложения подставляем в \eqref{KlD}, но анализируем полученное неравенство в уме (не выписываем полное неравенство, т.к. слишком громоздко).
 
-Замыкающие соотношения для флюида.
+Будем получать замыкающие соотношения, предполагая, что соответствующие полные производные в неравенстве могут принимать любые значения (можем добиться любых значений, воздействуя определённым образом на рассматриваемую физическую систему)
+
+Замыкающие соотношения для флюида:
 
 \begin{itemize}
 \item Предполагаем, что производная $\displaystyle{}\frac{d_f\varepsilon_{ij}}{dt}$ может быть любой, тогда для выполнения неравенства необходимо
@@ -124,25 +127,25 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 
 \end{itemize}
 
-Далее скелетные замыкающие соотношения.
+Далее скелетные замыкающие соотношения:
 
 \begin{itemize}
 \item Предполагаем, что производная $\displaystyle{}\frac{d_s\theta}{dt}$ может быть любой, тогда для выполнения неравенства необходимо 
-\beq
+\beq\label{FirstSkelet1}
 -r_s\frac{\partial\Psi_s}{\partial\theta}-r_s\eta_s+p\frac{\partial\varphi}{\partial\theta}=0\Rightarrow\eta_s=-\frac{\partial\Psi_s}{\partial\theta}+\frac{p}{\rho_s\varphi}\frac{\partial\varphi}{\partial\theta}
 \eeq
 
 (видим, что энтропия скелета уже зависит от пористости)
 
 \item Предполагаем, что производная $\displaystyle{}\frac{d_s\varepsilon_{ij}}{dt}$ может быть любой, тогда для выполнения неравенства необходимо 
-\beq
+\beq\label{FirstSkelet2}
 -r_s\frac{\partial\Psi_s}{\partial\varepsilon_{ij}}+T_{ij}+p\varphi\delta_{ij}+p\frac{\partial\varphi}{\partial\varepsilon_{ij}}=0
 \eeq
 
 (если линеаризовать последнее равенство, то получим закон Гука)
 
 \item Предполагаем, что производная $\displaystyle{}\frac{d_s\rho_f}{dt}$ може быть любой, тогда для выполнения неравенства необходимо 
-\beq
+\beq\label{FirstSkelet3}
 -r_s\frac{\partial\Psi_s}{\partial\rho_f}+p\frac{\partial\varphi}{\partial\rho_f}=0
 \eeq
 \end{itemize}
@@ -154,26 +157,26 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 \textbullet\ перейдём к другому термодинамическому потенциалу
 
 Сделаем замену переменных: 
-\beq
+\beq\label{ChangeVariables}
 f\left(\theta,\varepsilon_{ij},\rho_f\right)\rightarrow \tilde{f}\left(\theta,\varepsilon_{ij},\varphi(\theta,\varepsilon_{ij},\rho_f)\right)
 \eeq
 
-Тогда
+После замены переменных \eqref{ChangeVariables} распишем
 \beq
 r_s\frac{\partial\Psi_s}{\partial\rho_f}=r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}\frac{\partial\varphi}{\partial\rho_f}
 \eeq
 
-и последнее замыкающее соотношение
+и замыкающее соотношение \eqref{FirstSkelet3} перепишется в следующем виде:
 \beq
--r_s\frac{\partial\Psi_s}{\partial\rho_f}+p\frac{\partial\varphi}{\partial\rho_f}=0\Leftrightarrow \left(-r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}+p\right)\frac{\partial\varphi}{\partial\rho_f}=0
+\left(-r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}+p\right)\frac{\partial\varphi}{\partial\rho_f}=0
 \eeq
 
 Следовательно,
-\beq
+\beq\label{PressureRel}
 p=r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}
 \eeq
 
-С другой стороны, ранее получили
+С другой стороны, ранее в \eqref{FirstFluid3} получили, что
 \beq
 p=\rho_f^2\frac{\partial\Psi_f}{\partial\rho_f}=\rho_f^2\frac{\partial\tilde{\Psi}_f}{\partial\varphi}\frac{\partial\varphi}{\partial\rho_f}
 \eeq
@@ -184,63 +187,42 @@ p=\rho_f^2\frac{\partial\Psi_f}{\partial\rho_f}=\rho_f^2\frac{\partial\tilde{\Ps
 \eeq
 (вывели просто так, не запоминаем)
 
-После замены переменных распишем 
+После замены переменных \eqref{ChangeVariables} распишем 
 \beq
 r_s\frac{\partial\Psi_s}{\partial\varepsilon_{ij}}=r_s\frac{\partial\tilde{\Psi}_s}{\partial\varepsilon_{ij}}+r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}\frac{\partial\varphi}{\partial\varepsilon_{ij}}
 \eeq
+(так как $\tilde{\Psi}_s$ двояко зависит от деформаций: напрямую и через пористость).
 
-(так как $\tilde{\Psi}_s$ двояко зависит от деформаций: напрямую и через пористость)
-
-и предпоследнее замыкающее соотношение
-\beq
--r_s\frac{\partial\Psi_s}{\partial\varepsilon_{ij}}+T_{ij}+p\varphi\delta_{ij}+p\frac{\partial\varphi}{\partial\varepsilon_{ij}}=0
-\eeq
-
-равносильно
+Следовательно, замыкающее соотношение \eqref{FirstSkelet2} перепишется в следующем виде:
 \beq
 -r_s\frac{\partial\tilde{\Psi}_s}{\partial\varepsilon_{ij}}-r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}\frac{\partial\varphi}{\partial\varepsilon_{ij}}+T_{ij}+p\varphi\delta_{ij}+p\frac{\partial\varphi}{\partial\varepsilon_{ij}}=0
 \eeq
-
 вынося $\displaystyle{}\frac{\partial\varphi}{\partial\varepsilon_{ij}}$ за скобку
 \beq
 -r_s\frac{\partial\tilde{\Psi}_s}{\partial\varepsilon_{ij}}+\left(p-r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}\right)\frac{\partial\varphi}{\partial\varepsilon_{ij}}+T_{ij}+p\varphi\delta_{ij}=0
 \eeq
-
-Ранее получали, что
-\beq
-p=r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}
-\eeq
-
-поэтому замыкающее соотношение перепишется в виде
-\beq
+подставляя \eqref{PressureRel}
+\beq\label{SecondSkelet2}
 -r_s\frac{\partial\tilde{\Psi}_s}{\partial\varepsilon_{ij}}+T_{ij}+p\varphi\delta_{ij}=0
 \eeq
 
-Ранее получали первое скелетное замыкающее соотношение:
-\beq
-\eta_s=-\frac{\partial\Psi_s}{\partial\theta}+\frac{p}{\rho_s\varphi}\frac{\partial\varphi}{\partial\theta}
-\eeq
-
-В новых переменных
+После замены переменных \eqref{ChangeVariables} распишем
 \beq
 \frac{\partial\Psi_s}{\partial\theta}=\frac{\partial\tilde{\Psi}_s}{\partial\theta}+\frac{\partial\tilde{\Psi}_s}{\partial\varphi}\frac{\partial\varphi}{\partial\theta}
 \eeq
+(так как $\tilde{\Psi}_s$ двояко зависит от температуры: напрямую и через пористость).
 
-и первое скелетное замыкающее соотношение перепишется в виде
+Следовательно, замыкающее соотношение \eqref{FirstSkelet1} перепишется в следующем виде:
 \beq
 \eta_s=-\frac{\partial\tilde{\Psi}_s}{\partial\theta}-\frac{\partial\tilde{\Psi}_s}{\partial\varphi}\frac{\partial\varphi}{\partial\theta}+\frac{p}{r_s}\frac{\partial\varphi}{\partial\theta}
 \eeq
-
-Ранее получали, что 
-\beq
-p=r_s\frac{\partial\tilde{\Psi}_s}{\partial\varphi}
-\eeq
-поэтому замыкающее соотношение перепишется в виде
-\beq
+подставляя \eqref{PressureRel}
+\beq\label{SecondSkelet1}
 \eta_s=-\frac{\partial\tilde{\Psi}_s}{\partial\theta}
 \eeq
 
-Теперь осталось сделать последний шаг. Сделать так, чтобы это всё было в нормальных переменных: избавиться от пористости и получить давление.
+Теперь осталось сделать последний шаг: избавиться от пористости и получить давление.
+
 Для этого перейдём к потенциалу Гиббса:
 \beq
 G=U-TS+pV=\Psi+pV
@@ -266,7 +248,7 @@ dG=-SdT+Vdp
 Лирическое отступление: потенциал Гиббса сохраняется при фазовых переходах.
 
 Но сделаем не совсем потенциал Гиббса (а потенциал Гиббса с точки зрения флюида):
-\beq
+\beq\label{Gibbs}
 \Phi_s=\tilde{\Psi}_s-\frac{p\varphi}{r_s}
 \eeq
 
@@ -275,12 +257,12 @@ dG=-SdT+Vdp
 d\tilde{\Psi}_s=\frac{\partial\tilde{\Psi}_s}{\partial\theta}d\theta+\frac{\partial\tilde{\Psi}_s}{\partial\varepsilon_{ij}}d\varepsilon_{ij}+\frac{\partial\tilde{\Psi}_s}{\partial\varphi}d\varphi
 \eeq
 
-учитывая полученные ранее замыкающие соотношения
+учитывая полученные ранее замыкающие соотношения \eqref{PressureRel}, \eqref{SecondSkelet2} и \eqref{SecondSkelet1}, получаем
 \beq
 d\tilde{\Psi}_s=-\eta_s d\theta+\frac{T_{ij}+p\varphi\delta_{ij}}{r_s}d\varepsilon_{ij}+\frac{p}{r_s}d\varphi
 \eeq
 
-Распишем дифференциал
+Распишем дифференциал второго слагаемого потенциала \eqref{Gibbs}
 \beq
 -d\left(\frac{p\varphi}{r_s}\right)=-\frac{p d\varphi}{r_s}-\frac{\varphi dp}{r_s}+\frac{\varphi p}{r_s}\frac{dr_s}{r_s}
 \eeq
@@ -290,7 +272,7 @@ d\tilde{\Psi}_s=-\eta_s d\theta+\frac{T_{ij}+p\varphi\delta_{ij}}{r_s}d\varepsil
 \frac{dr_s}{r_s}=-\delta_{ij}d\varepsilon_{ij}
 \eeq
 
-Распишем дифференциал введённого потенциала
+Распишем дифференциал введённого потенциала \eqref{Gibbs}
 \beq
 d\Phi_s=d\tilde{\Psi}_s-d\left(\frac{p\varphi}{r_s}\right)=-\eta_s d\theta+\frac{T_{ij}+p\varphi\delta_{ij}}{r_s}d\varepsilon_{ij}+\frac{p}{r_s}d\varphi-\frac{p d\varphi}{r_s}-\frac{\varphi dp}{r_s}-\frac{\varphi p}{r_s}\delta_{ij}d\varepsilon_{ij}
 \eeq
