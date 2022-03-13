@@ -94,23 +94,23 @@ r_a\frac{d_au_a}{dt}=T_{ij}^a\partial_jv_i^a+r_aQ^a+Q^{int,a}-\partial_jq_j^a-b_
 
 Закон Фурье: $q_i=-\varkappa_{ij}\partial_j\theta$, где $\varkappa_{ij}$ -- тензор теплопроводности
 
-Связь внутренней энергии и температуры: $u_a=c_a\theta$, где $c_a$ -- удельная теплоёмкость фазы (считаем, что $\theta=\theta^s=\theta^f$, т.е. на масштабе рассматриваемых сред (на микромасштабе) теплообмен мгновенный, происходит быстрее любых других процессов; в плазме это предположение не выполняется, но у нас не плазма)
+Связь внутренней энергии и температуры: $u_a=c_a^\theta\theta$, где $c_a^\theta$ -- удельная теплоёмкость фазы (считаем, что $\theta=\theta^s=\theta^f$, т.е. на масштабе рассматриваемых сред (на микромасштабе) теплообмен мгновенный, происходит быстрее любых других процессов; в плазме это предположение не выполняется, но у нас не плазма)
 
 Также считаем, что $v_i^a=0$ (т.е. происходит только теплообмен, среды находятся в механическом равновесии)
 
 Учитывая замыкающие соотношения и поставленное условие, перепишем общий ЗСЭ:
 \beq\label{HT}
-\sum\limits_{a}{r_ac_a\frac{\partial\theta}{\partial t}}=rQ+\partial_i\left(\varkappa_{ij}\partial_j\theta\right)
+\sum\limits_{a}{r_ac_a^\theta\frac{\partial\theta}{\partial t}}=rQ+\partial_i\left(\varkappa_{ij}\partial_j\theta\right)
 \eeq
 
 предполагая однородность $\left(\varkappa_{ij}=\text{const}\right)$
 \beq\label{HeatTransfer}
-\sum\limits_{a}{r_ac_a\frac{\partial\theta}{\partial t}}-\varkappa_{ij}\partial_i\partial_j\theta=rQ
+\sum\limits_{a}{r_ac_a^\theta\frac{\partial\theta}{\partial t}}-\varkappa_{ij}\partial_i\partial_j\theta=rQ
 \eeq
 
 предполагая изотропность $\left(\varkappa_{ij}=\varkappa\delta_{ij}\right)$
 \beq
-\frac{\partial\theta}{\partial t}-\frac{\varkappa}{rc}\Delta\theta=\frac{Q}{c}\,\,\,;\,\,\, rc=\sum\limits_{a}{r_ac_a}
+\frac{\partial\theta}{\partial t}-\frac{\varkappa}{rc}\Delta\theta=\frac{Q}{c}\,\,\,;\,\,\, rc=\sum\limits_{a}{r_ac_a^\theta}
 \eeq
 
 Получили уравнение теплопроводности ($c$ -- удельная теплоёмкость смеси; $Q$ -- удельный источник тепла)
