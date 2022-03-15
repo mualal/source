@@ -80,6 +80,8 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 -\sum\limits_a{r_a\left(\frac{d_a\Psi_a}{dt}+\eta_a\frac{d_a\theta}{dt}\right)}+\left(T_{ij}+p\varphi\delta_{ij}\right)\dot{\varepsilon}_{ij}^s+\frac{p\varphi}{\rho_f}\frac{d_f\rho_f}{dt}+p\frac{d_s\varphi}{dt}+\delta_f+\delta_\theta\geq 0
 \eeq
 
+\subsection{Прямой подход}
+
 Мы знаем, что пористость и свободная энергия должны зависеть от температуры, от давления флюида (при фиксированной температуре связано "<намертво"> неким замыкающим соотношением с плотностью флюида) и от деформации скелета:
 \beq
 \Psi_a=\Psi_a\left(\theta,\varepsilon_{ij},\rho_f\right)
@@ -156,6 +158,8 @@ T_{ij}^{eq,f}\partial_j W_i+b_i^{eq}W_i=-p\left(\varphi\delta_{ij}\partial_j W_i
 
 \textbullet\ перейдём к другому термодинамическому потенциалу
 
+\subsection{Замена переменных}
+
 Сделаем замену переменных: 
 \beq\label{ChangeVariables}
 f\left(\theta,\varepsilon_{ij},\rho_f\right)\rightarrow \tilde{f}\left(\theta,\varepsilon_{ij},\varphi(\theta,\varepsilon_{ij},\rho_f)\right)
@@ -220,6 +224,8 @@ r_s\frac{\partial\Psi_s}{\partial\varepsilon_{ij}}=r_s\frac{\partial\tilde{\Psi}
 \beq\label{SecondSkelet1}
 \eta_s=-\frac{\partial\tilde{\Psi}_s}{\partial\theta}
 \eeq
+
+\subsection{Переход к потенциалу Гиббса}
 
 Теперь осталось сделать последний шаг: избавиться от пористости и получить давление.
 

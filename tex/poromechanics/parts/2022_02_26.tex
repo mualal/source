@@ -201,7 +201,7 @@ T_{ij}\approx T_{ij}^0+L_{ijkl}\varepsilon_{kl}-\alpha_{kl}^\theta L_{ijkl}\left
 
 Мы разобрались с консервативными слагаемыми второго начала термодинамики в форме неравенства Клаузиуса-Дюгема \eqref{KlD}. Консервативные слагаемые работают в термодинамически обратимых процессах. Далее перейдём к диссипативным слагаемым.
 
-\subsection{Роль диссипативных слагаемых неравенства Клаузиуса-Дюгема}
+\section{Роль диссипативных слагаемых неравенства Клаузиуса-Дюгема}
 
 Термическая диссипация (ввели при переписывании неравенства \eqref{KlD0}):
 \beq\label{ThermoDis}
@@ -222,6 +222,8 @@ T_{ij}\approx T_{ij}^0+L_{ijkl}\varepsilon_{kl}-\alpha_{kl}^\theta L_{ijkl}\left
 \beq\label{2InEq}
 \delta_f\geqslant0\text{ и }\delta_\theta\geqslant0
 \eeq
+
+\subsection{Термическая диссипация. Закон Фурье}
 
 Заметим, что при отсутствии градиента температуры, поток тепла равен нулю (из физических соображений) и термическая диссипация равна нулю:
 \beq\label{ZERO}
@@ -256,25 +258,30 @@ q_i\approx-\theta\cdot\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\n
 \displaystyle{}\varkappa_{ij}=\theta\cdot\frac{1}{2}\frac{\partial^2\delta_\theta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\nabla_i\theta=0}
 \eeq
 тогда
-\beq
+\beq\label{FourierLow}
 q_i\approx-\varkappa_{ij}\nabla_j\theta
 \eeq
 (получили закон Фурье, который использовали при выводе уравнения теплопроводности \eqref{HeatTransfer})
 
 Но получили не только закон Фурье, но и симметричность, и положительную определённость тензора теплопроводности $\varkappa_{ij}$.
 
+\subsection{Механическая диссипация}
+
 Далее будем работать с механической диссипацией \eqref{MechDis}, условие на которую распадается на 2 независимых условия:
 \beq\label{MechFirst}
 \delta_f^1=-b_i^{dis}W_i\geqslant0
 \eeq
-(связано с относительной скоростью флюида и скелета)
+(связано с относительной скоростью флюида и скелета).
+
 и
 \beq\label{MechSecond}
-\delta_f^2=-T_{ij}^{dis}\partial_jW_i\geqslant0
+\delta_f^2=-T_{ij}^{dis,f}\partial_jW_i\geqslant0
 \eeq
 (зависит от градиента скоростей; есть всегда: даже при отсутствии скелета)
 
-Заметим, что верно следствие
+\subsubsection{Закон Дарси}
+
+Заметим, что для для первого условия \eqref{MechFirst} верно следствие
 \beq\label{Important}
 W_i=0\Rightarrow\delta_f^1=0\text{ и }b_i^{dis}=0
 \eeq
@@ -286,10 +293,10 @@ W_i=0\Rightarrow\delta_f^1=0\text{ и }b_i^{dis}=0
 
 Из следствия \eqref{Important} первое слагаемое равно нулю.
 
-Из следствия \eqref{Important} и неравенства \eqref{MechFirst} производная во втором слагаемом тоже равна нулю (т.к. в этой точке достигается минимум $\delta_f^1$)
+Из следствия \eqref{Important} и неравенства \eqref{MechFirst} производная во втором слагаемом тоже равна нулю (т.к. в этой точке достигается минимум $\delta_f^1$).
 
 Таким образом,
-\beq
+\beq\label{BDisip}
 b_i^{dis}\approx-\frac{1}{2}\frac{\partial^2\delta_f^1}{\partial W_i\partial W_j}\bigg|_{W_i=0}W_j-\frac{1}{6}\frac{\partial^3\delta_f^1}{\partial W_i\partial W_j \partial W_k}\bigg|_{W_i=0}W_jW_k
 \eeq
 
@@ -302,24 +309,69 @@ A_{ij}=-\frac{1}{2}\frac{\partial^2\delta_f^1}{\partial W_i\partial W_j}\bigg|_{
 \beq
 r_f\frac{d_fv_i^f}{dt}=f_i+b_i^{dis}+b_i^{eq}+\partial_jT_{ij}^f
 \eeq
-перепишем
+учитывая \eqref{BDisip}, $T_{ij}^{eq,f}=-\varphi p\delta_{ij}$ и $b_i^{eq}=p\partial_i\varphi$, перепишем
 \beq
-r_f\frac{d_fv_i^f}{dt}=r_fg_i+A_{ij}W_j+p\partial_i\varphi-\varphi\partial_ip-p\partial_i\varphi
+r_f\frac{d_fv_i^f}{dt}\approx r_fg_i+A_{ij}W_j+p\partial_i\varphi-\varphi\partial_ip-p\partial_i\varphi
 \eeq
 и получаем уравнение Навье-Стокса для пористой среды:
 \beq
-\partial_ip=-\rho_f\frac{d_fv_i^f}{dt}+\rho_fg_i+A_{ij}W_j
+\partial_ip\approx-\rho_f\frac{d_fv_i^f}{dt}+\rho_fg_i+A_{ij}W_j
 \eeq
 
 Далее рассматриваем стационарное течение $\displaystyle{}\left(\frac{d_fv_i^f}{dt}=0\right)$, тогда из предыдущего равенства
 \beq
-W_j=A_{ij}^{-1}\left(\partial_ip-\rho_fg_i\right)
+W_j\approx A_{ij}^{-1}\left(\partial_ip-\rho_fg_i\right)
 \eeq
-Получили закон Дарси.
 
-Аналогичным образом из \eqref{MechSecond}, учитывая равенство $\partial_jW_i=\dot{\varepsilon}_{ij}^f$ (в предположении $v_s=0$) получаем
+Вводя положительно определённый тензор проницаемости
 \beq
-T_{ij}^{dis}\approx-\frac{1}{2}\frac{\partial^2\delta_f^2}{\partial\dot{\varepsilon}_{ij}\partial\dot{\varepsilon}_{kl}}\bigg|_{\dot{\varepsilon}_{ij}=0}\dot{\varepsilon}_{kl}
+K_{ij}=-\mu A_{ij}^{-1}
+\eeq
+получаем закон Дарси:
+\beq
+W_j\approx-\frac{K_{ij}}{\mu}\left(\partial_i p-\rho_f g_i\right)
+\eeq
+
+\subsubsection{Вязкость и закон Ньютона в перспективе}
+
+Аналогично для второго условия \eqref{MechSecond} верно следствие
+\beq\label{GradNewDis}
+\partial_jW_i=0\Rightarrow\delta_f^2=0\text{ и }T^{dis,f}=0
+\eeq
+($T^{dis,f}=0$ из принципа Галилея: если градиент относительной скорости равен нулю, то в каждой точке флюид движется относительно скелета с одинаковой скоростью, а значит можем перейти в систему отсчёта флюида, в которой, очевидно, не будет диссипаций $T^{dis,f}$).
+
+Если \textbf{скелета нет} (или его скорость везде равна нулю), то 
+\beq
+\partial_jW_i=\dot{\varepsilon}_{ij}^f\text{ и }\sigma_{ij}^{dis,f}=T_{ij}^{dis,f}
+\eeq
+(другими словами, градиент превращается в тензор скоростей деформаций флюида, а эффективное напряжение в истинное).
+
+Тогда условие \eqref{MechSecond} перепишется в виде
+\beq
+\delta_f^2=-\sigma_{ij}^{dis,f}\dot{\varepsilon}_{ij}^f
+\eeq
+
+Представим $\delta_f^2$ в виде частичной суммы ряда Тейлора:
+\beq
+\delta_f^2\approx\delta_f^2\bigg|_{\dot{\varepsilon}_{ij}^f=0}+\frac{\partial\delta_f^2}{\partial\dot{\varepsilon}_{ij}^f}\bigg|_{\dot{\varepsilon}_{ij}^f=0}\dot{\varepsilon}_{ij}^f+\frac{1}{2}\frac{\partial^2\delta_f^2}{\partial \dot{\varepsilon}_{ij}^f\partial \dot{\varepsilon}_{kl}^f}\bigg|_{\dot{\varepsilon}_{ij}^f=0}\dot{\varepsilon}_{kl}^f
+\eeq
+Из следствия \eqref{GradNewDis} первое слагаемое равно нулю.
+
+Из следствия \eqref{GradNewDis} и неравенства \eqref{MechSecond} производная во втором слагаемом тоже равна нулю (т.к. в этой точке достигается минимум $\delta_f^2$).
+
+Таким образом, для случаев отсутствия скелета ($\varphi=1$) или нулевой скорости скелета ($v_s=0$) получаем
+\beq
+\sigma_{ij}^{dis,f}\approx-\frac{1}{2}\frac{\partial^2\delta_f^2}{\partial\dot{\varepsilon}_{ij}^f\partial\dot{\varepsilon}_{kl}^f}\bigg|_{\dot{\varepsilon}_{ij}=0}\dot{\varepsilon}_{kl}^f
+\eeq
+Введём тензор вязкости 
+\beq\label{viscosity}
+\mu_{ijkl}=\frac{1}{2}\frac{\partial^2\delta_f^2}{\partial\dot{\varepsilon}_{ij}^f\partial\dot{\varepsilon}_{kl}^f}\bigg|_{\dot{\varepsilon}_{ij}=0}
+\eeq
+(положительно определён и обладает теми же симметриями, что и тензор жёсткости \eqref{2}, т.е. имеет 21 независимую компоненту в самом анизотропном случае).
+
+Тогда
+\beq\label{SigmaViscEpsilon}
+\sigma_{ij}^{dis,f}\approx-\mu_{ijkl}\dot{\varepsilon}_{kl}^f
 \eeq
 
 \end{document}
