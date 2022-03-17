@@ -8,6 +8,173 @@
 
 \section{Случай изотропной жидкости}
 
-Изотропность = инвариантность физических свойств во всех направлениях. Математически означает неизменность представления тензора при повороте системы координат.
+Введём тензор поворота $\symbf{O}$ так, чтобы:
+\beq
+\symbf{a}=\symbf{O}\cdot\symbf{a}'
+\eeq
+в координатном виде:
+\beq
+a_i=O_{ik}a_k'
+\eeq
+
+Распишем тензор $\symbf{\sigma}$ в штрихованном базисе и базисе без штриха и приравняем полученные выражения:
+\beq
+n_m'n_r'\sigma_{mr}'=n_in_j\sigma_{ij}
+\eeq
+учитывая связь штрихованного базиса и базиса без штриха, получаем:
+\beq\label{TensorRotInv}
+n_m'n_r'\sigma_{mr}'=O_{im}n_m'O_{jr}n_r'\sigma_{ij}\Rightarrow \sigma_{mr}'=O_{im}\sigma_{ij}O_{jr}
+\eeq
+Вспоминая, что умножение на транспонированный тензор реализуется в случае сворачивания первого индекса с первым или второго индекса со вторым; а просто скалярное умножение на тензор реализуется в случае сворачивания первого индекса со вторым или второго индекса с первым, перепишем равенство \eqref{TensorRotInv} в тензорном виде:
+\beq
+\symbf{\sigma}'=\symbf{O}^{T}\cdot\symbf{\sigma}\cdot\symbf{O}
+\eeq
+
+Далее перепишем равенство \eqref{SigmaViscEpsilon} в тензорном виде в штрихованном базисе (в дальнейшем обозначения $dis, f$ опущены для краткости):
+\beq
+\symbf{O}^{T}\cdot\symbf{\sigma}\cdot\symbf{O}=-\symbf{\mu}':\left(\symbf{O}^T\cdot\symbf{\dot{\varepsilon}}\cdot\symbf{O}\right)
+\eeq
+преобразуем
+\beq
+\symbf{\sigma}=-\symbf{O}\cdot\left(\symbf{\mu}':\left(\symbf{O}^T\cdot\symbf{\dot{\varepsilon}}\cdot\symbf{O}\right)\right)\cdot\symbf{O}^T
+\eeq
+
+С другой стороны, в базисе без штриха:
+\beq
+\symbf{\sigma}=-\symbf{\mu}:\symbf{\dot{\varepsilon}}
+\eeq
+
+Таким образом,
+\beq
+\symbf{\mu}:\symbf{\dot{\varepsilon}}=\symbf{O}\cdot\left(\symbf{\mu}':\left(\symbf{O}^T\cdot\symbf{\dot{\varepsilon}}\cdot\symbf{O}\right)\right)\cdot\symbf{O}^T
+\eeq
+
+Перепишем в координатном виде:
+\beq
+\mu_{ijkl}\dot{\varepsilon}_{kl}=O_{ia}\mu_{abcd}'\dot{\varepsilon}_{cd}'O_{jb}=\mu_{abcd}'\dot{\varepsilon}_{kl}O_{kc}O_{ld}O_{ia}O_{jb}
+\eeq
+сокращая $\dot{\varepsilon}_{kl}$:
+\beq
+\mu_{ijkl}=\mu_{abcd}'O_{kc}O_{ld}O_{ia}O_{jb}
+\eeq
+
+
+Изотропность = инвариантность физических свойств во всех направлениях. Математически означает неизменность представления тензора при повороте системы координат. Далее будем считать тензор $\symbf{\mu}$ изотропным ($\symbf{\mu}'=\symbf{\mu}$). Тогда
+\beq\label{IsotropicTensor}
+\mu_{ijkl}'=\mu_{abcd}'O_{kc}O_{ld}O_{ia}O_{jb}
+\eeq
+
+Далее получим инварианты тензора $\symbf{\sigma}$. Скалярная функция 
+
+Вспомним характеристическое уравнение для симметричного тензора второго ранга $\symbf{\sigma}$:
+\beq\label{Eigen}
+\det{\left(\symbf{\sigma}-\lambda\symbf{E}\right)}=0
+\eeq
+
+Вид уравнения \eqref{Eigen} не изменяется при повороте. Действительно,
+\begin{multline}\label{StableProve}
+\det{\left(\symbf{\sigma}-\lambda\symbf{E}\right)}=\det{\symbf{O}^T}\cdot\det{\left(\symbf{\sigma}-\lambda\symbf{E}\right)}\cdot\det{\symbf{O}}=\det{\left(\symbf{O}^T\cdot\left(\symbf{\sigma}-\lambda\symbf{E}\right)\cdot\symbf{O}\right)}=\\=\det{\left(\symbf{O}^T\cdot\symbf{\sigma}\cdot\symbf{O}-\lambda\symbf{O}^T\cdot\symbf{O}\right)}=\det{\left(\symbf{\sigma}'-\lambda\symbf{E}\right)}
+\end{multline}
+
+Раскроем определитель в уравнении \eqref{Eigen}:
+\beq
+\det{\left(\symbf{\sigma}-\lambda\symbf{E}\right)}=\frac{1}{3!}\varepsilon_{ikm}\varepsilon_{jln}\left(\sigma_{ij}-\lambda\delta_{ij}\right)\left(\sigma_{kl}-\lambda\delta_{kl}\right)\left(\sigma_{mn}-\lambda\delta_{mn}\right)=
+\eeq
+раскрывая скобки
+\begin{multline}
+=\frac{1}{3!}\varepsilon_{ikm}\varepsilon_{jln}\left(\sigma_{ij}\sigma_{kl}\sigma_{mn}-\lambda\left(\delta_{ij}\sigma_{kl}\sigma_{mn}+\delta_{kl}\sigma_{ij}\sigma_{mn}+\delta_{mn}\sigma_{ij}\sigma_{kl}\right)+\right.\\\left.+\lambda^2\left(\sigma_{mn}\delta_{kl}\delta_{ij}+\sigma_{kl}\delta_{ij}\delta_{mn}+\sigma_{ij}\delta_{kl}\delta_{mn}\right)-\lambda^3\delta_{ij}\delta_{kl}\delta_{mn}\right)=
+\end{multline}
+обнаруживая определитель и применяя Кронекеры
+\begin{multline}
+=\det{\symbf{\sigma}}-\frac{\lambda}{3!}\left(\varepsilon_{ikm}\varepsilon_{iln}\sigma_{kl}\sigma_{mn}+\varepsilon_{kmi}\varepsilon_{knj}\sigma_{ij}\sigma_{mn}+\varepsilon_{mik}\varepsilon_{mjl}\sigma_{ij}\sigma_{kl}\right)+\\+\frac{\lambda^2}{3!}\left(\varepsilon_{ikm}\varepsilon_{ikn}\sigma_{mn}+\varepsilon_{mik}\varepsilon_{min}\sigma_{kl}+\varepsilon_{kmi}\varepsilon_{kmj}\sigma_{ij}\right)-\frac{\lambda^3}{3!}\varepsilon_{ikm}\varepsilon_{ikm}=
+\end{multline}
+вспоминая свойства символов Леви-Чивиты и символов Кронекера
+
+(а именно $\varepsilon_{ikm}\varepsilon_{iln}=\delta_{kl}\delta_{mn}-\delta_{kn}\delta_{ml}$ и $\varepsilon_{ikm}\varepsilon_{ikn}=2\delta_{mn}$, и $\delta_{mm}=3$)
+\beq
+=\det{\symbf{\sigma}}-\frac{3\lambda}{6}\left(\sigma_{kk}\sigma_{mm}-\sigma_{nm}\sigma_{mn}\right)+\frac{3\lambda^2}{6}\cdot 2\sigma_{mm}-\frac{2\cdot 3\cdot\lambda^3}{6}=
+\eeq
+вспоминая определение следа
+\beq
+=\det{\symbf{\sigma}-\lambda\cdot\frac{\text{tr}^2\symbf{\sigma}-\text{tr}\,\symbf{\sigma}^2}{2}}+\lambda^2\cdot\text{tr}\,\symbf{\sigma}-\lambda^3.
+\eeq
+
+Так как вид характеристического уравнения не изменяется при повороте (см. \eqref{StableProve}), то и коэффициенты этого уравнения инвариантны относительно поворота. Получаем 3 функционально независимых главных инварианта симметричного тензора второго ранга $\symbf{\sigma}$:
+\begin{itemize}
+	\item первый: $I_1(\symbf{\sigma})=\text{tr}\,\symbf{\sigma}$
+	\item второй: $\displaystyle{}I_2(\symbf{\sigma})=\frac{\text{tr}\,\symbf{\sigma^2}-\text{tr}^2\symbf{\sigma}}{2}$
+	\item третий: $I_3(\symbf{\sigma})=\det{\symbf{\sigma}}$
+\end{itemize}
+
+И уравнение \eqref{Eigen} перепишется в виде
+\beq
+-\lambda^3+\lambda^2\cdot I_1(\symbf{\sigma})-\lambda\cdot I_2(\symbf{\sigma})+I_3(\symbf{\sigma})=0
+\eeq
+
+Аналогичные выкладки с характеристическим уравнением верны для любого симметричного тензора второго ранга (в частности, для $\symbf{\sigma}$ и $\symbf{\dot{\varepsilon}}$).
+
+Из изотропности тензора $\symbf{\mu}$ \eqref{IsotropicTensor} следует, что $\symbf{\mu}$ зависит только от инвариантов тензоров $\symbf{\sigma}$ и $\symbf{\dot{\varepsilon}}$. И данная зависимость в первом приближении линейна.
+
+Тогда
+\beq
+I_1(\symbf{\sigma})=K^1I_1(\symbf{\dot{\varepsilon}})+K^2I_2(\symbf{\dot{\varepsilon}})+K^3I_3(\symbf{\dot{\varepsilon}})
+\eeq
+
+Но связь линейна, поэтому след тензора напряжений не может зависеть от квадрата и от куба скорости изменения тензора малых деформаций, т.е. $K^2=0$, $K^3=0$ и
+\beq\label{TraceConnect}
+I_1(\symbf{\sigma})=K^1I_1(\symbf{\dot{\varepsilon}})
+\eeq
+
+Выделим девиаторную и шаровую части тензора $\symbf{\sigma}$:
+\beq\label{SpherePart}
+\sigma_{ij}=\left(\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}\right)+\frac{1}{3}\sigma_{kk}\delta_{ij}
+\eeq
+
+След девиатоной части равен нулю:
+\beq
+\text{tr}\left(\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}\right)=0,
+\eeq
+поэтому у девиаторной части есть только второй и третий инварианты и девиаторная часть тензора $\symbf{\sigma}$ не зависит от первого инварианта девиаторной части тензора $\symbf{\dot{\varepsilon}}$. 
+
+Следовательно, с учётом линейности второй инвариант девиаторной части тензора $\symbf{\sigma}$ зависит только от второго инварианта девиаторной части тензора $\symbf{\dot{\varepsilon}}$:
+\beq\label{DevConnect}
+\sigma_{ij}-\frac{1}{3}\sigma_{kk}\delta_{ij}=K^2\left(\dot{\varepsilon}_{ij}-\frac{1}{3}\dot{\varepsilon}_{kk}\delta_{ij}\right)
+\eeq
+
+Таким образом, из \eqref{TraceConnect}, \eqref{SpherePart} и \eqref{DevConnect}
+\beq
+\sigma_{ij}=K^2\dot{\varepsilon}_{ij}-\frac{K^2}{3}\dot{\varepsilon}_{kk}\delta_{ij}+\frac{K^1}{3}\dot{\varepsilon}_{kk}\delta_{ij}
+\eeq
+
+Введём вязкость $\displaystyle{}\mu=-\frac{K^2}{2}$ и вторую вязкость $\displaystyle{}\eta=\frac{K^1}{3}$, тогда
+\beq
+\sigma_{ij}^{dis,f}=-2\mu\dot{\varepsilon}_{ij}+\left(\frac{2\mu}{3}+\eta\right)\delta_{ij}\dot{\varepsilon}_{kk}
+\eeq
+Получили закон Ньютона для изотропной вязкой жидкости.
+
+Обычно $\eta\ll\mu$ (для воды примерно на 2 порядка).
+
+Также получили изотропный тензор вязкости:
+\beq
+\mu_{ijkl}=-\mu\left(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}\right)+\left(\eta+\frac{2\mu}{3}\right)\delta_{ij}\delta_{kl}
+\eeq
+
+Аналогично можем получить изотропный тензор жёсткости \eqref{2}:
+\beq
+L_{ijkl}=\left(K-\frac{2}{3}G\right)\delta_{ij}\delta_{kl}+G\left(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}\right)
+\eeq
+и закон Гука в изотропном случае:
+\beq
+\sigma_{ij}^s=K\delta_{ij}\varepsilon_{kk}+2G\left(\varepsilon_{ij}-\frac{1}{3}\delta_{ij}\varepsilon_{kk}\right),
+\eeq
+где $K$ -- модуль всестороннего сжатия и $G$ -- модуль сдвига.
+
+И закон Гука в изотропном случае в перегруппированной форме:
+\beq
+\sigma_{ij}^s=\lambda\delta_{ij}\varepsilon_{kk}+2\mu\varepsilon_{ij},
+\eeq
+где $\displaystyle{}\lambda=K-\frac{2}{3}G$ и $\mu=G$ -- константы (параметры) Ляме.
+
+\section{Соотношения Онзагера}
 
 \end{document}
