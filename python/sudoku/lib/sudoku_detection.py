@@ -1,7 +1,8 @@
 import cv2
+import numpy as np
 
 
-def find_sudoku_field(preprocessed_frame):
+def sudoku_field_detection(preprocessed_frame):
     contours, _ = cv2.findContours(preprocessed_frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     contours = sorted(contours, key=cv2.contourArea, reverse=True)
@@ -37,3 +38,41 @@ def find_sudoku_field(preprocessed_frame):
         return sudoku_field, [top_left, top_right, bot_right, bot_left]
 
     return []
+
+
+def grid_lines_detection(frame, length):
+    frame_copy = frame.copy()
+
+    col = frame_copy.shape[0]
+    row = frame_copy.shape[1]
+
+    col_size = col // length
+    row_size = row // length
+
+    col_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, col_size))
+    row_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (row_size, 1))
+
+    col_frame = cv2.erode(frame_copy, col_kernel)
+    col_frame = cv2.dilate(col_frame, col_kernel)
+
+    row_frame = cv2.erode(frame_copy, row_kernel)
+    row_frame = cv2.dilate(row_frame, row_kernel)
+
+    return col_frame, row_frame
+
+
+def grid_mask_creation(vertical_lines_frame, horizontal_lines_frame):
+    grid_lines = cv2.add(vertical_lines_frame, horizontal_lines_frame)
+    grid_lines = cv2.adaptiveThreshold(grid_lines, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 235, 2)
+    grid_lines = cv2.dilate(grid_lines, cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)), iterations=2)
+
+    pts = cv2.HoughLines(grid_lines, .3, np.pi/90, 200)
+
+    for rho, theta in np.squeeze(pts):
+        a, b = np.cos(theta), np.sin(theta)
+        x0, y0 = a * rho, b * rho
+        x1, y1 = int(x0 + 1000 * (-b)), int(y0 + 1000 * a)
+        x2, y2 = int(x0 - 1000 * (-b)), int(y0 - 1000 * a)
+        cv2.line(grid_lines, (x1, y1), (x2, y2), (255, 255, 255), 4)
+
+    return cv2.bitwise_not(grid_lines)
