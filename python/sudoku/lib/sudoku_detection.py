@@ -125,3 +125,23 @@ def grid_mask_creation(vertical_lines_frame, horizontal_lines_frame):
     grid_lines = cv2.bitwise_not(grid_lines)
 
     return grid_lines
+
+
+def recognize_digits(preprocessed_cells, ml_model):
+    """
+    recognize digits in sudoku cells
+    :param preprocessed_cells: list of preprocessed sudoku cells
+    :param ml_model: machine learning model to predict digits
+    :return: numpy array with sudoku to solve
+    """
+
+    cells_count = 81
+    sudoku_to_solve = np.zeros((int(np.sqrt(cells_count)), int(np.sqrt(cells_count))))
+
+    for i in range(int(np.sqrt(cells_count))):
+        for j in range(int(np.sqrt(cells_count))):
+            current_cell = preprocessed_cells[int(np.sqrt(cells_count)) * i + j]
+            if type(current_cell) is not int:
+                sudoku_to_solve[i][j] = np.argmax(ml_model.predict(np.array([current_cell])))
+
+    return sudoku_to_solve

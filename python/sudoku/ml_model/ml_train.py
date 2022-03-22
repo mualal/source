@@ -65,4 +65,4 @@ score = model.evaluate(X_test, y_test, verbose=0)
 print(f'Test loss: {score[0]}')
 print(f'Test accuracy: {score[1]}')
 
-print(model.predict(X_test[7:8]))
+print(model.predict(np.array([X_test[7]])))

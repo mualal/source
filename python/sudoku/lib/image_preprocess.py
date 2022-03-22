@@ -28,7 +28,7 @@ def to_black_white(frame_to_preprocess):
     frame_morph = cv2.morphologyEx(frame_inverted, cv2.MORPH_OPEN, kernel)
 
     # dilation, increases the white region in the image
-    frame_morph = cv2.dilate(frame_morph, kernel, iterations=1)
+    frame_morph = cv2.erode(frame_morph, kernel, iterations=1)
 
     return frame_morph
 
@@ -108,6 +108,15 @@ def cells_preprocess(cells_frames):
             continue
 
         height, width = cell_frame.shape
+        mid = width // 2
+
+        if np.isclose(cell_frame[int(mid - width * 0.2):int(mid + width * 0.2),
+                      int(mid - width * 0.2):int(mid + width * 0.2)],
+                      0).sum() / (0.4 * width * 0.4 * height) >= 0.95:
+            preprocessed_cells_frames.append(0)
+            continue
+
+        height, width = cell_frame.shape
 
         contours, _ = cv2.findContours(cell_frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = sorted(contours, key=cv2.contourArea, reverse=True)
@@ -117,6 +126,14 @@ def cells_preprocess(cells_frames):
         start_y = (height - h) // 2
         preprocessed_cell_frame = np.zeros_like(cell_frame)
         preprocessed_cell_frame[start_y:start_y+h, start_x:start_x+w] = cell_frame[y:y+h, x:x+w]
+
+        # change image dimensions
+        preprocessed_cell_frame = cv2.resize(preprocessed_cell_frame, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)
+        preprocessed_cell_frame = np.expand_dims(preprocessed_cell_frame, -1)
+        preprocessed_cell_frame.reshape((28, 28, 1))
+
+        # normalize
+        preprocessed_cell_frame = preprocessed_cell_frame / 255.0
 
         preprocessed_cells_frames.append(preprocessed_cell_frame)
 
