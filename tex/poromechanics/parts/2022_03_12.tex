@@ -176,5 +176,64 @@ L_{ijkl}=\left(K-\frac{2}{3}G\right)\delta_{ij}\delta_{kl}+G\left(\delta_{ik}\de
 где $\displaystyle{}\lambda=K-\frac{2}{3}G$ и $\mu=G$ -- константы (параметры) Ляме.
 
 \section{Соотношения Онзагера}
+Ларс Онзагер. Лауреат Нобелевской премии по химии 1968 за открытие соотношений, лежащих в основе термодинамики необратимых процессов.
+
+(\url{https://www.nobelprize.org/prizes/chemistry/1968/onsager/facts})
+
+Мы отдельно разобрались с имеющимися в неравенстве Клаузиусса-Дюгема диссипациями: получили закон Дарси, закон Фурье и закон вязкости Ньютона.
+
+Было 3 диссипации: $\delta_\theta\geqslant 0$, $\delta_f^1\geqslant 0$ и $\delta_f^2\geqslant 0$.
+
+Сумма $\delta_\theta+\delta_f^1+\delta_f^2\geqslant 0$ зависит от $\nabla\theta$, $W_i$ и $\partial_jW_i$.
+Ранее каждую из диссипаций в отдельности раскладывали в ряд Тейлора. Теперь будем раскладывать общую дисипацию, тогда первые производные по-прежнему равны нулю, но появятся смешанные производные, откуда и будут следовать соотношения Онзагера.
+
+Прикинем порядок значений боковых напряжений при течении флюида.
+
+Вязкость воды $\mu\approx10^{-3}\text{ Па}\cdot\text{с}=1\text{ сП}$
+
+Истинная скорость на забое (представим в виде отношения потоковой скорости к пористости):
+$$v_f=\frac{Q}{\varphi h\cdot 2\pi r_w}\approx\frac{10^2\,\frac{\text{м}^3}{\text{сут}}}{10^{-1}\cdot 10\text{ м}\cdot 1\text{ м}\cdot 10^5\frac{\text{с}}{\text{сут}}}=10^{-3}\,\frac{\text{м}}{\text{с}}$$
+Оценим порядок производной:
+$$\frac{\partial v_f}{\partial r}\sim 10^{-2}\,\frac{1}{\text{с}}$$
+
+Тогда
+$$\mu\frac{\partial v_f}{\partial r}\sim 10^{-5}\,\text{Па}$$
+
+Получили пренебрежимо малые значения напряжений (по сравнению с примерным давлением в пласте $10^7$ Па). Поэтому считаем жидкость в пласте идеальной ($\partial_jW_i$ пренебрежимо малы). И исключаем диссипацию $\delta_f^2$. Тогда диссипация
+\beq
+\delta(\nabla\theta, W_i)=\delta_\theta(\nabla\theta)+\delta_f^1(W_i) 
+\eeq
+
+Представим в виде частичной суммы ряда Тейлора (первые производные по-прежнему равны нулю аналогично \eqref{MechFirstFullT}):
+\begin{multline}\label{NewBothDis1}
+\delta\approx\frac{1}{2}\frac{\partial^2\delta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}\nabla_i\theta\nabla_j\theta+\frac{1}{2}\frac{\partial^2\delta}{\partial W_i\partial W_j}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}W_iW_j+\\+\frac{\partial^2\delta}{\partial\left(\nabla_j\theta\right)\partial W_i}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}\nabla_j\theta\,W_i
+\end{multline}
+
+С другой стороны, из \eqref{ThermoDis} и \eqref{MechFirst}
+\beq\label{NewBothDis2}
+\delta=-\frac{q_i\nabla_i\theta}{\theta}-b_i^{dis}W_i
+\eeq
+
+Приравнивая \eqref{NewBothDis1} и \eqref{NewBothDis2}, получаем, что
+\beq\label{bDisAbsNew}
+b_i^{dis}\approx-\frac{1}{2}\frac{\partial^2\delta}{\partial W_i\partial W_j}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}W_j-\frac{\partial^2\delta}{\partial\left(\nabla_j\theta\right)\partial W_i}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}\nabla_j\theta
+\eeq
+
+Видим, что диссипативная сила зависит не только от $W_j$, но и от градиента температуры. Если будет градиент температуры, то возможна ситуация, в которой появится некая диссипативная сила, которая приведёт жидкость в движение (в направлении, противоположном градиенту температуры).
+
+Все соотношения выводили в общем виде: выполняются и при рассмотрении небольшого количества жидкости в крупном скелете (пласт), и при небольшом количестве твёрдых частиц в жидкости (взвесь). Например, согласно \eqref{bDisAbsNew} при действии градиента температуры твёрдые частицы в взвеси могут начать движение относительно жидкости. И наоборот при добавлении движущихся твёрдых частиц в взвесь перенос тепла модифицируется.
+
+Из \eqref{NewBothDis1} и \eqref{NewBothDis2} дополнительно получаем:
+\beq\label{ThermoFlowAndMotion}
+q_i=-\theta\cdot\frac{1}{2}\frac{\partial^2\delta}{\partial\left(\nabla_i\theta\right)\partial\left(\nabla_j\theta\right)}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}\nabla_j\theta-\theta\cdot\frac{\partial^2\delta}{\partial\left(\nabla_i\theta\right)\partial W_j}\bigg|_{\substack{W_{\!i}=0,\\\nabla_{\!i}\theta=0}}W_j
+\eeq
+
+Получили стандартное слагаемое (см. \eqref{StandardThermo}) и дополнительное (конвективное) слагаемое: если есть поток жидкости, то тепло тоже переносится.
+
+Таким образом, есть 2 разных процесса:
+\begin{itemize}
+	\item конвекция частиц: при приложении градиента температуры появляется поток, индуцированный этим градиентом (см. \eqref{bDisAbsNew})
+	\item конвекция тепла: при движении частиц индуцируется теплоперенос (см. \eqref{ThermoFlowAndMotion})
+\end{itemize}
 
 \end{document}
