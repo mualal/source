@@ -1,0 +1,48 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage[fleqn]{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{mdframed}
+
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+
+\newcommand{\T}[0]{\overline{T}}
+\newcommand{\I}[2]{\,I_{#1}\!\left(#2\right)}
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!10] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+\newenvironment{solution}
+    {\textit{}}
+    {}
+
+\begin{document}
+\large\textbf{Муравцев Александр 5040103/10401} \hfill \textbf{Расчётное задание 1}   \\
+Email: muravtsev.aa@edu.spbstu.ru \hfill Вариант: а \\
+\rule{7in}{2.8pt}
+
+\begin{problem}[Задача]{(несвязанная динамическая задача термоупругости)}
+ 
+ Рассматривается полубесконечный стержень с модулем Юнга $E$ и плотностью $\rho$, для которого справедливо соотношение Дюамеля-Неймана. Объёмный источник в уравнении теплопроводности задан в виде
+ $$
+ 	Q=J_0(H(t)-H(t-\tau))e^{-\gamma x},
+ $$
+ где $H(t)$ -- функция Хевисайда.\\
+ 
+ Пренебрегая теплопроводностью материала, получить термоупругий импульс на расстоянии, существенно превышающем глубину проникновения теплового источника.\\
+ 
+ Принять, что время действия теплового импульса $\tau$ много меньше времени пробега акустической волны до координаты, в которой производится регистрация сигнала.
+
+\end{problem}
+\begin{solution}\\
+\textbf{Постановка задачи}\\
+\textbf{Преобразование Лапласа}
+
+\end{solution}
+
+\end{document}
