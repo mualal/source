@@ -1,0 +1,88 @@
+\documentclass[a4paper, 11pt]{article}
+\renewcommand{\baselinestretch}{1.1}
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage[fleqn]{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{mdframed}
+
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+
+\newcommand{\T}[0]{\overline{T}}
+\newcommand{\I}[2]{\,I_{#1}\!\left(#2\right)}
+
+\newenvironment{problem}[2][Problem]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+\newenvironment{solution}
+    {\textit{}}
+    {}
+
+\begin{document}
+\large\textbf{Муравцев Александр 3630103/70101} \hfill \textbf{Контрольная работа 1}   \\
+Email: muravtsev.aa@edu.spbstu.ru \hfill Вариант: 23 \\
+\rule{7in}{2.8pt}
+
+\begin{problem}[Задача]{23}
+ В шаре радиуса $a$ происходит объёмное тепловыделение постоянной плотности $Q_0e^{-\alpha\tau}$, а с поверхности тепло отводится потоком постоянной плотности $q_0$, начальная температура равна $0$.\\ Найти распределение температуры в шаре.
+\end{problem}
+
+
+\begin{solution}\\
+\textbf{Постановка задачи}
+	$$\Delta T-\frac{\partial T}{\partial\tau}=-\frac{Q_0e^{-\alpha\tau}}{k},\;\;0\leq r\leq a,\;\;\tau\geq 0$$
+	$$\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial T}{\partial r}\right)-\frac{\partial T}{\partial\tau}=-\frac{Q_0e^{-\alpha\tau}}{k};\;\;T|_{r=0}<\infty;\;\;\frac{\partial T}{\partial r}\bigg|_{r=a}=-\frac{q_0}{k};\;\;T|_{\tau=0}=0.$$\\
+\textbf{Преобразование Лапласа}
+	$$\overline{T}\left(r,p\right)=\int\limits_{0}^{\infty}T\left(r,\tau\right)e^{-p\tau}d\tau$$\\
+\textbf{Задача нахождения трансформанты}
+	$$\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\overline{T}}{dr}\right)-p\overline{T}=-\frac{Q_0}{k}\frac{1}{p+\alpha},\;\;\overline{T}|_{r=0}<\infty,\;\;\frac{\partial\overline{T}}{\partial r}\bigg|_{r=a}=-\frac{q_0}{kp}$$\\
+	Решение уравнения для образа$$\T\left(r,p\right)=C_1\frac{e^{-\sqrt{p}r}}{r}+C_2\frac{e^{\sqrt{p}r}}{\sqrt{p}r}+\frac{Q_0}{kp\left(p+\alpha\right)}$$
+	
+	
+	$$T|_{r=0}<\infty\Rightarrow C_1\sqrt{p}+C_2=0\Rightarrow C_2=-C_1\sqrt{p}\Rightarrow\overline{T}\left(r,p\right)=-\frac{2C_1}{r}\sh{\sqrt{p}r}+\frac{Q_0}{kp\left(p+\alpha\right)}$$
+	
+	
+	$$\frac{\partial\overline{T}}{\partial r}\bigg|_{r=a}=-2C_1\frac{\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}}{a^2}=-\frac{q_0}{kp}\Rightarrow C_1=\frac{q_0a^2}{2kp\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)}$$
+	
+	
+	$$\overline{T}\left(r,p\right)=-\frac{q_0a^2\sh{\sqrt{p}}r}{kp\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)r}+\frac{Q_0}{kp\left(p+\alpha\right)}$$
+	
+	
+	$$\overline{T}\left(r,p\right)=-\frac{q_0a^2\sh{\sqrt{p}}r}{kp\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)r}+\frac{Q_0}{k\alpha}\left(\frac{1}{p}-\frac{1}{p+\alpha}\right)$$\\
+\textbf{Обратное преобразование Лапласа}\\\\
+	Обращение с использованием интеграла Римана-Меллина даёт $$T=\frac{Q_0}{k\alpha}\left(1-e^{-\alpha\tau}\right)-\frac{q_0a^2}{2\pi i\cdot kr}\int\limits_{L}\frac{e^{p\tau}\sh{\sqrt{p}r}}{p\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)}dp$$
+	
+	Обозначим подынтегральную функцию $$F(p)=\frac{e^{p\tau}\sh{\sqrt{p}r}}{p\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)}$$ и будем исследовать её поведение в особых точках.\\\\
+	Используются формулы $$\sh{\sqrt{p}a}=\sum_{n=0}^{\infty}\frac{\left(\sqrt{p}a\right)^{1+2n}}{\left(1+2n\right)!}=\sqrt{p}a+\frac{p\sqrt{p}a^3}{6}+\frac{p^2\sqrt{p}a^5}{120}+...\,,$$
+	$$\ch{\sqrt{p}a}=\sum_{n=0}^{\infty}\frac{\left(\sqrt{p}a\right)^{2n}}{\left(2n\right)!}=1+\frac{pa^2}{2}+\frac{p^2a^4}{24}+...\,.$$\\
+	$$F(p)\underset{p\to0}{=}\frac{\left(1+p\tau+...\right)\left(\sqrt{p}r+\dfrac{p\sqrt{p}r^3}{6}+\dfrac{p^2\sqrt{p}r^5}{120}+...\right)}{p\left(\sqrt{p}a+\dfrac{p\sqrt{p}a^3}{2}+\dfrac{p^2\sqrt{p}a^5}{24}+...-\sqrt{p}a-\dfrac{p\sqrt{p}a^3}{6}-\dfrac{p^2\sqrt{p}a^5}{120}\right)}=$$$$=\frac{\left(1+p\tau+...\right)\left(r+\dfrac{pr^3}{6}+\dfrac{p^2r^5}{120}+...\right)}{p^2\left(\dfrac{a^3}{3}+\dfrac{pa^5}{30}+...\right)}=\frac{A_{-2}}{p^2}+\frac{A_{-1}}{p}+...$$
+	$p=0$ -- полюс второго порядка.\\
+	Вычет при $p=0$ равен коэффициенту при $A_{-1}$, который можно найти, приравнивая коэффициенты при одинаковых степенях $p$ в левой и правой частях последнего равенства.\\
+	Получаем
+	$$\left(1+p\tau+...\right)\left(r+\dfrac{pr^3}{6}+\dfrac{p^2r^5}{120}+...\right)=\left(A_{-2}+pA_{-1}\right)\left(\frac{a^3}{3}+\frac{pa^5}{30}+...\right)$$
+	
+	$$\frac{a^3}{3}\cdot A_{-2}=r\Rightarrow A_{-2}=\frac{3r}{a^3};$$
+	$$\frac{a^5}{30}\cdot A_{-2}+\frac{a^3}{3}\cdot A_{-1}=r\tau+\frac{r^3}{6}\Rightarrow \frac{a^3}{3}\cdot A_{-1}=r\tau+\frac{r^3}{6}-\frac{ra^2}{10}\Rightarrow A_{-1}=\frac{3r\tau}{a^3}+\frac{r^3}{2a^3}-\frac{3r}{10a}.$$\\
+	
+	$\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}=0$.
+	Обозначим $\sqrt{p}a=i\gamma$\\
+	$$i\gamma\ch{i\gamma}-\sh{i\gamma}=0;\,\,\,\,\,i\gamma\cos{\gamma}-i\sin{\gamma}=0;\,\,\,\,\,\tg{\gamma}=\gamma$$
+	Пусть $\gamma_n$ -- корни этого трансцендентного уравнения, отличные от нуля, причём $\gamma_n=-\gamma_{-n}$. Получим бесконечное множество простых полюсов
+	$$p_n=-\frac{\gamma_n^2}{a^2}\,\,\left(n\in\mathbb{N}\right).$$\\
+	Вычисление вычетов в этих особых точках осуществляется по правилам ТФКП:\\
+	$$Res(F(p),p=p_n)=\lim_{p\to p_n}\frac{e^{p\tau}\sh{\sqrt{p}r}\cdot\left(p-p_n\right)}{p\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)}=-\frac{2e^{-\gamma_n^2\tau/a^2}\sin{\frac{\gamma_nr}{a}}}{\gamma_n^2\sin{\gamma_n}}$$
+	
+	$$\int\limits_{L}\frac{e^{p\tau}\sh{\sqrt{p}r}}{p\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)}dp=2\pi i \left(Res(F(p),p=0)+\sum_{n=1}^{\infty}Res(F(p),p=p_n)\right)$$\\
+	
+	$$T=\frac{Q_0}{k\alpha}\left(1-e^{-\alpha\tau}\right)-\frac{q_0a^2}{2\pi i\cdot kr}\int\limits_{L}\frac{e^{p\tau}\sh{\sqrt{p}r}}{p\left(\sqrt{p}a\ch{\sqrt{p}a}-\sh{\sqrt{p}a}\right)}dp=$$ $$=\frac{Q_0}{k\alpha}\left(1-e^{-\alpha\tau}\right)-\frac{q_0a^2}{kr}\left(Res(F(p),p=0)+\sum_{n=1}^{\infty}Res(F(p),p=p_n)\right)$$
+	
+\textbf{Ответ:}
+	$$T(r,\tau)=\frac{Q_0}{k\alpha}\left(1-e^{-\alpha\tau}\right)-\frac{q_0}{k}\left(\frac{3\tau}{a}+\frac{r^2}{2a}-\frac{3a}{10}\right)+\frac{2q_0a^2}{kr}\sum_{n=1}^{\infty}\frac{e^{-\gamma_n^2\tau/a^2}\sin{\dfrac{\gamma_nr}{a}}}{\gamma_n^2\sin{\gamma_n}},$$ где $\gamma_n$ -- корни уравнения $\tg{\gamma}=\gamma$ $\left(n=\overline{1,\infty}\right)$.
+		
+\end{solution}
+ 
+\end{document}
