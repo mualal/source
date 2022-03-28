@@ -24,15 +24,16 @@
 
 \subsection{Для флюида}
 
-Представим $\Phi_f$ в виде частичной суммы ряда Тейлора по всем переменным.
+Представим $\Phi_f$ в виде частичной суммы ряда Тейлора по всем переменным:
 \begin{multline}\label{PhiFTaylor}
 \Phi_f\approx\Phi_f^0+\frac{\partial\Phi_f}{\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)+\frac{\partial\Phi_f}{\partial\theta}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)+\\+\frac{1}{2}\left(\frac{\partial^2\Phi_f}{\partial p^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)^2+2\frac{\partial^2\Phi_f}{\partial\theta\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)\left(\theta-\theta_0\right)+\frac{\partial^2\Phi_f}{\partial\theta^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)^2\right)
 \end{multline}
 
 Условие существования такого разложения: $\Phi_f\in C_2$ (вторые производные $\Phi_f$ не только существуют, но и непрерывны)
 
-Заметим, что во всех замыкающих соотношениях важны только производные, поэтому значение первого слагаемого в разложении может быть любым (другими словами, потенциальную и внутреннюю энергии можно отмерять от любого уровня)
+Заметим, что во всех замыкающих соотношениях важны только производные, поэтому значение первого слагаемого в разложении \eqref{PhiFTaylor} может быть любым (другими словами, потенциальную и внутреннюю энергии можем отмерять от любого уровня).
 
+\subsubsection{На теплоёмкость}
 Перепишем замыкающее соотношение из таблицы \ref{table:con}, подставив разложение \ref{PhiFTaylor}:
 \beq\label{LinCon}
 \eta_f=-\frac{\partial\Phi_f}{\partial\theta}\approx -\frac{\partial\Phi_f}{\partial\theta}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}-\frac{\partial^2\Phi_f}{\partial\theta\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)-\frac{\partial^2\Phi_f}{\partial\theta^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)
@@ -48,8 +49,9 @@ C=\frac{dQ}{dT}=T\frac{dS}{dT}
 \beq\label{CF}
 c_f^\theta=\theta\frac{\partial\eta_f}{\partial\theta}\approx-\theta\frac{\partial^2\Phi_f}{\partial\theta^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}
 \eeq
-(получили первое замыкающее соотношение на удельную теплоёмкость флюида; видим, что в первом приближении теплоёмкость является постоянной величиной; ранее использовали удельную теплоёмкость при выводе уравнения теплопроводности \eqref{HT})
+(получили первое замыкающее соотношение на удельную теплоёмкость флюида; видим, что в первом приближении теплоёмкость является постоянной величиной; ранее использовали удельную теплоёмкость при выводе уравнения теплопроводности \eqref{HT}).
 
+\subsubsection{На плотность}
 Перепишем ещё одно замыкающее соотношение для флюида из таблицы \ref{table:con}:
 \beq
 \frac{1}{\rho_f}=\frac{\partial\Phi_f}{\partial p}\approx\frac{\partial\Phi_f}{\partial p}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}+\frac{\partial^2\Phi_f}{\partial p^2}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(p-p_0\right)+\frac{\partial^2\Phi_f}{\partial p\partial\theta}\bigg|_{\substack{p=p_0\\ \theta=\theta_0}}\left(\theta-\theta_0\right)
@@ -87,6 +89,7 @@ c_f=-\rho_{f0}\frac{\partial^2\Phi_f}{\partial p^2}\bigg|_{\substack{p=p_0\\ \th
 
 При ненулевой пористости можем получить уравнения термопороупругости (есть вклад связанный с порами и давлением флюида, которое передаётся только через поры).
 
+\subsubsection{На теплоёмкость}
 Перепишем скелетное замыкающее соотношение на энтропию из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
 \begin{multline}
 \eta_s=-\frac{\partial\Phi_s}{\partial\theta}=-\frac{\partial\Phi_s}{\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}-\frac{\partial^2\Phi_s}{\partial p\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)-\frac{\partial^2\Phi_s}{\partial\theta\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{ij}-\\-\frac{\partial^2\Phi_s}{\partial\theta^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)
@@ -98,6 +101,7 @@ c_s^\theta=\theta\frac{\partial\eta_s}{\partial\theta}\approx -\theta\frac{\part
 \eeq
 Видим, что в первом приближении теплоёмкость постоянна (не зависит от температуры и давления).
 
+\subsubsection{На тензор эффективных напряжений}
 Перепишем скелетное замыкающее соотношение на тензор эффективных напряжений из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
 \begin{multline}\label{TIJ}
 T_{ij}=r_s\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}=r_s\left(\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\varepsilon_{kl}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{kl}+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)+\right. \\ \left.+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)\right)
@@ -161,6 +165,7 @@ T_{ij}\approx T_{ij}^0+L_{ijkl}\varepsilon_{kl}-\alpha_{kl}^\theta L_{ijkl}\left
 \end{center}
 \end{comment}
 
+\subsubsection{На пористость}
 Перепишем скелетное замыкающее соотношение на пористость из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
 \begin{multline}\label{LinPhi}
 \varphi=-r_s\frac{\partial\Phi_s}{\partial p}=-r_s\left(\frac{\partial\Phi_s}{\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}+\frac{\partial^2\Phi_s}{\partial p^2}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)+\frac{\partial^2\Phi_s}{\partial p\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)+\right.\\+\left.\frac{\partial^2\Phi_s}{\partial p\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{ij}\right)
