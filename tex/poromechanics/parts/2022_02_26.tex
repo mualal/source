@@ -101,8 +101,8 @@ c_s^\theta=\theta\frac{\partial\eta_s}{\partial\theta}\approx -\theta\frac{\part
 \eeq
 Видим, что в первом приближении теплоёмкость постоянна (не зависит от температуры и давления).
 
-\subsubsection{На тензор эффективных напряжений}
-Перепишем скелетное замыкающее соотношение на тензор эффективных напряжений из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
+\subsubsection{На тензор полных напряжений}
+Перепишем скелетное замыкающее соотношение на тензор полных напряжений из таблицы \ref{table:con}, подставив разложение \ref{PhiSTaylor}:
 \begin{multline}\label{TIJ}
 T_{ij}=r_s\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}=r_s\left(\frac{\partial\Phi_s}{\partial\varepsilon_{ij}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\varepsilon_{kl}}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\varepsilon_{kl}+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial\theta}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(\theta-\theta_0\right)+\right. \\ \left.+\frac{\partial^2\Phi_s}{\partial\varepsilon_{ij}\partial p}\bigg|_{\substack{p_0,\theta_0\\\varepsilon_{ij}=0}}\left(p-p_0\right)\right)
 \end{multline}
@@ -148,7 +148,7 @@ L_{ijkl}\varepsilon_{kl}=T_{ij}-T_{ij}^0-X_{ij}\left(\theta-\theta_0\right)+\alp
 \alpha_{kl}^\theta=-X_{ij}L_{ijkl}^{-1}
 \eeq
 
-Таким образом, подставляя \eqref{1}, \eqref{2}, \eqref{3} и \eqref{4} в \ref{TIJ}, получаем следующее линейное замыкающее соотношение на тензор эффективных напряжений:
+Таким образом, подставляя \eqref{1}, \eqref{2}, \eqref{3} и \eqref{4} в \ref{TIJ}, получаем следующее линейное замыкающее соотношение на тензор полных напряжений:
 \beq\label{StressTens}
 T_{ij}\approx T_{ij}^0+L_{ijkl}\varepsilon_{kl}-\alpha_{kl}^\theta L_{ijkl}\left(\theta-\theta_0\right)-\alpha_{ij}\left(p-p_0\right)
 \eeq
@@ -349,7 +349,7 @@ W_j\approx-\frac{K_{ij}}{\mu}\left(\partial_i p-\rho_f g_i\right)
 \beq
 \partial_jW_i=\dot{\varepsilon}_{ij}^f\text{ и }\sigma_{ij}^{dis,f}=T_{ij}^{dis,f}
 \eeq
-(другими словами, градиент превращается в тензор скоростей деформаций флюида, а эффективное напряжение в истинное).
+(другими словами, градиент превращается в тензор скоростей деформаций флюида, а полное напряжение в истинное).
 
 Тогда условие \eqref{MechSecond} перепишется в виде
 \beq
