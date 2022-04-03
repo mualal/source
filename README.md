@@ -8,6 +8,6 @@
 
 - [Задача по теории упругости](https://mualal.github.io/source/tex/telast2020/final-task/main.pdf)
 
-- [Задача по волнам](https://mualal.github.io/source/tex/waves2020/main.pdf)
+- [Задача по волнам](https://mualal.github.io/source/tex/waves2022/main.pdf)
 
 - [Виртуальные перемещения](https://mualal.github.io/source/tex/virtual-displacement/Muravtsev_Alexander_5040103_10401.pdf)
