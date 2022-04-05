@@ -1,9 +1,8 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage[a4paper, total={7in, 10in}]{geometry}
-\usepackage[fleqn]{amsmath}
+\usepackage{amsmath}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
-\usepackage{amssymb,amsthm}
 \usepackage{xcolor}
 \usepackage{mdframed}
 \usepackage{hyperref}
@@ -11,6 +10,8 @@
 \usepackage{enumitem}
 \setlength{\parindent}{0pt}
 
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
 \newcommand{\T}[0]{\overline{T}}
 \newcommand{\I}[2]{\,I_{#1}\!\left(#2\right)}
 
@@ -41,7 +42,10 @@ Email: \href{mailto:muravtsev.aa@edu.spbstu.ru}{muravtsev.aa@edu.spbstu.ru} \hfi
 
 \end{problem}
 \begin{solution}\\
-\textbf{Постановка задачи}\\
+\textbf{Постановка задачи}
+\beq
+\frac{\partial\theta}{dt}=Q
+\eeq
 \textbf{Преобразование Лапласа}
 
 \end{solution}
