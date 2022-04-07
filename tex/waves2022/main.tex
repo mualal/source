@@ -1,11 +1,12 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage[a4paper, total={7in, 10in}]{geometry}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{xcolor}
 \usepackage{mdframed}
 \usepackage{hyperref}
+\usepackage{tikz}
 
 \usepackage{enumitem}
 \setlength{\parindent}{0pt}
@@ -43,9 +44,59 @@ Email: \href{mailto:muravtsev.aa@edu.spbstu.ru}{muravtsev.aa@edu.spbstu.ru} \hfi
 \end{problem}
 \begin{solution}\\
 \textbf{Постановка задачи}
+
+По условию пренебрегаем теплопроводностью материала стержня (не учитываем распространение тепла вдоль стержня), поэтому уравнение теплопроводности можем записать в виде
 \beq
-\frac{\partial\theta}{dt}=Q
+\frac{\partial\theta}{\partial t}=Q\Leftrightarrow\frac{\partial\theta}{\partial t}=J_0(H(t)-H(t-\tau))e^{-\gamma x}
 \eeq
+Тогда распределение температуры по стержню (см. рис.\ref{fig:integrate}):
+\beq\label{Temperature}
+\theta=J_0\left(tH(t)-(t-\tau)H(t-\tau)\right)e^{-\gamma x}
+\eeq
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[line width=0.5]
+\draw (3,4) -- (5,4) -- (5,5) -- (6.5,5) -- (6.5,4) -- (8.5,4);
+\draw (3,1.5) -- (5,1.5) -- (6.5,3) -- (8.5,3);
+\draw[dashed] (5,4) -- (5,1.5);
+\draw[dashed] (6.5,4) -- (6.5,1.5);
+\draw[dashed] (3,5) -- (5,5);
+\draw[dashed] (3,3) -- (6.5,3);
+\node at (5,1.2) {$0$};
+\node at (6.5,1.2) {$\tau$};
+\node at (2.7,5) {$1$};
+\node at (2.7,3) {$\tau$};
+\end{tikzpicture}
+\caption{Интегрирование ступеньки}
+\label{fig:integrate}
+\end{figure}
+
+
+Далее подключаем уравнение баланса импульса:
+\beq
+\frac{\partial\sigma}{\partial x}-\rho\ddot{u}=0,
+\eeq
+где $\sigma=E\left(\varepsilon-\alpha\theta\right)$ (соотношение Дюамеля-Неймана) и $\displaystyle{}\varepsilon=\frac{\partial u}{\partial x}$.
+
+После подстановки:
+\beq
+\frac{\partial^2u}{\partial x^2}-\frac{1}{c_0^2}\frac{\partial^2u}{\partial t^2}=\alpha\frac{\partial\theta}{\partial x},
+\eeq
+где $\displaystyle{}c_0=\sqrt{\frac{E}{\rho}}$ -- скорость звука в стержне.
+
+Далее подставляем выражение для распределения температуры \eqref{Temperature}:
+\beq
+\frac{\partial^2u}{\partial x^2}-\frac{1}{c_0^2}\frac{\partial^2u}{\partial t^2}=-J_0\cdot\alpha\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)\cdot\gamma e^{-\gamma x}
+\eeq
+Левый торец стержня свободен:
+\beq
+\sigma|_{x=0}=0\Leftrightarrow\frac{\partial u}{\partial x}\bigg|_{x=0}=\alpha\cdot J_0\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)\cdot e^{-\gamma x}
+\eeq
+На бесконечности ставим условие излучения:
+\beq
+u|_{x\rightarrow\infty} -\text{условие излучения}
+\eeq
+
 \textbf{Преобразование Лапласа}
 
 \end{solution}
