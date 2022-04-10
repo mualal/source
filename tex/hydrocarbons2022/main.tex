@@ -1,0 +1,66 @@
+% !TeX spellcheck = en_US
+% !TeX program = xelatex
+
+\documentclass[a4paper,12pt]{article}
+\renewcommand{\baselinestretch}{1.1}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A, T1]{fontenc}
+\usepackage[english, russian]{babel}
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{setspace,amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+
+\makeatletter
+\let\@fnsymbol\@arabic
+\makeatother
+
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={170mm, 257mm},
+left=20mm,
+top=20mm,
+}
+
+\usepackage{systeme}
+\usepackage{skak}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{subfiles}
+\usepackage{hyperref}
+\hypersetup{pdfstartview=FitH, linkcolor=blue, urlcolor=blue, colorlinks=true}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{color}
+\usepackage{chngcntr}
+\usepackage{tikz}
+
+\usepackage{float}
+\floatstyle{plaintop}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+
+\graphicspath{{./img/}}
+\newcommand{\myPictWidth}{.95\textwidth}
+\newcommand{\phm}{\phantom{-}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+
+
+\begin{document}
+	\tableofcontents
+	\title{Заводнение терригенных и карбонатных коллекторов\\Конспект лекций}
+	\author{Муравцев А.А.\thanks{конспектирует; email: almuravcev@yandex.ru}
+	\and
+	Юдин Е.В.\thanks{лектор и составитель слайдов, Высшая школа теоретической механики, Санкт-Петербургский Политехнический университет. Дополнительные материалы к лекциям \href{https://csspbstu-my.sharepoint.com/:f:/g/personal/muravtsev_aa_edu_spbstu_ru/Epiacj6WFMBHqIF6E3YQgCMB7yi5NAA1ycqFLqrTZMhJ4w?e=i2agP0}{доступны по ссылке}.}}
+	\maketitle
+	\subfile{parts/2022_04_08}
+	\maketitle
+\end{document}
