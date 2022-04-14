@@ -1,11 +1,33 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QGridLayout, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QGridLayout, QTextEdit, QPushButton, QFileDialog
 from PyQt5.QtGui import QPixmap, QFont
 import sys
+import os
 import cv2
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
 import numpy as np
 from lib import image_preprocess, sudoku_detection
+import tensorflow as tf
+
+
+def get_sudoku_from_file(scanned_field):
+    file_name, check = QFileDialog.getOpenFileName(None, 'Выберите изображение',
+                                                   os.path.dirname(os.getcwd()).replace(os.sep, '/'),
+                                                   'Image files (*.jpg *.jpeg *.png)')
+    if check:
+        image = cv2.imread(file_name)
+        preprocessed_cells, _ = sudoku_detection.full_pipeline(image)
+
+        # fetch ml model for digits recognition
+        path_to_neural_net = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ml_model',
+                                          'digit_recognition_net.h5')
+        model = tf.keras.models.load_model(path_to_neural_net)
+
+        if preprocessed_cells is not None:
+            sudoku_to_solve = sudoku_detection.recognize_digits(preprocessed_cells, model)
+            scanned_field.setText(np.array2string(np.array(sudoku_to_solve)))
+        else:
+            scanned_field.setText('No solvable sudoku field found!')
 
 
 class VideoThread(QThread):
@@ -63,9 +85,12 @@ class App(QWidget):
         self.scanned_sudoku.setText('No solvable sudoku field found!')
         # create Run button
         self.run_button = QPushButton('Run Sudoku Solver')
+        self.file_select_button = QPushButton('Select image with sudoku field manually')
+        self.file_select_button.clicked.connect(lambda: get_sudoku_from_file(self.scanned_sudoku))
 
         # set font
-        widgets = (self.frame_field, self.text_label, self.scan_label, self.scanned_sudoku, self.run_button)
+        widgets = (self.frame_field, self.text_label, self.scan_label, self.scanned_sudoku,
+                   self.run_button, self.file_select_button)
         for widget in widgets:
             widget.setFont(QFont('Times New Roman', 14))
 
@@ -76,6 +101,7 @@ class App(QWidget):
         grid_box.addWidget(self.scan_label, 0, 1)
         grid_box.addWidget(self.scanned_sudoku, 1, 1)
         grid_box.addWidget(self.run_button, 2, 0, 2, 2)
+        grid_box.addWidget(self.file_select_button, 4, 0, 4, 2)
         # set the grid layout as the widgets layout
         self.setLayout(grid_box)
 
