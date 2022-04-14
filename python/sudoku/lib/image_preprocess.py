@@ -103,7 +103,7 @@ def cells_preprocess(cells_frames):
 
     for cell_frame in cells_frames:
 
-        if np.isclose(cell_frame, 0).sum() / (cell_frame.shape[0] * cell_frame.shape[1]) >= 0.95:
+        if np.isclose(cell_frame, 0).sum() / (cell_frame.shape[0] * cell_frame.shape[1]) >= 0.98:
             preprocessed_cells_frames.append(0)
             continue
 
