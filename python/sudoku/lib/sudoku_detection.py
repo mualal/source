@@ -1,5 +1,43 @@
 import cv2
 import numpy as np
+from lib import image_preprocess
+
+
+def full_pipeline(frame):
+    # preprocess to black-white
+    frame_preprocessed = image_preprocess.to_black_white(frame)
+
+    # detect sudoku field
+    field = sudoku_field_detection(frame_preprocessed)
+
+    # if sudoku field is detected
+    if field:
+        # warp sudoku field
+        warped_frame, matrix = image_preprocess.warping(field[1], frame)
+
+        # preprocess sudoku field to black-white
+        warped_frame_preprocessed = image_preprocess.to_black_white(warped_frame)
+
+        # detect vertical and horizontal lines
+        vertical_lines_frame, horizontal_lines_frame = grid_lines_detection(warped_frame_preprocessed, 10)
+
+        # create sudoku mask based on vertical and horizontal lines
+        mask = grid_mask_creation(vertical_lines_frame, horizontal_lines_frame)
+
+        # apply mask (get frame with digits)
+        numbers_frame = cv2.bitwise_and(warped_frame_preprocessed, mask)
+
+        # cut cells from numbers frame
+        cells_frames = image_preprocess.splitting_to_cells(numbers_frame)
+
+        # preprocess cropped cells
+        cells_frames_preprocessed = image_preprocess.cells_preprocess(cells_frames)
+
+        # check if there are only 81 cells
+        if len(cells_frames_preprocessed) == 81:
+            return cells_frames_preprocessed, field
+
+    return None, None
 
 
 def sudoku_field_detection(preprocessed_frame):

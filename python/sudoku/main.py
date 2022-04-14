@@ -3,7 +3,7 @@ import tensorflow as tf
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from lib import image_preprocess, sudoku_detection, sudoku_solver
+from lib import sudoku_detection, sudoku_solver
 
 
 if __name__ == '__main__':
@@ -17,43 +17,22 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
     while cap.isOpened():
-
         # openCV frame
         success, frame = cap.read()
         # frame = cv2.flip(frame, 1)
 
-        # preprocess to black-white
-        frame_preprocessed = image_preprocess.to_black_white(frame)
+        # detect all 81 sudoku cells and coordinates of sudoku field
+        cells_frames_preprocessed, field = sudoku_detection.full_pipeline(frame)
 
-        # detect sudoku field
-        field = sudoku_detection.sudoku_field_detection(frame_preprocessed)
+        # recognize detected cells
+        if cells_frames_preprocessed is not None:
 
-        # for correct display
-        numbers_frame = frame
+            sudoku_to_solve = sudoku_detection.recognize_digits(cells_frames_preprocessed, model)
 
-        # if sudoku field is detected
-        if field:
-            # warp sudoku field
-            warped_frame, matrix = image_preprocess.warping(field[1], frame)
-
-            # preprocess sudoku field to black-white
-            warped_frame_preprocessed = image_preprocess.to_black_white(warped_frame)
-
-            # detect vertical and horizontal lines
-            vertical_lines_frame, horizontal_lines_frame = \
-                sudoku_detection.grid_lines_detection(warped_frame_preprocessed, 10)
-
-            # create sudoku mask based on vertical and horizontal lines
-            mask = sudoku_detection.grid_mask_creation(vertical_lines_frame, horizontal_lines_frame)
-
-            # apply mask (get frame with digits)
-            numbers_frame = cv2.bitwise_and(warped_frame_preprocessed, mask)
-
-            # cut cells from numbers frame
-            cells_frames = image_preprocess.splitting_to_cells(numbers_frame)
-
-            # preprocess cropped cells
-            cells_frames_preprocessed = image_preprocess.cells_preprocess(cells_frames)
+            cv2.drawContours(frame, [field[0]], 0, (255, 0, 0), 2)
+            corners = field[1]
+            for corner in corners:
+                cv2.circle(frame, corner, 4, (0, 0, 255), cv2.FILLED)
 
             # for process visualizing and control
             # print(np.argmax(model.predict(np.array([cells_frames_preprocessed[6]]))))
@@ -62,27 +41,19 @@ if __name__ == '__main__':
             # print(cells_frames_preprocessed)
             # print(len(cells_frames_preprocessed))
 
-            # check if there are only 81 cells
-            if len(cells_frames_preprocessed) == 81:
-                # recognize digits using ml model
-                sudoku_to_solve = sudoku_detection.recognize_digits(cells_frames_preprocessed, model)
-                # print recognition result
-                print('Отсканнированный судоку:')
-                print(sudoku_to_solve)
-                # print solution
-                print('Решённый судоку:')
-                sudoku_solver.solve(sudoku_to_solve)
-                break
-
-        # experiments with contours (check detected sudoku field)
-        if field:
-            cv2.drawContours(frame, [field[0]], 0, (255, 0, 0), 2)
-            corners = field[1]
-            for corner in corners:
-                cv2.circle(frame, corner, 4, (0, 0, 255), cv2.FILLED)
+            # print recognition result
+            if sudoku_solver.check_sudoku_field(sudoku_to_solve):
+                solution = []
+                sudoku_solver.solve(solution, sudoku_to_solve)
+                if solution:
+                    print('Отсканированный судоку:')
+                    print(sudoku_to_solve)
+                    # print solution
+                    print('Решённый судоку:')
+                    print(solution[0])
 
         # openCV frame to display
-        cv2.imshow('detect', numbers_frame)
+        cv2.imshow('detect', frame)
 
         # key for while loop break
         if cv2.waitKey(1) & 0xFF == ord('q'):

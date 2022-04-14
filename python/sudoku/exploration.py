@@ -1,5 +1,5 @@
 from lib import sudoku_solver
-
+import numpy as np
 
 if __name__ == '__main__':
 
@@ -13,4 +13,11 @@ if __name__ == '__main__':
                       [7, 4, 0, 0, 6, 0, 9, 0, 0],
                       [0, 1, 9, 4, 0, 0, 0, 0, 0]]
 
-    sudoku_solver.solve(sudoku_example)
+    a = []
+    sudoku_solver.solve(a, sudoku_example)
+    if a:
+        print(a[0])
+
+    for i in [0, 1, 2]:
+        for j in [0, 1, 2]:
+            print(np.array(sudoku_example)[0 + 3 * i:3 + 3 * i, 0 + 3 * j:3 + 3 * j].reshape(9))
