@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     # fetch ml model for digits recognition
     path_to_neural_net = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ml_model',
-                                      'digit_recognition_net.h5')
+                                      'printed_digit_recognition_net.h5')
     model = tf.keras.models.load_model(path_to_neural_net)
 
     # openCV video capture
@@ -36,6 +36,7 @@ if __name__ == '__main__':
 
             # for process visualizing and control
             # print(np.argmax(model.predict(np.array([cells_frames_preprocessed[6]]))))
+            # print(cells_frames_preprocessed[12])
             # plt.imshow(cells_frames_preprocessed[12])
             # plt.show()
             # print(cells_frames_preprocessed)
@@ -50,7 +51,7 @@ if __name__ == '__main__':
                     print(sudoku_to_solve)
                     # print solution
                     print('Решённый судоку:')
-                    print(solution[0])
+                    # print(solution[0])
 
         # openCV frame to display
         cv2.imshow('detect', frame)

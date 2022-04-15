@@ -2,9 +2,29 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import re
+import cv2
+from sklearn.utils import shuffle
+
+all_files = os.listdir('../ml_model/dataset/')
+reg_pattern = re.compile(r'\d_\d+.jpeg')
+filtered_files = [i for i in all_files if reg_pattern.match(i)]
+
+X = []
+y = []
+
+for file in filtered_files:
+    X.append(cv2.imread('../ml_model/dataset/'+file, cv2.IMREAD_GRAYSCALE))
+    y.append(file[0])
+X = np.array(X)
+y = np.array(y)
+
+X, y = shuffle(X, y)
+X_train, y_train = X[0:int(0.8*len(X))], y[0:int(0.8*len(y))]
+X_test, y_test = X[int(0.8*len(X)):], y[int(0.8*len(y)):]
 
 # fetch train and test MNIST data
-(X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()
+# (X_train, y_train), (X_test, y_test) = tf.keras.datasets.mnist.load_data()
 # normalize
 X_train = X_train / 255.0
 X_test = X_test / 255.0
@@ -28,7 +48,7 @@ y_test = tf.keras.utils.to_categorical(y_test, num_classes)
 print(X_train.shape)
 
 # file with trained neural net
-path_to_neural_net = 'digit_recognition_net.h5'
+path_to_neural_net = 'printed_digit_recognition_net.h5'
 
 # load if saved; create and train otherwise
 if not os.path.isfile(path_to_neural_net):
@@ -50,12 +70,12 @@ if not os.path.isfile(path_to_neural_net):
 
     # train
     batch_size = 128
-    epochs = 15
+    epochs = 55
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.1)
 
     # save
-    model.save('digit_recognition_net.h5')
+    model.save('printed_digit_recognition_net.h5')
 else:
     # load model
     model = tf.keras.models.load_model(path_to_neural_net)

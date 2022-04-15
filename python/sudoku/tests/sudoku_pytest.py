@@ -10,7 +10,7 @@ from lib import sudoku_detection
 def fetch_ml():
     # fetch ml model for digits recognition
     path_to_neural_net = os.path.join(os.getcwd(), 'ml_model',
-                                      'digit_recognition_net.h5')
+                                      'printed_digit_recognition_net.h5')
     model = tf.keras.models.load_model(path_to_neural_net)
     return model
 
