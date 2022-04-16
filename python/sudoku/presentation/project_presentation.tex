@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T2A, T1]{fontenc}
 \usepackage[english, russian]{babel}
+\usepackage{sudoku}
 
 \title{Решатель судоку по изображению с камеры}
 \subtitle{}
@@ -15,7 +16,10 @@
 Санкт-Петербургский Политехнический университет Петра Великого
 }
 
+
 \begin{document}
+
+\renewcommand*\sudokuformat[1]{\Large\sffamily#1}
 
 \frame{\titlepage}
 
@@ -28,6 +32,28 @@
 
 \begin{frame}
 \frametitle{Распознавание поля судоку}
+
+\begin{center}
+\setlength\sudokusize{6cm}
+\begin{sudoku-block}
+| |2| | |3| |9| |7|.
+| |1| | | | | | | |.
+|4| |7| | | |2| |8|.
+| | |5|2| | | |9| |.
+| | | |1|8| |7| | |.
+| |4| | | |3| | | |.
+| | | | |6| | |7|1|.
+| |7| | | | | | | |.
+|9| |3| |2| |6| |5|.
+\end{sudoku-block}
+\end{center}
+
+\end{frame}
+
+\section{Разделение на ячейки}
+
+\begin{frame}
+\frametitle{Разделение на ячейки}
 \end{frame}
 
 \section{Распознавание цифр в ячейках}
