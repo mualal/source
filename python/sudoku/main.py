@@ -3,7 +3,15 @@ import tensorflow as tf
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import threading
 from lib import sudoku_detection, sudoku_solver
+
+
+class ThreadWithResult(threading.Thread):
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None):
+        def function():
+            self.result = target(*args, **kwargs)
+        super().__init__(group=group, target=function, name=name, daemon=daemon)
 
 
 if __name__ == '__main__':
@@ -16,7 +24,12 @@ if __name__ == '__main__':
     # openCV video capture
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
+    # list of threads for digits recognition
+    my_threads = []
+
     while cap.isOpened():
+
+        sudoku_to_solve = None
         # openCV frame
         success, frame = cap.read()
         # frame = cv2.flip(frame, 1)
@@ -26,13 +39,24 @@ if __name__ == '__main__':
 
         # recognize detected cells
         if cells_frames_preprocessed is not None:
+            if len(my_threads) < 3:
+                new_thread = ThreadWithResult(target=sudoku_detection.recognize_digits,
+                                              args=(cells_frames_preprocessed, model))
+                my_threads.append(new_thread)
+                my_threads[-1].start()
 
-            sudoku_to_solve = sudoku_detection.recognize_digits(cells_frames_preprocessed, model)
+        if len(my_threads) == 3:
+            if [thread.is_alive() for thread in my_threads] == [False, False, False]:
+                results = [thread.result for thread in my_threads]
+                if (results[0] == results[1]).all() and (results[1] == results[2]).all():
+                    sudoku_to_solve = results[0]
+                my_threads = []
 
-            cv2.drawContours(frame, [field[0]], 0, (255, 0, 0), 2)
-            corners = field[1]
-            for corner in corners:
-                cv2.circle(frame, corner, 4, (0, 0, 255), cv2.FILLED)
+            if field is not None:
+                cv2.drawContours(frame, [field[0]], 0, (255, 0, 0), 2)
+                corners = field[1]
+                for corner in corners:
+                    cv2.circle(frame, corner, 4, (0, 0, 255), cv2.FILLED)
 
             # for process visualizing and control
             # print(np.argmax(model.predict(np.array([cells_frames_preprocessed[6]]))))
@@ -43,15 +67,16 @@ if __name__ == '__main__':
             # print(len(cells_frames_preprocessed))
 
             # print recognition result
-            if sudoku_solver.check_sudoku_field(sudoku_to_solve):
-                solution = []
-                sudoku_solver.solve(solution, sudoku_to_solve)
-                if solution:
-                    print('Отсканированный судоку:')
-                    print(sudoku_to_solve)
-                    # print solution
-                    print('Решённый судоку:')
-                    # print(solution[0])
+            if sudoku_to_solve is not None:
+                if sudoku_solver.check_sudoku_field(sudoku_to_solve):
+                    solution = []
+                    sudoku_solver.solve(solution, sudoku_to_solve)
+                    if solution:
+                        print('Отсканированный судоку:')
+                        print(sudoku_to_solve)
+                        # print solution
+                        print('Решённый судоку:')
+                        print(solution[0])
 
         # openCV frame to display
         cv2.imshow('detect', frame)

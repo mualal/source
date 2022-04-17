@@ -8,6 +8,14 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
 import numpy as np
 from lib import image_preprocess, sudoku_detection
 import tensorflow as tf
+import threading
+
+
+class ThreadWithResult(threading.Thread):
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None):
+        def function():
+            self.result = target(*args, **kwargs)
+        super().__init__(group=group, target=function, name=name, daemon=daemon)
 
 
 def get_sudoku_from_file(scanned_field):
@@ -32,32 +40,43 @@ def get_sudoku_from_file(scanned_field):
 
 class VideoThread(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
-    detected_signal = pyqtSignal(bool)
+    detected_signal = pyqtSignal(np.ndarray)
 
-    def __init__(self):
+    def __init__(self, ml_model):
         super().__init__()
         self._run_flag = True
+        self.ml_model = ml_model
 
     def run(self):
         # openCV video capture
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-        last_detect = False
+        my_threads = []
         while self._run_flag:
             success, frame = cap.read()
             if success:
                 frame_preprocessed = image_preprocess.to_black_white(frame)
                 sudoku_field = sudoku_detection.sudoku_field_detection(frame_preprocessed)
+                preprocessed_cells, _ = sudoku_detection.full_pipeline(frame)
+                if preprocessed_cells is not None:
+                    if len(my_threads) < 3:
+                        new_thread = ThreadWithResult(target=sudoku_detection.recognize_digits,
+                                                      args=(preprocessed_cells, self.ml_model))
+                        my_threads.append(new_thread)
+                        my_threads[-1].start()
+
+                if len(my_threads) == 3:
+                    if [thread.is_alive() for thread in my_threads] == [False, False, False]:
+                        results = [thread.result for thread in my_threads]
+                        if (results[0] == results[1]).all() and (results[1] == results[2]).all():
+                            result = results[0]
+                            self.detected_signal.emit(result)
+                        my_threads = []
+
                 if sudoku_field:
-                    self.detected_signal.emit(True)
-                    last_detect = True
                     cv2.drawContours(frame, [sudoku_field[0]], 0, (255, 0, 0), 2)
                     sudoku_corners = sudoku_field[1]
                     for corner in sudoku_corners:
                         cv2.circle(frame, corner, 4, (0, 0, 255), cv2.FILLED)
-                else:
-                    if last_detect:
-                        self.detected_signal.emit(False)
-                        last_detect = False
                 self.change_pixmap_signal.emit(frame)
         # shut down openCV video capture
         cap.release()
@@ -105,8 +124,12 @@ class App(QWidget):
         # set the grid layout as the widgets layout
         self.setLayout(grid_box)
 
+        path_to_neural_net = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ml_model',
+                                          'printed_digit_recognition_net.h5')
+        model = tf.keras.models.load_model(path_to_neural_net)
+
         # create the video capture thread
-        self.thread = VideoThread()
+        self.thread = VideoThread(model)
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.detected_signal.connect(self.update_text)
@@ -123,13 +146,10 @@ class App(QWidget):
         qt_img = self.convert_cv_to_qt(cv_img)
         self.frame_field.setPixmap(qt_img)
 
-    @pyqtSlot(bool)
-    def update_text(self, detected):
+    @pyqtSlot(np.ndarray)
+    def update_text(self, sudoku_to_solve):
         """Updates the image_label with a new openCV image"""
-        if detected:
-            self.scanned_sudoku.setText('Square found!')
-        else:
-            self.scanned_sudoku.setText('No solvable sudoku field found!')
+        self.scanned_sudoku.setText(np.array2string(sudoku_to_solve))
 
     def convert_cv_to_qt(self, cv_img):
         """Convert from an openCV image to QPixmap"""
