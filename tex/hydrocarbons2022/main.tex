@@ -42,7 +42,7 @@ top=20mm,
 \usepackage{chngcntr}
 \usepackage{tikz}
 
-\usepackage{pythonhighlight}
+\usepackage[cache=false]{minted}
 
 \usepackage{float}
 \floatstyle{plaintop}
@@ -54,6 +54,7 @@ top=20mm,
 \newcommand{\phm}{\phantom{-}}
 \newcommand{\beq}{\begin{equation}}
 \newcommand{\eeq}{\end{equation}}
+\newcommand{\insertslide}[1]{\newpage\includegraphics[width=\textwidth]{#1}}
 
 
 \begin{document}
@@ -78,4 +79,6 @@ top=20mm,
 	\subfile{parts/2022_04_01}
 	\newpage
 	\subfile{parts/2022_04_08}
+	\newpage
+	\subfile{parts/2022_04_15}
 \end{document}
