@@ -68,15 +68,16 @@ if __name__ == '__main__':
 
             # print recognition result
             if sudoku_to_solve is not None:
-                if sudoku_solver.check_sudoku_field(sudoku_to_solve):
-                    solution = []
-                    sudoku_solver.solve(solution, sudoku_to_solve)
-                    if solution:
-                        print('Отсканированный судоку:')
-                        print(sudoku_to_solve)
-                        # print solution
-                        print('Решённый судоку:')
-                        print(solution[0])
+                if len(np.unique(sudoku_to_solve)) != 1:
+                    if sudoku_solver.check_sudoku_field(sudoku_to_solve):
+                        solution = []
+                        sudoku_solver.solve(solution, sudoku_to_solve)
+                        if solution:
+                            print('Отсканированный судоку:')
+                            print(sudoku_to_solve)
+                            # print solution
+                            print('Решённый судоку:')
+                            print(solution[0])
 
         # openCV frame to display
         cv2.imshow('detect', frame)
