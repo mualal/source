@@ -41,6 +41,11 @@ top=20mm,
 \usepackage{color}
 \usepackage{chngcntr}
 \usepackage{tikz}
+\usepackage{fancyhdr}
+
+\fancyhf{}
+\rhead{Семинар \thesection}
+\cfoot{Стр. \thepage}
 
 \setsansfont{Arial}
 \setmonofont{Courier New}
@@ -67,6 +72,7 @@ top=20mm,
 	\and
 	Юдин Е.В.\thanks{лектор и составитель слайдов, Высшая школа теоретической механики, Санкт-Петербургский Политехнический университет. Дополнительные материалы к лекциям \href{https://csspbstu-my.sharepoint.com/:f:/g/personal/muravtsev_aa_edu_spbstu_ru/Epiacj6WFMBHqIF6E3YQgCMB7yi5NAA1ycqFLqrTZMhJ4w?e=i2agP0}{доступны по ссылке}.}}
 	\maketitle
+	\pagestyle{fancy}
 	\subfile{parts/2022_02_04}
 	\newpage
 	\subfile{parts/2022_02_11}
