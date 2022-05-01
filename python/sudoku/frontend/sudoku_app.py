@@ -1,18 +1,21 @@
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QGridLayout, QTextEdit, QPushButton, QFileDialog
-from PyQt5.QtGui import QPixmap, QFont
-import sys
-import os
-import cv2
-from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
 import numpy as np
-from lib import image_preprocess, sudoku_detection
 import tensorflow as tf
+import cv2
+import os
+import re
+import sys
 import threading
+from PyQt5 import QtGui
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
+from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QGridLayout, QTextEdit, QPushButton, QFileDialog
+from lib import image_preprocess, sudoku_detection, sudoku_solver
 
 
 class ThreadWithResult(threading.Thread):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon=None):
+        self.result = None
+
         def function():
             self.result = target(*args, **kwargs)
         super().__init__(group=group, target=function, name=name, daemon=daemon)
@@ -27,8 +30,7 @@ def get_sudoku_from_file(scanned_field):
         preprocessed_cells, _ = sudoku_detection.full_pipeline(image)
 
         # fetch ml model for digits recognition
-        path_to_neural_net = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ml_model',
-                                          'printed_digit_recognition_net.h5')
+        path_to_neural_net = '../ml_model/printed_digit_recognition_net.h5'
         model = tf.keras.models.load_model(path_to_neural_net)
 
         if preprocessed_cells is not None:
@@ -36,6 +38,22 @@ def get_sudoku_from_file(scanned_field):
             scanned_field.setText(np.array2string(np.array(sudoku_to_solve)))
         else:
             scanned_field.setText('No solvable sudoku field found!')
+
+
+def solve_sudoku_puzzle(scanned_field):
+    s1 = scanned_field.toPlainText()
+    s2 = re.sub(r'\[', r'', s1)
+    s3 = re.sub(r'\n', r'', s2)
+    s4 = re.sub(r'\]', r'', s3)
+    s5 = re.sub(r'\.', r'', s4)
+    s6 = re.sub(r' ', r',', s5)
+    try:
+        sudoku_arr = np.array(eval('[' + s6 + ']')).reshape(9, 9)
+        sudoku_solution = []
+        sudoku_solver.solve(sudoku_solution, sudoku_arr)
+        scanned_field.setText(np.array2string(np.array(sudoku_solution[0], dtype=float)))
+    except Exception:
+        scanned_field.setText('No solvable sudoku field detected!')
 
 
 class VideoThread(QThread):
@@ -104,9 +122,9 @@ class App(QWidget):
         self.scanned_sudoku.setText('No solvable sudoku field found!')
         # create Run button
         self.run_button = QPushButton('Run Sudoku Solver')
+        self.run_button.clicked.connect(lambda: solve_sudoku_puzzle(self.scanned_sudoku))
         self.file_select_button = QPushButton('Select image with sudoku field manually')
         self.file_select_button.clicked.connect(lambda: get_sudoku_from_file(self.scanned_sudoku))
-
         # set font
         widgets = (self.frame_field, self.text_label, self.scan_label, self.scanned_sudoku,
                    self.run_button, self.file_select_button)

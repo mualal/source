@@ -28,7 +28,7 @@ def to_black_white(frame_to_preprocess):
     frame_morph = cv2.morphologyEx(frame_inverted, cv2.MORPH_OPEN, kernel)
 
     # dilation, increases the white region in the image
-    frame_morph = cv2.erode(frame_morph, kernel, iterations=1)
+    frame_morph = cv2.dilate(frame_morph, kernel, iterations=1)
 
     return frame_morph
 
@@ -87,7 +87,7 @@ def splitting_to_cells(warped_frame):
             top_left_corner = (i * width, j * width)
             bottom_right_corner = ((i + 1) * width, (j + 1) * width)
             cells.append(warped_frame[top_left_corner[0]:bottom_right_corner[0],
-                           top_left_corner[1]:bottom_right_corner[1]])
+                         top_left_corner[1]:bottom_right_corner[1]])
 
     return cells
 
@@ -125,7 +125,7 @@ def cells_preprocess(cells_frames):
         start_x = (width - w) // 2
         start_y = (height - h) // 2
         preprocessed_cell_frame = np.zeros_like(cell_frame)
-        preprocessed_cell_frame[start_y:start_y+h, start_x:start_x+w] = cell_frame[y:y+h, x:x+w]
+        preprocessed_cell_frame[start_y:start_y + h, start_x:start_x + w] = cell_frame[y:y + h, x:x + w]
 
         # change image dimensions
         preprocessed_cell_frame = cv2.resize(preprocessed_cell_frame, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)

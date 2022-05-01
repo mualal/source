@@ -2,7 +2,9 @@ import numpy as np
 
 
 def check_sudoku_field(matrix):
+
     matrix_num = np.array(matrix)
+
     for i in range(9):
         vertical = list(filter(lambda a: a != 0, matrix_num[:, i]))
         horizontal = list(filter(lambda a: a != 0, matrix_num[i, :]))
@@ -20,6 +22,9 @@ def check_sudoku_field(matrix):
 
         if len(set(current_square)) != len(current_square):
             return False
+
+    if len(set(matrix_num.reshape(81))) == 1:
+        return False
 
     return True
 
@@ -48,17 +53,14 @@ def possible(matrix: list, x: int, y: int, number: int) -> bool:
     return True
 
 
-def solve(a, matrix, flag=1):
-    flag = flag + 1
-    if flag > 1000:
-        return
+def solve(a, matrix):
     for x in range(9):
         for y in range(9):
             if matrix[x][y] == 0:
                 for n in range(1, 10):
                     if possible(matrix, x, y, n):
                         matrix[x][y] = n
-                        solve(a, matrix, flag)
+                        solve(a, matrix)
                         matrix[x][y] = 0
                 return
     a.append(np.array(matrix))

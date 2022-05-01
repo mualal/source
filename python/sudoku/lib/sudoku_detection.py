@@ -33,8 +33,15 @@ def full_pipeline(frame):
         # preprocess cropped cells
         cells_frames_preprocessed = image_preprocess.cells_preprocess(cells_frames)
 
-        # check if there are only 81 cells
-        if len(cells_frames_preprocessed) == 81:
+        flag = False
+
+        for cell in cells_frames_preprocessed:
+            if type(cell) is not int:
+                flag = True
+                break
+
+        # check if there are only 81 cells and not all cells are integers
+        if len(cells_frames_preprocessed) == 81 and flag:
             return cells_frames_preprocessed, field
 
     return None, None

@@ -1,5 +1,6 @@
 from lib import sudoku_solver
 import numpy as np
+import time
 
 if __name__ == '__main__':
 
@@ -13,8 +14,22 @@ if __name__ == '__main__':
                       [7, 4, 0, 0, 6, 0, 9, 0, 0],
                       [0, 1, 9, 4, 0, 0, 0, 0, 0]]
 
+    sudoku_example_2 = [[0, 0, 0, 0, 0, 6, 0, 0, 0],
+                        [0, 5, 9, 0, 0, 0, 0, 0, 8],
+                        [2, 0, 0, 0, 0, 8, 0, 0, 0],
+                        [0, 4, 5, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 3, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 6, 0, 0, 3, 0, 5, 4],
+                        [0, 0, 0, 3, 2, 5, 0, 0, 6],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
     a = []
+    start = time.time()
     sudoku_solver.solve(a, sudoku_example)
+    end = time.time()
+    print(end - start)
+
     if a:
         print(a[0])
 
