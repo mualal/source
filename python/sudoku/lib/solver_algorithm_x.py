@@ -34,6 +34,42 @@ class RootNode(Node):
         return 'RootNode'
 
 
+def generate_exact_cover_board(grid_size):
+
+    exact_cover_board = np.zeros((grid_size**3, 4 * grid_size**2))
+
+    for col in range(grid_size ** 2):
+        for row in range(grid_size):
+            exact_cover_board[row + col * grid_size][col] = 1
+
+    for col in range(grid_size ** 2, 2 * grid_size**2):
+        adjusted_col = col % grid_size**2
+        column_block = adjusted_col // grid_size
+        for row in range(grid_size):
+            x = row + (column_block * grid_size) + grid_size**2
+            y = adjusted_col * grid_size + row
+            exact_cover_board[y][x] = 1
+
+    for col in range(2 * grid_size**2, 3 * grid_size**2):
+        adjusted_col = col % grid_size**2
+        for row in range(grid_size):
+            x = (row + adjusted_col * grid_size) % grid_size**2 + 2 * grid_size**2
+            y = row + adjusted_col * grid_size
+            exact_cover_board[y][x] = 1
+
+    for col in range(3 * grid_size**2, 4 * grid_size**2):
+        adjusted_col = col % grid_size**2
+        box_size = int(np.sqrt(grid_size))
+        column_block = (adjusted_col // box_size) % box_size
+        for row in range(grid_size):
+            x = row + (column_block + (adjusted_col // (grid_size * box_size)) *
+                       box_size) * grid_size + 3 * grid_size**2
+            y = adjusted_col * grid_size + row
+            exact_cover_board[y][x] = 1
+
+    return exact_cover_board
+
+
 def create_sparse_matrix(matrix):
     root = RootNode()
 
@@ -86,47 +122,140 @@ def print_sparse_matrix(root):
         node = node.down
 
 
+def choose_least_column(root):
+    node = root.right
+    least_column = node
+    while node.right != root:
+        node = node.right
+        if node.node_count < least_column.node_count:
+            least_column = node
+    return least_column
+
+
+def cover(node):
+    column = node.column
+    column.right.left = column.left
+    column.left.right = column.right
+
+    row = column.down
+    while row != column:
+        right_node = row.right
+        while right_node != row:
+            right_node.up.down = right_node.down
+            right_node.down.up = right_node.up
+            right_node.column.node_count -= 1
+            right_node = right_node.right
+        row = row.down
+
+
+def uncover(node):
+    column = node.column
+
+    row = column.up
+    while row != column:
+        left_node = row.left
+        while left_node != row:
+            left_node.up.down = left_node
+            left_node.down.up = left_node
+            left_node.column.node_count += 1
+            left_node = left_node.left
+        row = row.up
+
+    column.right.left = column
+    column.left.right = column
+
+
+def cover_values(root, values, size):
+    for value in values:
+        column_id = value[0] * size + value[1]
+
+        column = root.right
+        while column != root:
+            if column.value == column_id:
+                break
+            column = column.right
+
+        cover(column)
+
+        row_node = column.down
+        while row_node != column:
+            if row_node.value == value:
+                break
+            row_node = row_node.down
+
+        right_node = row_node.right
+        while right_node != row_node:
+            cover(right_node)
+            right_node = right_node.right
+
+
+def solve(root, solution):
+    if root.right == root:
+        return solution, True
+
+    column = choose_least_column(root)
+    cover(column)
+
+    row_node = column.down
+    while row_node != column:
+        solution.append(row_node)
+
+        right_node = row_node.right
+        while right_node != row_node:
+            cover(right_node)
+            right_node = right_node.right
+
+        solution, found = solve(root, solution)
+        if found:
+            return solution, True
+
+        solution.pop()
+
+        column = row_node.column
+        left_node = row_node.left
+        while left_node != row_node:
+            if left_node != root:
+                uncover(left_node)
+            left_node = left_node.left
+        row_node = row_node.down
+    uncover(column)
+
+    return solution, False
+
+
+def solver_pipeline(sudoku_grid):
+
+    sudoku_size = len(sudoku_grid)
+
+    exact_cover = generate_exact_cover_board(sudoku_size)
+
+    root = create_sparse_matrix(exact_cover)
+
+    values = []
+
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            if grid[row][col]:
+                values.append((row, col, grid[row][col]))
+    try:
+        cover_values(root, values, sudoku_size)
+    except AttributeError:
+        return 'Given Sudoku field violate game rules'
+
+    solution, found = solve(root, [])
+
+    if found:
+        for element in solution:
+            sol_value = element.value
+            sudoku_grid[sol_value[0]][sol_value[1]] = sol_value[2]
+        return np.array(sudoku_grid, dtype=float)
+    else:
+        return 'No solution to given Sudoku field'
+
+
 if __name__ == '__main__':
 
     start = time.time()
-
-    sudoku_size = 9
-    exact_cover_board = np.zeros((sudoku_size**3, 4 * sudoku_size**2))
-
-    for col in range(sudoku_size ** 2):
-        for row in range(sudoku_size):
-            exact_cover_board[row + col * sudoku_size][col] = 1
-
-    for col in range(sudoku_size ** 2, 2 * sudoku_size**2):
-        adjusted_col = col % sudoku_size**2
-        column_block = adjusted_col // sudoku_size
-        for row in range(sudoku_size):
-            x = row + (column_block * sudoku_size) + sudoku_size**2
-            y = adjusted_col * sudoku_size + row
-            exact_cover_board[y][x] = 1
-
-    for col in range(2 * sudoku_size**2, 3 * sudoku_size**2):
-        adjusted_col = col % sudoku_size**2
-        for row in range(sudoku_size):
-            x = (row + adjusted_col * sudoku_size) % sudoku_size**2 + 2 * sudoku_size**2
-            y = row + adjusted_col * sudoku_size
-            exact_cover_board[y][x] = 1
-
-    for col in range(3 * sudoku_size**2, 4 * sudoku_size**2):
-        adjusted_col = col % sudoku_size**2
-        box_size = int(np.sqrt(sudoku_size))
-        column_block = (adjusted_col // box_size) % box_size
-        for row in range(sudoku_size):
-            x = row + (column_block + (adjusted_col // (sudoku_size * box_size)) *
-                       box_size) * sudoku_size + 3 * sudoku_size**2
-            y = adjusted_col * sudoku_size + row
-            exact_cover_board[y][x] = 1
-
-    # print(exact_cover_board)
-
-    root1 = create_sparse_matrix(exact_cover_board)
-
-    # print_sparse_matrix(root1)
 
     grid = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
             [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -138,12 +267,8 @@ if __name__ == '__main__':
             [0, 0, 0, 4, 1, 9, 0, 0, 5],
             [0, 0, 0, 0, 8, 0, 0, 7, 9]]
 
-    values1 = []
-
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
-            if grid[row][col]:
-                values1.append((row, col, grid[row][col]))
+    sol = solver_pipeline(grid)
+    print(sol)
 
     end = time.time()
     print(end - start)
