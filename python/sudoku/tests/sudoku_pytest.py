@@ -24,7 +24,7 @@ class TestSudokuRecognition:
         preprocessed_cells, _ = sudoku_detection.full_pipeline(image)
         model = fetch_ml()
         assert (sudoku_detection.recognize_digits(preprocessed_cells, model) == [[5, 3, 0, 0, 7, 0, 0, 0, 0],
-                                                                                 [5, 0, 0, 1, 9, 5, 0, 0, 0],
+                                                                                 [6, 0, 0, 1, 9, 5, 0, 0, 0],
                                                                                  [0, 9, 8, 0, 0, 0, 0, 6, 0],
                                                                                  [8, 0, 0, 0, 6, 0, 0, 0, 3],
                                                                                  [4, 0, 0, 8, 0, 3, 0, 0, 1],

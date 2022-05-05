@@ -9,7 +9,7 @@ from PyQt5 import QtGui
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QGridLayout, QTextEdit, QPushButton, QFileDialog
-from lib import image_preprocess, sudoku_detection, sudoku_solver
+from lib import image_preprocess, sudoku_detection, sudoku_solver, solver_algorithm_x
 
 
 class ThreadWithResult(threading.Thread):
@@ -49,10 +49,13 @@ def solve_sudoku_puzzle(scanned_field):
     s6 = re.sub(r' ', r',', s5)
     try:
         sudoku_arr = np.array(eval('[' + s6 + ']')).reshape(9, 9)
-        sudoku_solution = []
-        sudoku_solver.solve(sudoku_solution, sudoku_arr)
-        scanned_field.setText(np.array2string(np.array(sudoku_solution[0], dtype=float)))
-    except Exception:
+        solution = solver_algorithm_x.solver_pipeline(sudoku_arr)
+        if type(solution) is not str:
+            scanned_field.setText(np.array2string(solution))
+        else:
+            scanned_field.setText(solution)
+    except Exception as ex:
+        print(ex)
         scanned_field.setText('No solvable sudoku field detected!')
 
 

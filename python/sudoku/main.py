@@ -4,7 +4,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import threading
-from lib import sudoku_detection, sudoku_solver
+from lib import sudoku_detection, sudoku_solver, solver_algorithm_x
 
 
 class ThreadWithResult(threading.Thread):
@@ -67,16 +67,12 @@ if __name__ == '__main__':
 
             # print recognition result
             if sudoku_to_solve is not None:
-                if len(np.unique(sudoku_to_solve)) != 1:
-                    if sudoku_solver.check_sudoku_field(sudoku_to_solve):
-                        solution = []
-                        sudoku_solver.solve(solution, sudoku_to_solve)
-                        if solution:
-                            print('Отсканированный судоку:')
-                            print(sudoku_to_solve)
-                            # print solution
-                            print('Решённый судоку:')
-                            print(solution[0])
+                solution = solver_algorithm_x.solver_pipeline(sudoku_to_solve)
+                print('Отсканированный судоку:')
+                print(sudoku_to_solve)
+                # print solution
+                print('Решённый судоку:')
+                print(solution)
 
         # openCV frame to display
         cv2.imshow('detect', frame)

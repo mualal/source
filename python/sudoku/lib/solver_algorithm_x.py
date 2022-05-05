@@ -232,11 +232,10 @@ def solver_pipeline(sudoku_grid):
     root = create_sparse_matrix(exact_cover)
 
     values = []
-
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
-            if grid[row][col]:
-                values.append((row, col, grid[row][col]))
+    for row in range(len(sudoku_grid)):
+        for col in range(len(sudoku_grid[0])):
+            if sudoku_grid[row][col]:
+                values.append((row, col, sudoku_grid[row][col]))
     try:
         cover_values(root, values, sudoku_size)
     except AttributeError:
@@ -244,11 +243,12 @@ def solver_pipeline(sudoku_grid):
 
     solution, found = solve(root, [])
 
+    solved_sudoku_grid = sudoku_grid.copy()
     if found:
         for element in solution:
             sol_value = element.value
-            sudoku_grid[sol_value[0]][sol_value[1]] = sol_value[2]
-        return np.array(sudoku_grid, dtype=float)
+            solved_sudoku_grid[sol_value[0]][sol_value[1]] = sol_value[2]
+        return np.array(solved_sudoku_grid, dtype=float)
     else:
         return 'No solution to given Sudoku field'
 
