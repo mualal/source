@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+# from PIL import Image as im
+# from datetime import datetime
 
 
 def to_black_white(frame_to_preprocess):
@@ -130,7 +132,10 @@ def cells_preprocess(cells_frames):
         # change image dimensions
         preprocessed_cell_frame = cv2.resize(preprocessed_cell_frame, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)
         preprocessed_cell_frame = np.expand_dims(preprocessed_cell_frame, -1)
-        preprocessed_cell_frame.reshape((28, 28, 1))
+
+        # save images for ml model training
+        #data = im.fromarray(preprocessed_cell_frame.reshape(28, 28))
+        #data.save('../ml_model/custom_images/' + datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f')[:-3] + '.jpeg')
 
         # normalize
         preprocessed_cell_frame = preprocessed_cell_frame / 255.0
