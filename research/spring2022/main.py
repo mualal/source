@@ -1,5 +1,10 @@
 import pandas as pd
 import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import ExtraTreesRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
@@ -12,6 +17,17 @@ def save_fig(fig_id, tight_layout=True, fig_extension='png', resolution=300):
     if tight_layout:
         plt.tight_layout()
     plt.savefig(path, format=fig_extension, dpi=resolution)
+
+
+class DataFrameSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, attribute_names):
+        self.attribute_names = attribute_names
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self, x):
+        return x[self.attribute_names].values
 
 
 class ReservoirMetamodel:
@@ -69,13 +85,57 @@ class ReservoirMetamodel:
         sns.scatterplot(x=self.data['PERMX CRACK (mD)'], y=self.data['OIL RATE 1 (SM3/DAY)'],
                         hue=self.data['PORO CRACK'])
 
-        save_fig('all_data_scatterplot')
+        save_fig('all_data_scatterplot_1')
+
+    def data_scaler(self, input):
+        num_attribs = list(input)
+        num_pipeline = Pipeline([
+            ('selector', DataFrameSelector(num_attribs)),
+            ('std_scaler', StandardScaler())
+        ])
+        train_input_prepared = num_pipeline.fit_transform(input)
+        return train_input_prepared
+
+    def linear_regression(self):
+        lin_reg = LinearRegression()
+        lin_reg.fit(self.data_scaler(self.data_train.iloc[:, 0:4]), self.data_train['OIL RATE 1 (SM3/DAY)'])
+        return lin_reg
+
+    def linear_regression_tests_boxplot(self):
+        sns.set(rc={'figure.figsize': (20, 15)}, font_scale=2)
+        lin_reg = self.linear_regression()
+        relative_error = (lin_reg.predict(self.data_scaler(self.data_test.iloc[:, 0:4])) -
+                          np.array(self.data_test['OIL RATE 1 (SM3/DAY)'])) / \
+                         (np.array(self.data_test['OIL RATE 1 (SM3/DAY)'])) * 100
+        plt.figure()
+        sns.boxplot(x=relative_error)
+        plt.xlabel('Ошибка прогноза, в процентах')
+        save_fig('linear_regression_test_errors_boxplot')
+
+    def extra_trees(self):
+        extra_trees_reg = ExtraTreesRegressor(n_estimators=1000, random_state=42)
+        extra_trees_reg.fit(self.data_scaler(self.data_train.iloc[:, 0:4]), self.data_train['OIL RATE 1 (SM3/DAY)'])
+        return extra_trees_reg
+
+    def extra_trees_tests_boxplot(self):
+        sns.set(rc={'figure.figsize': (20, 15)}, font_scale=2)
+        extra_trees_reg = self.extra_trees()
+        relative_error = (extra_trees_reg.predict(self.data_scaler(self.data_test.iloc[:, 0:4])) -
+                          np.array(self.data_test['OIL RATE 1 (SM3/DAY)'])) / \
+                         (np.array(self.data_test['OIL RATE 1 (SM3/DAY)'])) * 100
+        plt.figure()
+        sns.boxplot(x=relative_error)
+        plt.xlabel('Ошибка прогноза, в процентах')
+        save_fig('extra_trees_regression_test_errors_boxplot')
 
 
 if __name__ == '__main__':
     metamodel = ReservoirMetamodel(pd.read_csv(os.path.join('datasets', 'reservoir_train800_scenario1.csv')))
-    metamodel.print_info()
-    metamodel.plot_parameters_distributions()
-    metamodel.plot_corr_heat_map()
-    metamodel.all_scatter_plot()
-    metamodel.manual_approximation()
+    # metamodel.print_info()
+    # metamodel.plot_parameters_distributions()
+    # metamodel.plot_corr_heat_map()
+    # metamodel.all_scatter_plot()
+    # metamodel.manual_approximation()
+
+    metamodel.linear_regression_tests_boxplot()
+    metamodel.extra_trees_tests_boxplot()
