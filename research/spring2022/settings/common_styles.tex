@@ -17,6 +17,9 @@
     \IfFileExists{pscyr.sty}{\renewcommand{\rmdefault}{ftm}}{}
 \fi
 
+\usepackage[cache=false]{minted}
+\newminted{python}{fontsize=\scriptsize, linenos=false}
+
 %%% Подписи %%%
 \captionsetup{%
 singlelinecheck=off,                % Многострочные подписи, например у таблиц
