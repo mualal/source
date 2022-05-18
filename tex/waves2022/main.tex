@@ -82,7 +82,7 @@ Email: \href{mailto:muravtsev.aa@edu.spbstu.ru}{muravtsev.aa@edu.spbstu.ru} \hfi
 \beq
 \frac{\partial^2u}{\partial x^2}-\frac{1}{c_0^2}\frac{\partial^2u}{\partial t^2}=\alpha\frac{\partial\theta}{\partial x},
 \eeq
-где $\displaystyle{}c_0=\sqrt{\frac{E}{\rho}}$ -- скорость звука в стержне.
+где $\displaystyle{}c_0=\sqrt{\frac{E}{\rho}}$ -- скорость звука в стержне.\\\\
 
 Далее подставляем выражение для распределения температуры \eqref{Temperature}:
 \beq
@@ -90,11 +90,11 @@ Email: \href{mailto:muravtsev.aa@edu.spbstu.ru}{muravtsev.aa@edu.spbstu.ru} \hfi
 \eeq
 Левый торец стержня свободен:
 \beq
-\sigma|_{x=0}=0\Leftrightarrow\frac{\partial u}{\partial x}\bigg|_{x=0}=\alpha\cdot J_0\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)\cdot e^{-\gamma x}
+\sigma|_{x=0}=0\Leftrightarrow\frac{\partial u}{\partial x}\bigg|_{x=0}=\alpha\cdot J_0\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)
 \eeq
 На бесконечности ставим условие излучения:
 \beq
-u|_{x\rightarrow\infty} -\text{условие излучения}
+u|_{x\rightarrow\infty}<\infty
 \eeq
 Ставим нулевые начальные условия:
 \beq
@@ -104,8 +104,8 @@ u(0,x)=0\text{ и }\dot{u}(0,x)=0
 \beq
 \begin{cases}
 	\dfrac{\partial^2u}{\partial x^2}-\dfrac{1}{c_0^2}\dfrac{\partial^2u}{\partial t^2}=-J_0\cdot\alpha\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)\cdot\gamma e^{-\gamma x}\\\\
-	\dfrac{\partial u}{\partial x}\bigg|_{x=0}=\alpha\cdot J_0\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)\cdot e^{-\gamma x}\\
-	u|_{x\rightarrow\infty} -\text{условие излучения}\\\\
+	\dfrac{\partial u}{\partial x}\bigg|_{x=0}=\alpha\cdot J_0\cdot\left(tH(t)-(t-\tau)H(t-\tau)\right)\\\\
+	u|_{x\rightarrow\infty}<\infty\\\\
 	u(0,x)=0\\
 	\dot{u}(0,x)=0
 \end{cases}
@@ -117,16 +117,43 @@ u(0,x)=0\text{ и }\dot{u}(0,x)=0
 \beq
 \begin{cases}
 \dfrac{d^2u^L}{dx^2}-\dfrac{p^2}{c_0^2}u^L=-J_0\cdot\alpha\cdot\dfrac{1-e^{-\tau p}}{p^2}\cdot \gamma e^{-\gamma x}\\\\
-\dfrac{du^L}{dx}\bigg|_{x=0}=\alpha\cdot J_0\cdot\dfrac{1-e^{-\tau p}}{p^2}\cdot e^{-\gamma x}\\
-u^L|_{x\rightarrow\infty}-\text{условие излучения}\\
+\dfrac{du^L}{dx}\bigg|_{x=0}=\alpha\cdot J_0\cdot\dfrac{1-e^{-\tau p}}{p^2}\\\\
+u^L|_{x\rightarrow\infty}<\infty\\
 \end{cases}
 \eeq
+\\\\\\\\\\\
+\textbf{Решение в пространстве Лапласа}\\
+
 Общее решение полученного дифференциального уравнения:
 \beq
 u^L=C_1e^{\,px/c}+C_2e^{-px/c}+\frac{J_0\cdot\alpha\cdot\gamma\cdot\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}e^{-\gamma x}
 \eeq
+Из второго граничного условия:
+\beq
+u^L|_{x\rightarrow\infty}<\infty \Rightarrow C_1=0
+\eeq
 Из первого граничного условия:
-
+\beq
+-\frac{p}{c}C_2-\frac{J_0\cdot\alpha\cdot\gamma^2\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}=\alpha\cdot J_0\cdot\frac{1-e^{-\tau p}}{p^2}
+\eeq
+\\
+\beq
+-\frac{p}{c}C_2=\frac{\alpha\cdot J_0\left(1-e^{-\tau p}\right)}{p^2}\left(1+\frac{\gamma^2}{\frac{p^2}{c^2}-\gamma^2}\right)
+\eeq
+\\
+\beq
+-\frac{p}{c}C_2=\frac{p^2}{c^2}\frac{\alpha\cdot J_0\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}
+\eeq
+\\
+\beq
+C_2=-\frac{p}{c}\frac{\alpha\cdot J_0\cdot\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}
+\eeq
 \end{solution}
+Тогда
+\beq
+u^L=\frac{\alpha\cdot J_0\cdot\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}\left(\gamma e^{-\gamma x}-\frac{p}{c}\cdot e^{-\frac{px}{c}}\right)
+\eeq
+\\\\
+\textbf{Переход из пространства Лапласа к оригиналу}\\
 
 \end{document}
