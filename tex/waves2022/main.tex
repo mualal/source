@@ -150,10 +150,65 @@ C_2=-\frac{p}{c}\frac{\alpha\cdot J_0\cdot\left(1-e^{-\tau p}\right)}{p^2\left(\
 \eeq
 \end{solution}
 Тогда
-\beq
-u^L=\frac{\alpha\cdot J_0\cdot\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}\left(\gamma e^{-\gamma x}-\frac{p}{c}\cdot e^{-\frac{px}{c}}\right)
+\beq\label{LaplaceEq}
+\boxed{u^L=\frac{\alpha\cdot J_0\cdot\left(1-e^{-\tau p}\right)}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}\left(\gamma e^{-\gamma x}-\frac{p}{c}\cdot e^{-\frac{px}{c}}\right)}
 \eeq
 \\\\
 \textbf{Переход из пространства Лапласа к оригиналу}\\
+Раскроем скобки в \eqref{LaplaceEq}:
+\beq
+u^L=J_0\cdot\alpha\cdot\left(\underbrace{\frac{\gamma e^{-\gamma x}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}}_{u_1^L}\underbrace{-\frac{\frac{p}{c}\cdot e^{-\frac{px}{c}}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}}_{u_2^L}\underbrace{-\frac{\gamma e^{-\gamma x}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}\cdot e^{-\tau p}}_{u_3^L}+\underbrace{\frac{\frac{p}{c}\cdot e^{-\frac{px}{c}}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}\cdot e^{-\tau p}}_{u_4^L}\right)
+\eeq
+\\
+Первое слагаемое:
+\beq
+u_1^L=\frac{\gamma e^{-\gamma x}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}=\frac{c^2\gamma e^{-\gamma x}}{p^2\left(p^2-\left(\gamma c\right)^2\right)}=
+\eeq
+\\
+Небольшое отступление от задачи (заметки на полях):
+\beq
+\frac{1}{p^2\left(p^2-a^2\right)}=\frac{A}{p^2}+\frac{B}{p^2-a^2}=\frac{Ap^2-Aa^2+Bp^2}{p^2\left(p^2-a^2\right)}\Rightarrow A=-\frac{1}{a^2}\text{ и }B=\frac{1}{a^2}
+\eeq
+Продолжаем расписывать первое слагаемое:
+\beq
+=\frac{c^2\gamma e^{-\gamma x}}{\gamma^2c^2}\left(\frac{1}{p^2-\left(\gamma c\right)^2}-\frac{1}{p^2}\right)=\frac{e^{-\gamma x}}{\gamma^2 c}\left(\frac{\gamma c}{p^2-\left(\gamma c\right)^2}-\frac{\gamma c}{p^2}\right)
+\eeq
+Тогда
+\beq
+\boxed{\mathcal{L}^{-1}\left(u_1^L\right)=\frac{e^{-\gamma x}}{\gamma^2c}\left(\text{sh}\,\gamma c t-\gamma c t\right)}
+\eeq
+Второе слагаемое:
+\beq
+u_2^L=-\frac{\frac{p}{c}\cdot e^{-\frac{px}{c}}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}=-\frac{c\cdot e^{-\frac{px}{c}}}{p\left(p^2-\left(\gamma c\right)^2\right)}=
+\eeq
+Небольшое отступление от задачи (заметки на полях):
+\beq
+\frac{1}{p\left(p^2-a^2\right)}=\frac{A}{p}+\frac{Bp}{p^2-a^2}=\frac{A\left(p^2-a^2\right)+Bp^2}{p\left(p^2-a^2\right)}\Rightarrow A=-\frac{1}{a^2}\text{ и }B=\frac{1}{a^2}
+\eeq
+Продолжаем расписывать второе слагаемое:
+\beq
+=-\frac{1}{\gamma^2c}\left(\frac{p}{p^2-\left(\gamma c\right)^2}-\frac{1}{p}\right)
+\eeq
+Тогда, используя теорему запаздывания,
+\beq
+\boxed{\mathcal{L}^{-1}\left(u_2^L\right)=\frac{1}{\gamma^2c}\left(1-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)}
+\eeq
+Аналогично по теореме запаздывания:
+\beq
+\boxed{\mathcal{L}^{-1}\left(u_3^L\right)=-\frac{e^{-\gamma x}}{\gamma^2c}\left(\text{sh}\!\left(\gamma c \left(t-\tau\right)\right)-\gamma c \left(t-\tau\right)\right)}
+\eeq
+и
+\beq
+\boxed{\mathcal{L}^{-1}\left(u_4^L\right)=\frac{1}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-1\right)}
+\eeq
+По линейности:
+\beq
+\mathcal{L}^{-1}\left(u^L\right)=J_0\cdot\alpha\cdot\left(\mathcal{L}^{-1}\left(u_1^L\right)+\mathcal{L}^{-1}\left(u_2^L\right)+\mathcal{L}^{-1}\left(u_3^L\right)+\mathcal{L}^{-1}\left(u_4^L\right)\right)
+\eeq
+Подставляем:
+
+\begin{multline}
+\mathcal{L}^{-1}\left(u^L\right)=\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{sh}\,\gamma ct-\text{sh}\!\left(\gamma c\left(t-\tau\right)\right)-\gamma c\tau\right)e^{-\gamma x}\,+\\+\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)
+\end{multline}
 
 \end{document}
