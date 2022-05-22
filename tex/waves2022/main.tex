@@ -208,7 +208,19 @@ u_2^L=-\frac{\frac{p}{c}\cdot e^{-\frac{px}{c}}}{p^2\left(\frac{p^2}{c^2}-\gamma
 Подставляем:
 
 \begin{multline}
-\mathcal{L}^{-1}\left(u^L\right)=\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{sh}\,\gamma ct-\text{sh}\!\left(\gamma c\left(t-\tau\right)\right)-\gamma c\tau\right)e^{-\gamma x}\,+\\+\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)
-\end{multline}
-
+u=\mathcal{L}^{-1}\left(u^L\right)=\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{sh}\,\gamma ct-\text{sh}\!\left(\gamma c\left(t-\tau\right)\right)-\gamma c\tau\right)e^{-\gamma x}\,+\\+\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)
+\end{multline}\\
+(выражение получено при условии, что $t\geqslant\tau+\dfrac{x}{c}$\,)
+\\\\
+По условию задачи требуется получить термоупругий импульс на расстоянии, существенно превышающем глубину проникновения теплового источника ($e^{-\gamma x}\rightarrow 0$), поэтому 
+\beq
+u=\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)
+\eeq
+Преобразуя разность гиперболических косинусов, получаем
+\beq
+u=\frac{2J_0\cdot\alpha}{\gamma^2c}\cdot\text{sh}\!\left(\gamma c\left(t-\frac{x}{c}\right)-\frac{\gamma c\tau}{2}\right)\cdot\text{sh}\!\left(-\gamma c\tau\right)
+\eeq
+\beq
+\boxed{u=\frac{2J_0\cdot\alpha}{\gamma^2c}\cdot\text{sh}\!\left(\gamma c\tau\right)\cdot\text{sh}\!\left(\frac{\gamma c\tau}{2}-\gamma c\left(t-\frac{x}{c}\right)\right)}
+\eeq
 \end{document}
