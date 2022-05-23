@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 # from PIL import Image as im
 # from datetime import datetime
+# import time
 
 
 def to_black_white(frame_to_preprocess):
@@ -105,7 +106,7 @@ def cells_preprocess(cells_frames):
 
     for cell_frame in cells_frames:
 
-        if np.isclose(cell_frame, 0).sum() / (cell_frame.shape[0] * cell_frame.shape[1]) >= 0.98:
+        if np.isclose(cell_frame, 0).sum() / (cell_frame.shape[0] * cell_frame.shape[1]) >= 0.97:
             preprocessed_cells_frames.append(0)
             continue
 
@@ -117,8 +118,6 @@ def cells_preprocess(cells_frames):
                       0).sum() / (0.4 * width * 0.4 * height) >= 0.95:
             preprocessed_cells_frames.append(0)
             continue
-
-        height, width = cell_frame.shape
 
         contours, _ = cv2.findContours(cell_frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = sorted(contours, key=cv2.contourArea, reverse=True)
@@ -134,8 +133,9 @@ def cells_preprocess(cells_frames):
         preprocessed_cell_frame = np.expand_dims(preprocessed_cell_frame, -1)
 
         # save images for ml model training
-        #data = im.fromarray(preprocessed_cell_frame.reshape(28, 28))
-        #data.save('../ml_model/custom_images/' + datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f')[:-3] + '.jpeg')
+        # data = im.fromarray(preprocessed_cell_frame.reshape(28, 28))
+        # data.save('../ml_model/custom_images/' + datetime.now().strftime('%Y-%m-%d-%H-%M-%S-%f')[:-3] + '.jpeg')
+        # time.sleep(0.1)
 
         # normalize
         preprocessed_cell_frame = preprocessed_cell_frame / 255.0

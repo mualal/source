@@ -17,7 +17,7 @@ class ThreadWithResult(threading.Thread):
 if __name__ == '__main__':
 
     # fetch ml model for digits recognition
-    path_to_neural_net = 'ml_model/printed_digit_recognition_net.h5'
+    path_to_neural_net = 'ml_model/neural_net_classifier_2.h5'
     model = tf.keras.models.load_model(path_to_neural_net)
 
     # openCV video capture

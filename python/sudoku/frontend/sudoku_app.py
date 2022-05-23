@@ -30,7 +30,7 @@ def get_sudoku_from_file(scanned_field):
         preprocessed_cells, _ = sudoku_detection.full_pipeline(image)
 
         # fetch ml model for digits recognition
-        path_to_neural_net = '../ml_model/printed_digit_recognition_net.h5'
+        path_to_neural_net = '../ml_model/neural_net_classifier_2.h5'
         model = tf.keras.models.load_model(path_to_neural_net)
 
         if preprocessed_cells is not None:
@@ -146,7 +146,7 @@ class App(QWidget):
         self.setLayout(grid_box)
 
         path_to_neural_net = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ml_model',
-                                          'printed_digit_recognition_net.h5')
+                                          'neural_net_classifier_2.h5')
         model = tf.keras.models.load_model(path_to_neural_net)
 
         # create the video capture thread

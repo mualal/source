@@ -34,12 +34,13 @@ async def photo_process(message: types.Message):
     # solve sudoku if found
     image = cv2.imread(photo_path)
     preprocessed_cells, _ = sudoku_detection.full_pipeline(image)
-    path_to_neural_net = '../ml_model/printed_digit_recognition_net.h5'
+    path_to_neural_net = '../ml_model/neural_net_classifier_2.h5'
     model = tf.keras.models.load_model(path_to_neural_net)
 
     if preprocessed_cells is not None:
         sudoku_to_solve = sudoku_detection.recognize_digits(preprocessed_cells, model)
         solution = solver_algorithm_x.solver_pipeline(sudoku_to_solve)
+        print(sudoku_to_solve)
         print(solution)
         if type(solution) is not str:
             # generate image with solution
@@ -76,7 +77,8 @@ async def photo_process(message: types.Message):
             await message.answer_photo(types.InputFile(solution_photo_path))
         else:
             # send reply
-            await message.reply('Не удалось верно распознать 🧐 или судоку на изображении противоречит правилам')
+            await message.reply('Не удалось верно распознать 🧐 или судоку на изображении противоречит правилам.\n'
+                                'Попробуйте сделать более качественный снимок 🖼')
     else:
         # send reply
         await message.reply('Не нашёл судоку на данном изображении 🙁')

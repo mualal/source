@@ -61,7 +61,7 @@ def train_neural_net(x_data, y_data, neural_net_name):
 
         # train
         batch_size = 128
-        epochs = 55
+        epochs = 100
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.1)
 
@@ -106,5 +106,5 @@ if __name__ == '__main__':
     X = np.array(X)
     y = np.array(y)
 
-    # train_neural_net(X, y, 'neural_net_classifier_1.h5')
-    train_svc(X, y, 'support_vector_classifier_1.h5')
+    train_neural_net(X, y, 'neural_net_classifier_2.h5')
+    # train_svc(X, y, 'support_vector_classifier_1.h5')
