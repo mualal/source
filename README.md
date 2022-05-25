@@ -23,3 +23,5 @@
 - [Заводнение терригенных и карбонатных коллекторов. Конспект лекций](https://mualal.github.io/source/tex/hydrocarbons2022/main.pdf)
 
 - [Презентация к проекту по курсу "Компьютерные технологии"](https://mualal.github.io/source/python/sudoku/presentation/project_presentation.pdf)
+
+- [Код проекта]
