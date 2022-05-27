@@ -52,7 +52,7 @@ class ReservoirMetamodel:
         print(self.data.describe())
 
     def plot_parameters_distributions(self, suffix='_unknown'):
-        self.data.iloc[:, 41:].hist(bins=50, figsize=(15, 10))
+        self.data.iloc[:, 7:59:5].hist(bins=50, figsize=(15, 10))
         save_fig('parameters_histograms' + suffix)
 
     def corr_matrix(self):
@@ -62,7 +62,8 @@ class ReservoirMetamodel:
         sns.set(rc={'figure.figsize': (20, 15)}, font_scale=1)
         plt.figure()
         corr_matrix = self.corr_matrix()
-        ax = sns.heatmap(corr_matrix, cmap='coolwarm', annot=False, vmin=-1, vmax=1)
+        ax = sns.heatmap(corr_matrix, cmap='coolwarm',
+                         annot=False, vmin=-1, vmax=1)
         cbar = ax.collections[0].colorbar
         cbar.ax.tick_params(labelsize=20)
         save_fig('corr_matrix' + suffix)
@@ -135,7 +136,8 @@ class ReservoirMetamodel:
     def extra_trees_regression(self):
         extra_trees_regs = []
         for i in range(1, 61):
-            extra_trees_reg = ExtraTreesRegressor(n_estimators=500, random_state=42)
+            extra_trees_reg = ExtraTreesRegressor(n_estimators=500,
+                                                  random_state=42)
             extra_trees_reg.fit(self.data_scaler(self.data_train.iloc[:, 0:4]),
                                 self.data_train[f'OIL RATE {i} (SM3/DAY)'])
             extra_trees_regs.append(extra_trees_reg)
@@ -148,7 +150,7 @@ class ReservoirMetamodel:
         if approx == 'manual_approximation_test_errors_boxplot':
             y = self.manual_approximation()
             for i in range(1, 61):
-                relative_error = (y[i - 1] - 
+                relative_error = (y[i - 1] -
                                   self.data_test[f'OIL RATE {i} (SM3/DAY)']) \
                                  / self.data_test[f'OIL RATE {i} (SM3/DAY)'] * 100
                 relative_errors.append(relative_error)
@@ -157,32 +159,40 @@ class ReservoirMetamodel:
             for i in range(1, 61):
                 relative_error = (extra_trees_regs[i - 1].predict(
                     self.data_scaler(self.data_test.iloc[:, 0:4])) -
-                                  np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) / \
-                                 (np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) * 100
+                                  np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) / \
+                                 (np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) * 100
                 relative_errors.append(relative_error)
         elif approx == 'nearest_neighs_approximation_test_errors_boxplot':
             neigh_regs = self.neigh_regression()
             for i in range(1, 61):
                 relative_error = (neigh_regs[i - 1].predict(
                     self.data_scaler(self.data_test.iloc[:, 0:4])) -
-                                  np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) / \
-                                 (np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) * 100
+                                  np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) / \
+                                 (np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) * 100
                 relative_errors.append(relative_error)
         elif approx == 'svm_approximation_test_errors_boxplot':
             svm_regs = self.svm_regression()
             for i in range(1, 61):
                 relative_error = (svm_regs[i - 1].predict(
                     self.data_scaler(self.data_test.iloc[:, 0:4])) -
-                                  np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) / \
-                                 (np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) * 100
+                                  np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) / \
+                                 (np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) * 100
                 relative_errors.append(relative_error)
         else:
             lin_regs = self.linear_regression()
             for i in range(1, 61):
                 relative_error = (lin_regs[i - 1].predict(
                     self.data_scaler(self.data_test.iloc[:, 0:4])) -
-                                  np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) / \
-                                 (np.array(self.data_test[f'OIL RATE {i} (SM3/DAY)'])) * 100
+                                  np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) / \
+                                 (np.array(self.data_test[f'OIL RATE {i} '
+                                                          f'(SM3/DAY)'])) * 100
                 relative_errors.append(relative_error)
         plt.figure()
         plt.xticks(rotation=90)
@@ -193,16 +203,17 @@ class ReservoirMetamodel:
 
 
 if __name__ == '__main__':
-    dataset_file = 'reservoir_train800_scenario2.csv'
-    metamodel = ReservoirMetamodel(pd.read_csv(os.path.join('datasets', dataset_file)))
-    metamodel.print_df()
+    dataset_file = 'reservoir_train800_scenario1.csv'
+    metamodel = ReservoirMetamodel(pd.read_csv(os.path.join('datasets',
+                                                            dataset_file)))
+    # metamodel.print_df()
     # metamodel.print_info()
-    # metamodel.plot_parameters_distributions(suffix=dataset_file[-14:-4]+'_2')
+    # metamodel.plot_parameters_distributions(suffix=dataset_file[-14:-4])
     # metamodel.plot_corr_heat_map(suffix=dataset_file[-14:-4])
-    # metamodel.all_scatter_plot()
+    metamodel.all_scatter_plot()
     # metamodel.manual_approximation()
 
-    # metamodel.plot_errors_boxplot('extra_trees_regression_test_errors_boxplot', suffix=dataset_file[-14:-4])
-
+    metamodel.plot_errors_boxplot('manual_approximation_test_errors_boxplot',
+                                  suffix=dataset_file[-14:-4])
 
 \end{pythoncode}
