@@ -1,0 +1,221 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+\section{\textcolor{red}{Лекция 19.04.2022.}}
+
+\subsection{Уравнения Максвелла}
+\includegraphics[width=\textwidth]{59}
+
+В своих работах Максвелл подробно не рассказал, как ему удалось получить уравнения. В то время ещё не была разработана теория Коссера (теория микрополярных сред, которую мы рассмотрели выше), поэтому Максвелл мог рассматривать вращение только как твёрдого целого, откуда нельзя получить уравнения Максвелла. Видимо, он их получил, основываясь на интуиции.
+
+По мере развития науки поняли, что уравнения Максвелла выполняются далеко не всегда, например, не выполняются (вообще не работают) на микромасштабе.
+
+Елена Александровна Иванова пыталась рассматривать телеграфное уравнение, которое описывает распространение токов в электроцепи. Оказалось, что телеграфные уравнения, описывающие проводимости в диэлектриках и проводниках, кардинально противоположны. Одно из них можно получить из уравнений Максвелла, а другое нельзя. Обратилась к физикам, они сказали, что все специалисты это знают, но никто не объясняет, почему это так.
+
+Если рассматривать уравнения Максвелла как данность, то непонятно, что можно в них модифицировать.\\
+
+На слайде представлен магнит с ориентированными в его магнитном поле опилками. Введён вектор магнитного поля $\underline{B}$ (индукция магнитного поля), который характеризует ориентацию опилок. Рассмотрена любая замкнутая поверхность, содержащая магнит. Видим, что при любом расположении поверхности, суммарный поток через неё равен нулю. Данный факт трактуется как отсутствие магнитных зарядов.
+
+\insertslide{60}
+
+Следующий опыт (первое уравнение на слайде): изменяем поток магнитного поля через площадь, ограниченную контуром (изменяем за счёт движения магнита, кольцо находится в переменном магнитном поле). Такое изменение создаёт электричество в рассматриваемом контуре, характеризуемое вектором $\underline{E}$ (напряжённость электрического поля).
+
+Ещё один опыт (второе уравнение на слайде): изменяем поток магнитного поля через площадь, ограниченную контуром (изменяем за счёт движения самого контура - его нормали, изменения формы). Тоже будем наблюдать ток в проводе.
+
+Объединяя, получаем третье уравнение на слайде: изменение магнитного потока через контур соответствует некой электродвижущей силе, возникающей в проводнике. 
+
+\insertslide{61}
+
+Транспортная теорема = вносим производную под знак интеграла по определённым правилам.\\
+
+В итоге, получили второе уравнение Максвелла. Важно: для полей $\underline{B}$ и $\underline{E}$ не нужна материя (они существуют вокруг всего). Рассматриваемые контуры воображаемы.
+
+\insertslide{62}
+
+Следующие уравнения (на слайде) связаны с электрическими зарядами.\\
+
+Электрический заряд всегда связан с массой (он не может без неё существовать). Заряд не является аддитивным по массе (если добавляем массу, то не значит, что добавили заряд, т.к. добавляемая масса может быть, например, нейтрально заряженной).\\
+
+$q$ (на слайде) -- удельная величина заряда по объёму.
+
+\insertslide{63}
+
+\insertslide{64}
+
+Преобразование второй части общего решения, полученного из закона сохранения заряда. Последнее уравнение Максвелла.
+
+Есть две пары похожих характеристик: $\underline{E}$ и $\underline{B}$ вводили без наличия зарядов (просто электрические и магнитные поля без наличия материи); $\underline{D}$ и $\underline{H}$, для которых необходимо существование материи. Есть гипотеза Максвелла-Лоренца линейной связи между этими парами характеристик.
+
+\insertslide{65}
+
+\insertslide{66}
+
+\insertslide{67}
+
+\insertslide{68}
+
+\insertslide{69}
+
+\subsection{Связь уравнений Максвелла с уравнениями механики}
+
+Возвращаемся к полученным ранее механическим уравнениям для полярных сред.\\
+
+Баланс количества движения:
+\beq\label{MotionEq}
+\rho\frac{\delta\underline{v}}{\delta t}=\nabla\cdot\underline{\underline{\sigma}}+\rho\underline{f}
+\eeq
+
+Баланс динамического спина
+\beq\label{SpinEq}
+\rho\frac{\delta\!\left(\underline{\underline{J}}\cdot\underline{\omega}\right)}{\delta t}=\underline{\underline{\sigma}}_{\times}+\nabla\cdot\underline{\underline{M}}+\rho\underline{m}
+\eeq
+
+Баланс энергии:
+\beq\label{EnergyEq}
+\rho\frac{\delta u}{\delta t}=\underline{\underline{\sigma}}:\left(\nabla\underline{v}+\underline{\underline{E}}\times\underline{\omega}\right)+\underline{\underline{M}}:\nabla\underline{\omega}+\rho q-\nabla\cdot\underline{h}
+\eeq
+
+Две диаметрально противоположные точки зрения: дальнодействия (сила может передаваться просто абстрактно через пустоту) и близкодействия (всегда есть посредник, который передаёт воздействие от одного объекта к другому; этот посредник не имеет ничего общего с реально наблюдаемой материей).\\
+
+Будем моделировать вакуум неким континуумом (для того, чтобы можно было пользоваться континуальными моделями мы должны стоять на теории близкодействия: есть некий агент, который передаёт влияние одного объекта на другой объект).\\
+
+Максвелл и Герц тоже работали, основываясь на близкодействии (наличии некого эфира), но затем научный мир стал отказываться от этой точки зрения (так как не были развиты теории с вращательными степенями свободы, а, если строить теории близкодействия, основываясь только на трансляционных степенях свободы, то придём к противоречиям).\\
+
+Сейчас, когда появились теория Коссера (микрополярных сред), возвращаются к концепции эфира, но процесс возвращения происходит медленно, так как многие по-прежнему считают, что концепция эфира и близкодействие -- отсталые. Но даже вакуум (пустота) наделяется огромным количество характеристик (у него есть магнитная постоянная, электрическая постоянная, скорость распространения света, скорость распространения гравитационных волн) - (но с другой стороны, это смешно считать, что у пустоты есть множество физических характеристик).
+
+Итак, мы считаем, что есть эфир (некий континуум, который передаёт что-то из одной точки в другую).
+
+Рассмотрим простую ситуацию -- частицы эфира неподвижны и т.д.:
+\beq
+\underline{v}=0;\,\,\,\underline{\underline{\sigma}}=0;\,\,\,\rho=\text{const};\,\,\,\underline{f}=0
+\eeq
+Таким образом, уравнение \eqref{MotionEq} будет удовлетворяться тождественно.\\
+
+Плюс тогда
+\beq
+\frac{\delta}{\delta t}\left(.\right)=\frac{d}{dt}\left(.\right)+\overbrace{\underline{v}}^{=0}\cdot\nabla\left(.\right)=\frac{d}{dt}\left(.\right)
+\eeq
+
+Примем следующее определяющее соотношение для тензора моментных напряжений (является антисимметричным):
+\beq\label{MDef}
+\underline{\underline{M}}=\mu\underline{B}\times\underline{\underline{E}}
+\eeq
+
+Размерности:
+\beq
+\left(\left[\underline{B}\right]=\text{Тесла}=\frac{\text{Н}}{\text{А}\cdot\text{м}}\right)\text{ и }\left(\left[\underline{M}\right]=\text{Па}\cdot\text{м}=\frac{\text{Н}}{\text{м}}\right)\Rightarrow\left[\mu\right]=\text{А}
+\eeq
+
+Распишем дивергенцию $\underline{\underline{M}}$:
+\beq
+\nabla\cdot\underline{\underline{M}}=\mu\nabla\cdot\left(\underline{\underline{E}}\times\underline{B}\right)=\mu\nabla\times\underline{B}
+\eeq
+
+Далее принимаем тензор инерции шаровым:
+\beq
+\underline{\underline{J}}=J_0\underline{\underline{E}}
+\eeq
+
+Баланс динамического спина \eqref{SpinEq} принимает следующий вид:
+\beq
+\rho_0\frac{d\!\left(J_0\underline{\omega}\right)}{dt}=\mu\nabla\times\underline{B}+\rho_0\underline{m}
+\eeq
+
+Выразим $\nabla\times\underline{B}$:
+\beq\label{MaxwellAnalog4}
+\nabla\times\underline{B}=\frac{1}{\mu}\frac{d}{dt}\left(\rho_0J_0\underline{\omega}\right)-\frac{\rho_0}{\mu}\underline{m}
+\eeq
+
+Получили уравнение, которое по структуре совпадает \textbf{с четвёртым уравнением Максвелла}:
+\beq\label{Maxwell4}
+\nabla\times\underline{B}=\frac{1}{c^2}\frac{d\underline{E}}{dt}+\frac{1}{\varepsilon_0c^2}\underline{j}
+\eeq
+
+Сравнивая \eqref{MaxwellAnalog4} и \eqref{Maxwell4}, получаем:
+\beq\label{Coeffs4}
+\underline{E}=\frac{\rho_0J_0c^2}{\mu}\underline{\omega}\text{    и    }\underline{j}=-\frac{\varepsilon_0c^2\rho_0}{\mu}\underline{m}
+\eeq
+
+Далее будем считать, что повороты малы (линейная микрополярная теория), тогда
+\beq
+\underline{\omega}=\frac{d\underline{\theta}}{dt}
+\eeq
+и из \eqref{Coeffs4}:
+\beq\label{E}
+\underline{E}=\frac{\rho_0J_0c^2}{\mu}\frac{d\underline{\theta}}{dt}
+\eeq
+
+Далее начинаем работать с балансом энергии:
+\beq
+\underline{\underline{M}}:\nabla\underline{\omega}=
+\eeq
+используя определяющее соотношение \eqref{MDef},
+\begin{multline}
+=\mu\left(\underline{B}\times\underline{e_k}\underline{e_k}\right):\left(\nabla\underline{\omega}\right)=\mu\left(\underline{B}\times\underline{e_k}\right)\cdot\overbrace{\nabla\left(\underline{e_k}\cdot\omega\right)}^{\nabla\text{ только на }\omega}=\mu\overbrace{\nabla\cdot\left(\underline{B}\times\underline{e_k}\right)e_k\cdot\underline{\omega}}^{\nabla\text{ действует только на }\omega}=\\=\mu\underbrace{\nabla\cdot\left(\underline{B}\times\underline{\omega}\right)}_{\nabla\text{ только на }\omega}=\mu\underline{B}\cdot\left(\underline{\omega}\times\nabla\right)=-\mu\underline{B}\cdot\left(\nabla\times\underline{\omega}\right)
+\end{multline}
+
+Подставляем в баланс энергии \eqref{EnergyEq}, принимая, что $\underline{h}=0$ и $q=0$:
+\beq\label{EnergySimplify}
+\rho_0\frac{du}{dt}=\mu\underline{B}\cdot\left(\nabla\times\frac{d\underline{\theta}}{dt}\right)
+\eeq
+
+Так мы в линейной теории (малые повороты), то энергия
+\beq
+u=\frac{1}{2}\kappa\left(\nabla\times\underline{\theta}\right)^2
+\eeq 
+и равенство \eqref{EnergySimplify} перепишется в виде:
+\beq
+\rho_0\kappa\left(\nabla\times\underline{\theta}\right)\cdot\frac{d}{dt}\left(\nabla\cdot\underline{\theta}\right)=-\mu\underline{B}\cdot\frac{d}{dt}\left(\nabla\times\underline{\theta}\right)
+\eeq
+
+Следовательно,
+\beq\label{B}
+\underline{B}=-\frac{\rho_0\kappa}{\mu}\nabla\times\underline{\theta}
+\eeq
+
+Видим, что $\underline{B}$ есть ротор какой-то векторной величины, поэтому дивергенция $\underline{B}$ равна нулю:
+\beq
+\nabla\cdot\underline{B}=0
+\eeq
+
+Получили \textbf{первое уравнение Максвелла}.
+
+Дифференцируем равенство \eqref{B}:
+\beq\label{Help1}
+\frac{d\underline{B}}{dt}=-\rho_0\frac{\kappa}{\mu}\nabla\times\frac{d\underline{\theta}}{dt}
+\eeq
+
+Из \eqref{E}:
+\beq\label{Help2}
+\nabla\times\underline{E}=\frac{\rho_0J_0c^2}{\mu}\nabla\times\frac{d\underline{\theta}}{dt}
+\eeq
+
+Таким образом, из \eqref{Help1} и \eqref{Help2}:
+\beq
+\nabla\times\underline{E}=-\frac{J_0c^2}{\kappa}\frac{d\underline{B}}{dt}
+\eeq
+
+Получили \textbf{второе уравнение Максвелла} (должно выполняться равенство $\kappa=J_0c^2$).
+
+Возьмём дивергенцию от обеих частей уравнения \eqref{Maxwell4}:
+\beq
+0=\frac{1}{c^2}\frac{d}{dt}\nabla\cdot\underline{E}+\frac{1}{\varepsilon_0c^2}\nabla\cdot\underline{j}
+\eeq
+
+Известно, что
+\beq
+\nabla\cdot\underline{j}=-\frac{dq}{dt}
+\eeq
+
+Тогда
+\beq
+\frac{d}{dt}\nabla\cdot\underline{E}=\frac{1}{\varepsilon_0}\frac{dq}{dt}
+\eeq
+
+Получили \textbf{третье уравнение Максвелла}.\\
+
+Таким образом, показали, что из механики (в самой простой среде) можем получить уравнения Максвелла. Смогли связать механические величины с электродинамическими величинами. 
+
+Большой плюс в том, что теперь знаем, каким образом можем модифицировать уравнения Максвелла, рассматривая более сложные среды с дополнительными слагаемыми и множителями (и тем самым обобщить уравнения Максвелла на более общие случаи).
+
+\end{document}
