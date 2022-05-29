@@ -86,13 +86,13 @@ $q$ (на слайде) -- удельная величина заряда по �
 Итак, мы считаем, что есть эфир (некий континуум, который передаёт что-то из одной точки в другую).
 
 Рассмотрим простую ситуацию -- частицы эфира неподвижны и т.д.:
-\beq
+\beq\label{HM1}
 \underline{v}=0;\,\,\,\underline{\underline{\sigma}}=0;\,\,\,\rho=\text{const};\,\,\,\underline{f}=0
 \eeq
 Таким образом, уравнение \eqref{MotionEq} будет удовлетворяться тождественно.\\
 
 Плюс тогда
-\beq
+\beq\label{HM2}
 \frac{\delta}{\delta t}\left(.\right)=\frac{d}{dt}\left(.\right)+\overbrace{\underline{v}}^{=0}\cdot\nabla\left(.\right)=\frac{d}{dt}\left(.\right)
 \eeq
 
@@ -154,18 +154,18 @@ $q$ (на слайде) -- удельная величина заряда по �
 =\mu\left(\underline{B}\times\underline{e_k}\underline{e_k}\right):\left(\nabla\underline{\omega}\right)=\mu\left(\underline{B}\times\underline{e_k}\right)\cdot\overbrace{\nabla\left(\underline{e_k}\cdot\underline{\omega}\right)}^{\nabla\text{ только на }\omega}=\mu\overbrace{\nabla\cdot\left(\underline{B}\times\underline{e_k}\right)\underline{e_k}\cdot\underline{\omega}}^{\nabla\text{ действует только на }\omega}=\\=\mu\underbrace{\nabla\cdot\left(\underline{B}\times\underline{\omega}\right)}_{\nabla\text{ только на }\omega}=\mu\underline{B}\cdot\left(\underline{\omega}\times\nabla\right)=-\mu\underline{B}\cdot\left(\nabla\times\underline{\omega}\right)
 \end{multline}
 
-Подставляем в баланс энергии \eqref{EnergyEq}, принимая, что $\underline{h}=0$ и $q=0$:
+Подставляем в баланс энергии \eqref{EnergyEq}, учитывая \eqref{HM1}, \eqref{HM2} и принимая, что $\underline{h}=0$ и $q=0$:
 \beq\label{EnergySimplify}
-\rho_0\frac{du}{dt}=\mu\underline{B}\cdot\left(\nabla\times\frac{d\underline{\theta}}{dt}\right)
+\rho_0\frac{du}{dt}=-\mu\underline{B}\cdot\left(\nabla\times\frac{d\underline{\theta}}{dt}\right)
 \eeq
 
-Так мы в линейной теории (малые повороты), то энергия
+Так как мы в линейной теории (малые повороты), то энергия
 \beq
 u=\frac{1}{2}\kappa\left(\nabla\times\underline{\theta}\right)^2
 \eeq 
 и равенство \eqref{EnergySimplify} перепишется в виде:
 \beq
-\rho_0\kappa\left(\nabla\times\underline{\theta}\right)\cdot\frac{d}{dt}\left(\nabla\cdot\underline{\theta}\right)=-\mu\underline{B}\cdot\frac{d}{dt}\left(\nabla\times\underline{\theta}\right)
+\rho_0\kappa\left(\nabla\times\underline{\theta}\right)\cdot\frac{d}{dt}\left(\nabla\times\underline{\theta}\right)=-\mu\underline{B}\cdot\frac{d}{dt}\left(\nabla\times\underline{\theta}\right)
 \eeq
 
 Следовательно,
