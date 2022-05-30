@@ -7,6 +7,7 @@ import cv2
 from sklearn import svm, metrics
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
+from keras.utils.vis_utils import plot_model
 
 
 def train_neural_net(x_data, y_data, neural_net_name):
@@ -63,10 +64,27 @@ def train_neural_net(x_data, y_data, neural_net_name):
         batch_size = 128
         epochs = 100
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-        model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.1)
+        history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.1)
 
         # save
         model.save(path_to_neural_net)
+
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
+        plt.title('Точность нейросети')
+        plt.ylabel('Точность')
+        plt.xlabel('Номер эпохи')
+        plt.legend(['обучение', 'валидация'], loc='upper left')
+        plt.show()
+
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('Функция потерь')
+        plt.ylabel('Потери')
+        plt.xlabel('Номер эпохи')
+        plt.legend(['обучение', 'валидация'], loc='upper left')
+        plt.show()
+
     else:
         # load model
         model = tf.keras.models.load_model(path_to_neural_net)
@@ -77,6 +95,15 @@ def train_neural_net(x_data, y_data, neural_net_name):
     print(f'Test accuracy: {score[1]}')
 
     print(model.predict(np.array([x_test[7]])))
+    print([np.argmax(el) for el in model.predict(np.array(x_test))])
+    print(y_data)
+    conf_matrix_disp = metrics.ConfusionMatrixDisplay.from_predictions(y_data, [str(np.argmax(el)) for el in
+                                                                                model.predict(
+                                                                                    np.array(x_data))])
+    conf_matrix_disp.figure_.suptitle('Confusion Matrix (train + test)')
+    plt.show()
+    plot_model(model, to_file='../images/model_plot.jpg', show_shapes=True, show_layer_names=True)
+    print(model.summary())
 
 
 def train_svc(x_data, y_data, classifier_name):

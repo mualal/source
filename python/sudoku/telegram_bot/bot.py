@@ -21,6 +21,11 @@ if not os.path.exists(downloads_directory):
     os.makedirs(downloads_directory)
 
 
+@dp.message_handler(commands=['start'])
+async def send_welcome(message: types.Message):
+    await message.answer('Привет! Я готов решить судоку по изображению. Отвечу на любое присланное мне изображение')
+
+
 @dp.message_handler(content_types=types.ContentType.PHOTO)
 async def photo_process(message: types.Message):
     photo_path = os.path.join(downloads_directory, datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f') + '.jpg')
@@ -77,7 +82,8 @@ async def photo_process(message: types.Message):
             await message.answer_photo(types.InputFile(solution_photo_path))
         else:
             # send reply
-            await message.reply('Не удалось верно распознать 🧐 или судоку на изображении противоречит правилам.\n'
+            await message.reply('Не удалось верно распознать 🧐 или судоку на изображении '
+                                'противоречит правилам / не имеет решения.\n'
                                 'Попробуйте сделать более качественный снимок 🖼')
     else:
         # send reply
