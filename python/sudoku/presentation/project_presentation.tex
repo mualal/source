@@ -81,21 +81,45 @@ sudoku
 \section{Распознавание и обработка судоку на изображении}
 \subsection{Цветное в чёрно-белое}
 \begin{frame}
-\frametitle{Преобразование в чёрно-белое изображение}
+\frametitle{Преобразование в чёрно-белое изображение. OpenCV}
 \begin{center}
 \begin{tikzpicture}
 	\node[inner sep=0pt] (to_black_white) at (0,0) {\includegraphics[width=0.7\textwidth]{to_black_white}};
 \end{tikzpicture}
 \end{center}
 
+\begin{textblock*}{1.5cm}(3cm,1.5cm)
+\tiny cv2.cvtColor(...)
+\end{textblock*}
+
+\begin{textblock*}{1.5cm}(5.5cm,1.5cm)
+\tiny cv2.GaussianBlur(...)
+\end{textblock*}
+
+\begin{textblock*}{1.5cm}(8cm,1.5cm)
+\tiny cv2.adaptiveThreshold(...)
+\end{textblock*}
+
+\begin{textblock*}{1.5cm}(3cm,8.3cm)
+\tiny cv2.bitwise\_not(...)
+\end{textblock*}
+
+\begin{textblock*}{1.5cm}(5.5cm,8.3cm)
+\tiny cv2.morphologyEx(...)
+\end{textblock*}
+
+\begin{textblock*}{1.5cm}(8cm,8.3cm)
+\tiny cv2.dilate(...)
+\end{textblock*}
+
+
 \end{frame}
 
 
 \subsection{Определение местоположения поля судоку на кадре}
 \begin{frame}
-\frametitle{Распознавание поля судоку}
+\frametitle{Распознавание поля судоку. Разделение на ячейки}
 
-\begin{center}
 \setlength\sudokusize{6cm}
 \begin{sudoku-block}
 | |2| | |3| |9| |7|.
@@ -108,17 +132,16 @@ sudoku
 | |7| | | | | | | |.
 |9| |3| |2| |6| |5|.
 \end{sudoku-block}
-\end{center}
+
+\begin{textblock*}{4.5cm}(7.5cm,2cm)
+\includegraphics[width=4.5cm]{Sudoku_example6_preprocessed.png}
+\end{textblock*}
+
+\begin{textblock*}{4.5cm}(7.7cm,7cm)
+\tiny Преобразовано с помощью библиотеки для обработки изображений OpenCV
+\end{textblock*}
 
 \end{frame}
-
-
-\subsection{Разделение на ячейки}
-\begin{frame}
-\frametitle{Разделение на ячейки}
-\end{frame}
-
-
 
 
 \subsection{Распознавание цифр в ячейках с помощью обученной нейронной сети}
@@ -226,6 +249,10 @@ sudoku
 \small При сильном просвечивании нейросеть может уловить паттерн просвечивающей цифры.
 \end{textblock*}
 
+\begin{textblock*}{5cm}(6cm,6cm)
+\small Дополнительно видим, что есть разные начертания одних и тех же цифр $\Rightarrow$ необходимость расширения датасета.
+\end{textblock*}
+
 \end{frame}
 
 \begin{frame}
@@ -295,11 +322,11 @@ sudoku
 
 \subsection{Рекурсивный перебор}
 \begin{frame}
+\begin{center}
 \frametitle{Рекурсивный перебор, поиск с возвратом (бэктрекинг)}
-
+\includegraphics[width=5.5cm]{Sudoku_recursive_scheme}
+\end{center}
 \end{frame}
-
-
 
 
 \subsection{Постановка задачи о точном покрытии}
@@ -353,22 +380,32 @@ $S=\{A,B,C,D,E\}$, где $A=\{0,1,4,6\}$, $B=\{2,3,5\}$, $C=\{0,4,8\}$, $D=\{0,
 
 \hspace*{-1cm}
 \includegraphics[width=1.15\textwidth]{SudokuToExactCoverProblem}
-
+\begin{textblock*}{7cm}(4.5cm,8.3cm)
+729 строк и 324 столбца
+\end{textblock*}
 
 \end{frame}
-
 
 
 \subsection{Алгоритм X и его реализация с помощью метода танцующих ссылок}
 \begin{frame}
 \frametitle{Алгоритм X}
+\includegraphics[width=7cm]{algorithmX_example}
+\begin{textblock*}{5cm}(8cm,3cm)
+Представление бинарной матрицы в виде многосвязного списка
+\end{textblock*}
+
+\begin{textblock*}{5cm}(8cm,6cm)
+Метод танцующих ссылок
+\end{textblock*}
+
 
 \end{frame}
 
 
 \section{Телеграм-бот}
 \begin{frame}
-\frametitle{Телеграм-бот}
+\frametitle{Телеграм-бот с помощью aiogram}
 \begin{textblock*}{5cm}(0cm,1cm)
 \includegraphics[width=5cm]{telegram_screen_1}
 \end{textblock*}
@@ -435,6 +472,14 @@ $S=\{A,B,C,D,E\}$, где $A=\{0,1,4,6\}$, $B=\{2,3,5\}$, $C=\{0,4,8\}$, $D=\{0,
 \begin{pythoncode}
 class ThreadWithResult(threading.Thread):    def __init__(self, group=None, target=None, name=None,                 args=(), kwargs={}, *, daemon=None):        self.result = None        def function():            self.result = target(*args, **kwargs)        super().__init__(group=group, target=function,                         name=name, daemon=daemon)
 \end{pythoncode}
+
+\begin{textblock*}{8cm}(1cm,2cm)
+Класс с выводом результата потока
+\end{textblock*}
+
+\begin{textblock*}{10cm}(1cm,7cm)
+\footnotesize Создаётся свой поток для каждого из трёх последовательных изображений, полученных с камеры. Если результаты после выполнения каждого из потоков совпадают, то отсканированный судоку записывается в текстовое поле PyQt приложения.
+\end{textblock*}
 
 \end{frame}
 
