@@ -16,6 +16,8 @@
 \newcommand{\T}[0]{\overline{T}}
 \newcommand{\I}[2]{\,I_{#1}\!\left(#2\right)}
 
+\graphicspath{{./img/}}
+
 \newenvironment{problem}[2][Problem]
     { \begin{mdframed}[backgroundcolor=gray!10] \textbf{#1 #2} \\}
     {  \end{mdframed}}
@@ -175,7 +177,7 @@ u_1^L=\frac{\gamma e^{-\gamma x}}{p^2\left(\frac{p^2}{c^2}-\gamma^2\right)}=\fra
 \eeq
 Тогда
 \beq
-\boxed{\mathcal{L}^{-1}\left(u_1^L\right)=\frac{e^{-\gamma x}}{\gamma^2c}\left(\text{sh}\,\gamma c t-\gamma c t\right)}
+\boxed{\mathcal{L}^{-1}\left(u_1^L\right)=\frac{e^{-\gamma x}}{\gamma^2c}\left(\text{sh}\,\gamma c t-\gamma c t\right)\cdot H\!\left(t\right)}
 \eeq
 Второе слагаемое:
 \beq
@@ -191,15 +193,15 @@ u_2^L=-\frac{\frac{p}{c}\cdot e^{-\frac{px}{c}}}{p^2\left(\frac{p^2}{c^2}-\gamma
 \eeq
 Тогда, используя теорему запаздывания,
 \beq
-\boxed{\mathcal{L}^{-1}\left(u_2^L\right)=\frac{1}{\gamma^2c}\left(1-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)}
+\boxed{\mathcal{L}^{-1}\left(u_2^L\right)=\frac{1}{\gamma^2c}\left(1-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)\cdot H\!\left(t-\frac{x}{c}\right)}
 \eeq
 Аналогично по теореме запаздывания:
 \beq
-\boxed{\mathcal{L}^{-1}\left(u_3^L\right)=-\frac{e^{-\gamma x}}{\gamma^2c}\left(\text{sh}\!\left(\gamma c \left(t-\tau\right)\right)-\gamma c \left(t-\tau\right)\right)}
+\boxed{\mathcal{L}^{-1}\left(u_3^L\right)=-\frac{e^{-\gamma x}}{\gamma^2c}\left(\text{sh}\!\left(\gamma c \left(t-\tau\right)\right)-\gamma c \left(t-\tau\right)\right)\cdot H\!\left(t-\tau\right)}
 \eeq
 и
 \beq
-\boxed{\mathcal{L}^{-1}\left(u_4^L\right)=\frac{1}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-1\right)}
+\boxed{\mathcal{L}^{-1}\left(u_4^L\right)=\frac{1}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-1\right)\cdot H\!\left(t-\tau-\frac{x}{c}\right)}
 \eeq
 По линейности:
 \beq
@@ -207,20 +209,39 @@ u_2^L=-\frac{\frac{p}{c}\cdot e^{-\frac{px}{c}}}{p^2\left(\frac{p^2}{c^2}-\gamma
 \eeq
 Подставляем:
 
-\begin{multline}
-u=\mathcal{L}^{-1}\left(u^L\right)=\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{sh}\,\gamma ct-\text{sh}\!\left(\gamma c\left(t-\tau\right)\right)-\gamma c\tau\right)e^{-\gamma x}\,+\\+\frac{J_0\cdot\alpha}{\gamma^2c}\left(\text{ch}\!\left(\gamma c\left(t-\tau-\frac{x}{c}\right)\right)-\text{ch}\!\left(\gamma c\left(t-\frac{x}{c}\right)\right)\right)
-\end{multline}\\
-(выражение получено при условии, что $t\geqslant\tau+\dfrac{x}{c}$\,)
-\\\\
-Введём новые безразмерные переменные: $\xi=\gamma x$ и $\eta=\gamma ct$
+{\footnotesize
+\beq
+u=\mathcal{L}^{-1}\left(u^L\right)=\begin{cases}
+\dfrac{J_0\alpha}{\gamma^2c}\left(\sh{\gamma ct}-\gamma ct\right)e^{-\gamma x},\,\,\, \text{если } 0\leqslant t<\tau;\\\\
+\dfrac{J_0\alpha}{\gamma^2c}\left(\sh{\gamma ct-\sh{\left(\gamma c\left(t-\tau\right)\right)}}-\gamma c\tau\right)e^{-\gamma x}, \,\,\, \text{если }\tau \leqslant t<\dfrac{x}{c};\\\\
+\dfrac{J_0\alpha}{\gamma^2c}\left(\sh{\gamma ct-\sh{\left(\gamma c\left(t-\tau\right)\right)}}-\gamma c\tau\right)e^{-\gamma x}+\dfrac{J_0\alpha}{\gamma^2c}\left(1-\ch{\left(\gamma c\left(t-\dfrac{x}{c}\right)\right)}\right), \,\,\, \text{если }\dfrac{x}{c} \leqslant t<\dfrac{x}{c}+\tau;\\\\
+\dfrac{J_0\alpha}{\gamma^2c}\left(\sh{\gamma ct-\sh{\left(\gamma c\left(t-\tau\right)\right)}}-\gamma c\tau\right)e^{-\gamma x}\,+\\\\+\,\dfrac{J_0\alpha}{\gamma^2c}\left(\ch{\left(\gamma c\left(t-\tau-\dfrac{x}{c}\right)\right)}-\ch{\left(\gamma c\left(t-\dfrac{x}{c}\right)\right)}\right), \,\,\, \text{если }\dfrac{x}{c}+\tau \leqslant t<\infty\\\\
+\end{cases}	
+\eeq
+
+}
+
+Далее перейдём к деформации $\varepsilon=\dfrac{\partial u}{\partial x}$:\\\\\\
+{\normalsize
+\beq
+\varepsilon=\begin{cases}
+-\dfrac{J_0\alpha}{\gamma c}\left(\sh{\gamma ct}-\gamma ct\right)e^{-\gamma x},\,\,\, \text{если } 0\leqslant t<\tau;\\\\
+-\dfrac{J_0\alpha}{\gamma c}\left(\sh{\gamma ct-\sh{\left(\gamma c\left(t-\tau\right)\right)}}-\gamma c\tau\right)e^{-\gamma x}, \,\,\, \text{если }\tau \leqslant t<\dfrac{x}{c};\\\\
+-\dfrac{J_0\alpha}{\gamma c}\left(\sh{\gamma ct-\sh{\left(\gamma c\left(t-\tau\right)\right)}}-\gamma c\tau\right)e^{-\gamma x}+\dfrac{J_0\alpha}{\gamma c}\sh{\left(\gamma c\left(t-\dfrac{x}{c}\right)\right)}, \,\,\, \text{если }\dfrac{x}{c} \leqslant t<\dfrac{x}{c}+\tau;\\\\
+-\dfrac{J_0\alpha}{\gamma c}\left(\sh{\gamma ct-\sh{\left(\gamma c\left(t-\tau\right)\right)}}-\gamma c\tau\right)e^{-\gamma x}\,\,+\\\\+\,\dfrac{J_0\alpha}{\gamma c}\left(\sh{\left(\gamma c\left(t-\dfrac{x}{c}\right)\right)}-\sh{\left(\gamma c\left(t-\tau-\dfrac{x}{c}\right)\right)}\right), \,\,\, \text{если }\dfrac{x}{c}+\tau \leqslant t<\infty\\\\
+\end{cases}	
+\eeq
+}
+
+С помощью пакета Maple построим график зависимости деформаций от времени для двух точек на стержне с координатами $x=25$ и $x=40$:\\\\
+
+\includegraphics[width=\textwidth]{waves2022_plot}
+
+% Из графиков видим, что, когда упругий импульс доходит до точки наблюдения (в момент времени $t=x/c$), деформации резко меняют знак и в дальнейшем спадают до нуля. Перед сменой знака стержень испытывает растягивающие (отрицательные - почему???) напряжения, так как изначально был включён объёмный источник тепла, действие которого увеличивало температуру стержня.
 \newpage
-\ 
-\newpage
-\ 
-\newpage
-\ 
-\newpage
-\ 
-\newpage
-\ 
+
+Приложение. Построение графиков в пакете Maple.
+
+\includegraphics[width=\textwidth]{waves2022_code}
+
 \end{document}
