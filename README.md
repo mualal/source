@@ -14,6 +14,8 @@
 
 - [Введение в механику пористых сред. Конспект лекций](https://mualal.github.io/source/tex/poromechanics/main.pdf)
 
+- [Волны в деформируемых средах. Конспект лекций](https://mualal.github.io/source/tex/waves2022/lectures/main.pdf)
+
 - [Несвязанная динамическая задача термоупругости (по курсу "Волны в деформируемых средах")](https://mualal.github.io/source/tex/waves2022/main.pdf)
 
 - [Виртуальные перемещения. Обзор](https://mualal.github.io/source/tex/virtual-displacement/Muravtsev_Alexander_5040103_10401.pdf)
