@@ -1,13 +1,37 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.ndimage import convolve
+
+
+def gosper_glider_gun(size):
+    glider_gun_grid = np.zeros(shape=(size, size))
+    for (i, j) in [(5, 1), (5, 2), (6, 1), (6, 2), (5, 11), (6, 11), (7, 11), (4, 12), (8, 12), (3, 13), (9, 13),
+                   (3, 14), (9, 14), (6, 15), (4, 16), (8, 16), (5, 17), (6, 17), (7, 17), (6, 18), (3, 21), (4, 21),
+                   (5, 21), (3, 22), (4, 22), (5, 22), (2, 23), (6, 23), (1, 25), (2, 25), (6, 25), (7, 25), (3, 35),
+                   (4, 35), (3, 36), (4, 36)]:
+        glider_gun_grid[i, j] = 1
+
+    return glider_gun_grid
+
+
+def field_process(cells_grid, kernel=None):
+    if kernel is None:
+        kernel = [[1, 1, 1],
+                  [1, 0, 1],
+                  [1, 1, 1]]
+    neighbours_sum = convolve(cells_grid, kernel, mode='constant')
+    new_cells_grid = cells_grid.copy()
+    new_cells_grid[neighbours_sum != 2] = 0
+    new_cells_grid[neighbours_sum == 3] = 1
+    return new_cells_grid
 
 
 def main():
     grid_size = 50
     cell_geometry_scale = 0.1
-    update_time = 0.5
+    update_time = 0.01
 
-    grid = np.zeros(shape=(grid_size, grid_size))
+    grid = gosper_glider_gun(grid_size)
 
     fig = plt.figure(figsize=(cell_geometry_scale * grid_size, cell_geometry_scale * grid_size))
 
@@ -16,9 +40,11 @@ def main():
     plt.ion()
     while True:
         for n, _ in enumerate(grid[0, :]):
-            plt.axvline(x=-0.5 + n, linewidth=cell_geometry_scale, color='blue')
-            plt.axhline(y=-0.5 + n, linewidth=cell_geometry_scale, color='blue')
+            plt.axvline(x=-0.5+n, linewidth=cell_geometry_scale, color='blue')
+            plt.axhline(y=-0.5+n, linewidth=cell_geometry_scale, color='blue')
+
         plt.imshow(X=grid, cmap='binary')
+        grid = field_process(grid)
 
         pt = plt.ginput(n=1, timeout=update_time)
 
@@ -32,7 +58,7 @@ def main():
             else:
                 grid[p_y][p_x] = 1
                 selected_cells_coords.append(cell_coords)
-        grid[-1, -1] = 1 - grid[-1, -1]
+        # grid[-1, -1] = 1 - grid[-1, -1]
 
         plt.clf()
 
