@@ -26,6 +26,18 @@ def pulsar(size):
     return pulsar_grid
 
 
+def simkin_glider_gun(size):
+    glider_gun_grid = np.zeros(shape=(size, size))
+    for (i, j) in [(1, 1), (1, 2), (2, 1), (2, 2), (1, 8), (1, 9), (2, 8), (2, 9), (4, 5), (4, 6), (5, 5), (5, 6),
+                   (10, 23), (10, 24), (10, 26), (10, 27), (11, 22), (11, 28), (12, 22), (12, 29), (13, 22),
+                   (13, 23), (13, 24), (13, 28), (14, 27), (18, 21), (18, 22), (19, 21), (20, 22), (20, 23), (20, 24),
+                   (21, 24), (12, 32), (12, 33), (13, 32), (13, 33)]:
+        (i, j) = (i + 15, j + 15)
+        glider_gun_grid[i, j] = 1
+
+    return glider_gun_grid
+
+
 def field_process(cells_grid, kernel=None):
     if kernel is None:
         kernel = [[1, 1, 1],
@@ -45,7 +57,9 @@ def main():
 
     # grid = gosper_glider_gun(grid_size)
 
-    grid = pulsar(grid_size)
+    # grid = pulsar(grid_size)
+
+    grid = simkin_glider_gun(grid_size)
 
     fig = plt.figure(figsize=(cell_geometry_scale * grid_size, cell_geometry_scale * grid_size))
 
