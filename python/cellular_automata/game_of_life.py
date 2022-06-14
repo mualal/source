@@ -38,6 +38,24 @@ def simkin_glider_gun(size):
     return glider_gun_grid
 
 
+def spaceships(size):
+    spaceships_grid = np.zeros(shape=(size, size))
+    for (i, j) in [(2, 3), (2, 4), (2, 5), (2, 6), (3, 2), (3, 6), (4, 6), (5, 2), (5, 5)]:
+        (i, j) = (i + 5, j)
+        spaceships_grid[i, j] = 1
+
+    for (i, j) in [(1, 4), (2, 2), (2, 6), (3, 7), (4, 2), (4, 7), (5, 3), (5, 4), (5, 5), (5, 6), (5, 7)]:
+        (i, j) = (i + 20, j)
+        spaceships_grid[i, j] = 1
+
+    for (i, j) in [(1, 4), (1, 5), (2, 2), (2, 7), (3, 8), (4, 2), (4, 8), (5, 3), (5, 4), (5, 5), (5, 6),
+                   (5, 7), (5, 8)]:
+        (i, j) = (i + 35, j)
+        spaceships_grid[i, j] = 1
+
+    return spaceships_grid
+
+
 def field_process(cells_grid, kernel=None):
     if kernel is None:
         kernel = [[1, 1, 1],
@@ -59,7 +77,9 @@ def main():
 
     # grid = pulsar(grid_size)
 
-    grid = simkin_glider_gun(grid_size)
+    # grid = simkin_glider_gun(grid_size)
+
+    grid = spaceships(grid_size)
 
     fig = plt.figure(figsize=(cell_geometry_scale * grid_size, cell_geometry_scale * grid_size))
 
