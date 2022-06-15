@@ -3,6 +3,18 @@ import matplotlib.pyplot as plt
 from scipy.ndimage import convolve
 
 
+def initial_state(size, pict='gosper_glider_gun'):
+    if pict == 'gosper_glider_gun':
+        return gosper_glider_gun(size=size)
+    if pict == 'pulsar':
+        return pulsar(size=size)
+    if pict == 'simkin_glider_gun':
+        return simkin_glider_gun(size=size)
+    if pict == 'spaceships':
+        return spaceships(size=size)
+    return np.zeros(shape=(size, size))
+
+
 def gosper_glider_gun(size):
     glider_gun_grid = np.zeros(shape=(size, size))
     for (i, j) in [(5, 1), (5, 2), (6, 1), (6, 2), (5, 11), (6, 11), (7, 11), (4, 12), (8, 12), (3, 13), (9, 13),
@@ -73,13 +85,7 @@ def main():
     cell_geometry_scale = 0.1
     update_time = 0.01
 
-    # grid = gosper_glider_gun(grid_size)
-
-    # grid = pulsar(grid_size)
-
-    # grid = simkin_glider_gun(grid_size)
-
-    grid = spaceships(grid_size)
+    grid = initial_state(size=grid_size, pict='spaceships')
 
     fig = plt.figure(figsize=(cell_geometry_scale * grid_size, cell_geometry_scale * grid_size))
 
