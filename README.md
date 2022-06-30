@@ -1,15 +1,5 @@
 # Для работ по учёбе
 
-<style>
-  table,
-  th,
-  td {
-    padding: 10px;
-    border: 2px solid black;
-    border-collapse: collapse;
-  }
-</style>
-
 <table>
   <tr>
     <td>
