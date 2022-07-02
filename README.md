@@ -1,5 +1,7 @@
 # Для работ по учёбе
 
+<center><img src="https://github.com/mualal/source/blob/main/images/ChromaticNumber6.png" alt="Interesting Challenge" style="width:250px;height:200px"></center>
+
 <table>
   <thead>
     <tr>
