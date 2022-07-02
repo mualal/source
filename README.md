@@ -1,6 +1,8 @@
 # Для работ по учёбе
 
-![Simple example to interesting challenge](https://github.com/mualal/source/blob/main/images/ChromaticNumber6.png | width=250)
+<center>
+<img src="images/ChromaticNumber6.png" alt="Interesting Challenge" style="width:250px;height:200px">
+</center>
 
 <table>
   <thead>
