@@ -3,7 +3,10 @@
 /* table creation */
 CREATE TABLE book(
     book_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    /* but in MySQL: book_id INT PRIMARY KEY AUTO_INCREMENT, */
+    /*
+    but in MySQL:
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+    */
     title VARCHAR(50),
     author VARCHAR(30),
     price DECIMAL(8, 2),
@@ -159,7 +162,7 @@ WHERE amount IN (
         HAVING COUNT(amount) = 1
 		);
 
-
+/* ANY keyword only for MySQL queries
 SELECT author, title, price
 FROM book
 WHERE price < ANY (
@@ -167,7 +170,7 @@ WHERE price < ANY (
         FROM book
         GROUP BY author
 	);
-
+*/
 
 SELECT title, author, amount, (SELECT MAX(amount) FROM book) - amount as Заказ
 FROM book
@@ -175,4 +178,128 @@ WHERE amount <> (SELECT MAX(amount) FROM book);
 
 
 SELECT title, author, amount, (SELECT MAX(amount)+1 FROM book) - amount as Заказ
+FROM book;
+
+
+/* -------------------- Запросы корректировки данных -------------------- */
+
+/* table creation */
+CREATE TABLE supply(
+	supply_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	/*
+	but in MySQL:
+	supply_id INT PRIMARY KEY AUTO_INCREMENT,
+	*/
+    title VARCHAR(50),
+    author VARCHAR(30),
+    price DECIMAL(8, 2),
+    amount INT
+);
+
+/* insertion to table */
+INSERT INTO supply(title,author,price,amount)
+VALUES
+	('Лирика','Пастернак Б.Л.', 518.99,2),
+    ('Черный человек','Есенин С.А.',570.20,6),
+    ('Белая гвардия','Булгаков М.А.',540.50,7),
+    ('Идиот','Достоевский Ф.М.',360.80,3);
+SELECT * FROM supply;
+
+/* insertion to table from another table */
+INSERT INTO book(title,author,price,amount)
+SELECT title,author,price,amount
+FROM supply
+WHERE author != 'Булгаков М.А.' AND author != 'Достоевский Ф.М.';
+SELECT * FROM book;
+
+/* insertion to table from another table */
+INSERT INTO book(title,author,price,amount)
+SELECT title,author,price,amount
+FROM supply
+WHERE author NOT IN (
+		SELECT author
+        FROM book
+        );
+SELECT * FROM book;
+
+/* update query */
+UPDATE book
+SET price=0.9*price
+WHERE amount BETWEEN 5 AND 10;
+SELECT * FROM book;
+
+/* create new column in table */
+ALTER TABLE book
+ADD buy INT;
+SELECT * FROM book;
+
+/* update values in newly created column */
+UPDATE book
+SET buy=0
+WHERE title="Мастер и Маргарита";
+UPDATE book
+SET buy=3
+WHERE title="Белая гвардия";
+UPDATE book
+SET buy=8
+WHERE title="Идиот";
+UPDATE book
+SET buy=0
+WHERE title="Братья Карамазовы";
+UPDATE book
+SET buy=18
+WHERE title="Стихотворения и поэмы";
+UPDATE book
+SET buy=0
+WHERE title="Лирика";
+UPDATE book
+SET buy=0
+WHERE title="Чёрный человек";
+SELECT * FROM book;
+
+/* update values in column with condition */
+UPDATE book
+SET buy = IIF(buy>amount,amount,buy);
+/*
+but in MySQL:
+supply_id INT PRIMARY KEY AUTO_INCREMENT,
+*/
+UPDATE book
+SET price=0.9*price
+WHERE buy=0;
+SELECT * FROM book;
+
+SELECT * FROM supply;
+
+/* MySQL only
+UPDATE book, supply
+SET book.amount = book.amount + supply.amount
+WHERE book.title = supply.title AND book.author = supply.author;
+
+UPDATE book, supply
+SET book.price = (book.price + supply.price) / 2
+WHERE book.title = supply.title AND book.author = supply.author;
+SELECT * FROM book;
+*/
+
+DELETE FROM supply
+WHERE author in (SELECT author FROM book GROUP BY author HAVING SUM(amount)>10);
+SELECT * FROM supply;
+
+
+CREATE TABLE ordering AS
+SELECT author, title,
+   (
+    SELECT ROUND(AVG(amount))
+    FROM book
+   ) AS amount
 FROM book
+WHERE amount < (SELECT ROUND(AVG(amount)) FROM book);
+
+SELECT * FROM ordering;
+
+/* -------------------- Таблица "Командировки", запросы на выборку -------------------- */
+
+/* -------------------- Таблица "Нарушения ПДД", запросы корректировки -------------------- */
+
+
