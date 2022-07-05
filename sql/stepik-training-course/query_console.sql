@@ -300,6 +300,195 @@ SELECT * FROM ordering;
 
 /* -------------------- Таблица "Командировки", запросы на выборку -------------------- */
 
+
+CREATE TABLE trip(
+	trip_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	/*
+	but in MySQL:
+	trip_id INT PRIMARY KEY AUTO_INCREMENT,
+	*/
+	name VARCHAR(30),
+	city VARCHAR(25),
+	per_diem DECIMAL(8, 2),
+	date_first DATE,
+	date_last DATE
+);
+
+
+INSERT INTO trip(name, city, per_diem, date_first, date_last)
+VALUES
+	('Баранов П.Е.', 'Москва', 700, '2020-01-12', '2020-01-17'),
+	('Абрамова К.А.', 'Владивосток', 450, '2020-01-14', '2020-01-27'),
+	('Семенов И.В.', 'Москва', 700, '2020-01-23', '2020-01-31'),
+	('Ильиных Г.Р.', 'Владивосток', 450, '2020-01-12', '2020-02-02'),
+	('Колесов С.П.', 'Москва', 700, '2020-02-01', '2020-02-06'),
+	('Баранов П.Е.', 'Москва', 700, '2020-02-14', '2020-02-22'),
+	('Абрамова К.А.', 'Москва', 700, '2020-02-23', '2020-03-01'),
+	('Лебедев Т.К.', 'Москва', 700, '2020-03-03', '2020-03-06'),
+	('Колесов С.П.', 'Новосибирск', 450, '2020-02-27', '2020-03-12'),
+	('Семенов И.В.', 'Санкт-Петербург', 700, '2020-03-29', '2020-04-05'),
+	('Абрамова К.А.', 'Москва', 700, '2020-04-06', '2020-04-14'),
+	('Баранов П.Е.', 'Новосибирск', 450, '2020-04-18', '2020-05-04'),
+	('Лебедев Т.К.', 'Томск', 450, '2020-05-20', '2020-05-31'),
+	('Семенов И.В.', 'Санкт-Петербург', 700, '2020-06-01', '2020-06-03'),
+	('Абрамова К.А.', 'Санкт-Петербург', 700, '2020-05-28', '2020-06-04'),
+	('Федорова А.Ю.', 'Новосибирск', 450, '2020-05-25', '2020-06-04'),
+	('Колесов С.П.', 'Новосибирск', 450, '2020-06-03', '2020-06-12'),
+	('Федорова А.Ю.', 'Томск', 450, '2020-06-20', '2020-06-26'),
+	('Абрамова К.А.', 'Владивосток', 450, '2020-07-02', '2020-07-13'),
+	('Баранов П.Е.', 'Воронеж', 450, '2020-07-19', '2020-07-25');
+
+SELECT * FROM trip;
+
+
+SELECT name, city, per_diem, date_first, date_last
+FROM trip
+WHERE name LIKE "%а _._."
+ORDER BY date_last DESC;
+
+
+SELECT DISTINCT name
+FROM trip
+WHERE city = "Москва"
+ORDER BY name;
+
+
+SELECT city, COUNT(city) as "Количество"
+FROM trip
+GROUP BY city
+ORDER BY city;
+
+
+SELECT city, COUNT(city) as "Количество"
+FROM trip
+GROUP BY city
+ORDER BY 2 DESC
+LIMIT 2;
+
+
+SELECT name, city, JULIANDAY(date_last)-JULIANDAY(date_first)+1 AS "Длительность"
+/*
+but in MySQL:
+SELECT name, city, DATEDIFF(date_last, date_first)+1 AS "Длительность"
+*/
+FROM trip
+WHERE city <> "Москва" AND city <> "Санкт-Петербург"
+ORDER BY 3 DESC, 2 DESC;
+
+
+SELECT name, city, date_first, date_last
+FROM trip
+WHERE JULIANDAY(date_last)-JULIANDAY(date_first) = (SELECT MIN(JULIANDAY(date_last)-JULIANDAY(date_first)) FROM trip)
+/*
+but in MySQL:
+WHERE DATEDIFF(date_last, date_first) = (SELECT MIN(DATEDIFF(date_last, date_first)) FROM trip)
+*/
+
+
+/* MySQL only
+SELECT name, city, date_first, date_last
+FROM trip
+WHERE MONTH(date_first) = MONTH(date_last)
+ORDER BY city, name;
+*/
+
+
+/* MySQL only
+SELECT MONTHNAME(date_first) AS "Месяц", COUNT(MONTHNAME(date_first)) AS "Количество"
+FROM trip
+GROUP BY MONTHNAME(date_first)
+ORDER BY 2 DESC, 1;
+*/
+
+
+/* MySQL only
+SELECT name, city, date_first, (DATEDIFF(date_last, date_first)+1)*per_diem AS "Сумма"
+FROM trip
+WHERE (MONTH(date_first) = 2 OR MONTH(date_first) = 3) AND YEAR(date_first) = 2020
+ORDER BY name, 4 DESC;
+*/
+
+
+SELECT name, SUM((JULIANDAY(date_last)-JULIANDAY(date_first)+1)*per_diem) AS "Сумма"
+/*
+but in MySQL:
+SELECT name, SUM((DATEDIFF(date_last, date_first)+1)*per_diem) AS "Сумма"
+*/
+FROM trip
+GROUP BY name
+HAVING COUNT(name)>3
+ORDER BY 2 DESC;
+
 /* -------------------- Таблица "Нарушения ПДД", запросы корректировки -------------------- */
 
+CREATE TABLE fine(
+    fine_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+/* but in MySQL:
+    fine_id        INT PRIMARY KEY AUTO_INCREMENT,
+*/
+    name           VARCHAR(30),
+    number_plate   VARCHAR(6),
+    violation      VARCHAR(50),
+    sum_fine       DECIMAL(8, 2),
+    date_violation DATE,
+    date_payment   DATE
+);
 
+CREATE TABLE traffic_violation(
+    violation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+/* but in MySQL:
+    violation_id INT PRIMARY KEY AUTO_INCREMENT,
+*/
+    violation    VARCHAR(50),
+    sum_fine     DECIMAL(8, 2)
+);
+
+INSERT INTO fine(name, number_plate, violation, sum_fine, date_violation, date_payment)
+values ('Баранов П.Е.', 'P523BT', 'Превышение скорости(от 40 до 60)', 500.00, '2020-01-12', '2020-01-17'),
+       ('Абрамова К.А.', 'О111AB', 'Проезд на запрещающий сигнал', 1000.00, '2020-01-14', '2020-02-27'),
+       ('Яковлев Г.Р.', 'T330TT', 'Превышение скорости(от 20 до 40)', 500.00, '2020-01-23', '2020-02-23'),
+       ('Яковлев Г.Р.', 'M701AA', 'Превышение скорости(от 20 до 40)', NULL, '2020-01-12', NULL),
+       ('Колесов С.П.', 'K892AX', 'Превышение скорости(от 20 до 40)', NULL, '2020-02-01', NULL),
+       ('Баранов П.Е.', 'P523BT', 'Превышение скорости(от 40 до 60)', NULL, '2020-02-14', NULL),
+       ('Абрамова К.А.', 'О111AB', 'Проезд на запрещающий сигнал', NULL, '2020-02-23', NULL),
+       ('Яковлев Г.Р.', 'T330TT', 'Проезд на запрещающий сигнал', NULL, '2020-03-03', NULL);
+
+
+INSERT INTO traffic_violation(violation, sum_fine)
+VALUES ('Превышение скорости(от 20 до 40)', 500),
+       ('Превышение скорости(от 40 до 60)', 1000),
+       ('Проезд на запрещающий сигнал', 1000);
+
+SELECT * FROM fine;
+
+SELECT * FROM traffic_violation;
+
+/* MySQL only
+UPDATE fine, traffic_violation
+SET fine.sum_fine = traffic_violation.sum_fine
+WHERE fine.sum_fine IS NULL AND fine.violation = traffic_violation.violation;
+
+SELECT * FROM fine;
+
+
+SELECT name, number_plate, violation
+FROM fine
+GROUP BY name, number_plate, violation
+HAVING COUNT(violation)>1
+
+
+UPDATE fine, payment
+SET fine.date_payment = payment.date_payment, fine.sum_fine = IF(DATEDIFF(payment.date_payment,fine.date_violation)<21,fine.sum_fine/2,fine.sum_fine)
+WHERE fine.name = payment.name AND fine.number_plate = payment.number_plate AND fine.violation = payment.violation AND fine.date_payment IS NULL
+
+
+CREATE TABLE back_payment AS
+SELECT name, number_plate, violation, sum_fine, date_violation
+FROM fine
+WHERE date_payment is NULL
+
+
+DELETE FROM fine
+WHERE date_violation < "2020-02-01";
+SELECT * FROM fine;
+*/
