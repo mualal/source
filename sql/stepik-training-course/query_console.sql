@@ -492,3 +492,172 @@ DELETE FROM fine
 WHERE date_violation < "2020-02-01";
 SELECT * FROM fine;
 */
+
+/* -------------------- Связи между таблицами -------------------- */
+
+/* Создание таблицы author с первичным ключом */
+CREATE TABLE author(
+/* but in MySQL:
+    author_id INT PRIMARY KEY AUTO_INCREMENT,
+*/
+    author_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_author VARCHAR(50)
+);
+
+/* Вставка значений в таблицу author */
+INSERT INTO author(name_author)
+VALUES ('Булгаков М.А.'),
+       ('Достоевский Ф.М.'),
+       ('Есенин С.А.'),
+       ('Пастернак Б.Л.');
+
+/* Создание таблицы genre с первичным ключом */
+CREATE TABLE genre(
+/* but in MySQL:
+    genre_id INT PRIMARY KEY AUTO_INCREMENT,
+*/
+    genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_genre VARCHAR(30)
+);
+
+/* Вставка значений в таблицу genre */
+INSERT INTO genre(name_genre)
+VALUES ('Роман'),
+       ('Поэзия'),
+       ('Приключения');
+
+/* Создание таблицы book с внешними ключами */
+CREATE TABLE book(
+/* but in MySQL:
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+*/
+    book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(50),
+    author_id INT NOT NULL,
+    genre_id INT,
+    price DECIMAL(8,2),
+    amount INT,
+    FOREIGN KEY (author_id) REFERENCES author (author_id),
+    FOREIGN KEY (genre_id) REFERENCES genre (genre_id)
+);
+
+/* Создание таблицы book с внешними ключами и действиями при удалении записи главной таблицы */
+CREATE TABLE book(
+/* but in MySQL:
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+*/
+    book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(50),
+    author_id INT NOT NULL,
+    genre_id INT,
+    price DECIMAL(8,2),
+    amount INT,
+    FOREIGN KEY (author_id) REFERENCES author (author_id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genre (genre_id) ON DELETE SET NULL
+);
+
+/* Вставка значений в таблицу book */
+INSERT INTO book(title, author_id, genre_id, price, amount)
+VALUES ('Стихотворения и поэмы', 1, 1, 670.99, 3),
+       ('Белая гвардия', 1, 1, 540.50, 5),
+       ('Идиот', 2, 1, 460.00, 10),
+       ('Братья Карамазовы', 2, 1, 799.01, 3),
+       ('Игрок', 2, 1, 480.50, 10),
+       ('Стихотворения и поэмы', 3, 2, 650.00, 15),
+       ('Черный человек', 3, 2, 570.20, 6),
+       ('Лирика', 4, 2, 518.99, 2);
+
+/* -------------------- Запросы на выборку, соединение таблиц -------------------- */
+
+/* Соединение INNER JOIN */
+SELECT title, name_genre, price
+FROM
+    genre INNER JOIN book
+    ON genre.genre_id = book.genre_id
+WHERE amount > 8
+ORDER BY price DESC;
+
+/* Внешнее соединение LEFT и RIGHT OUTER JOIN */
+SELECT name_genre
+FROM genre LEFT JOIN book
+     ON genre.genre_id = book.genre_id
+WHERE title is NULL;
+
+/* Перекрёстное соединение CROSS JOIN */
+/* MySQL only
+SELECT name_city, name_author, DATE_ADD('2020-01-01', INTERVAL FLOOR(RAND() * 365) DAY) AS "Дата"
+FROM city CROSS JOIN author
+ORDER BY name_city, 3 DESC;
+*/
+
+/* Запросы на выборку из нескольких таблиц */
+SELECT name_genre, title, name_author
+FROM genre
+     INNER JOIN book ON genre.genre_id = book.genre_id
+     INNER JOIN author ON book.author_id = author.author_id
+WHERE name_genre LIKE "Роман"
+ORDER BY title;
+
+/* Запросы для нескольких таблиц с группировкой */
+SELECT name_author, SUM(amount) AS "Количество"
+FROM
+    author LEFT JOIN book
+    on author.author_id = book.author_id
+GROUP BY name_author
+HAVING SUM(amount)<10 OR SUM(amount) is NULL
+ORDER BY 2;
+/* TODO: здесь посмотреть подробнее вроде в SQLite и MySQL разные результаты - в MySQL появляется Лермонтов с NULL */
+
+/* Запросы для нескольких таблиц со вложенными запросами */
+SELECT name_author
+FROM
+    author INNER JOIN book
+    on author.author_id = book.author_id
+GROUP BY name_author
+HAVING COUNT(DISTINCT genre_id)=1
+ORDER BY name_author;
+
+/* TODO: изменить данные в таблице supply перед последующим объединением */
+
+/* Операция соединение, использование USING() */
+SELECT book.title AS "Название", name_author AS "Автор", supply.amount+book.amount AS "Количество"
+FROM author
+    INNER JOIN book USING (author_id)
+    INNER JOIN supply ON book.title = supply.title
+                         and author.name_author = supply.author
+                         and book.price = supply.price;
+
+/* -------------------- Запросы корректировки, соединение таблиц -------------------- */
+
+
+/* -------------------- База данных "Интернет-магазин книг", запросы на выборку -------------------- */
+
+
+/* -------------------- База данных "Интернет-магазин книг", запросы корректировки -------------------- */
+
+
+/* -------------------- База данных "Тестирование", запросы на выборку -------------------- */
+
+
+/* -------------------- База данных "Тестирование", запросы корректировки -------------------- */
+
+
+/* -------------------- База данных "Абитуриент", запросы на выборку -------------------- */
+
+
+/* -------------------- База данных "Абитуриент", запросы корректировки -------------------- */
+
+
+/* -------------------- База данных "Учебная аналитика по курсу", -------------------- */
+
+
+/* -------------------- База данных "Интернет-магазин книг", часть 1 -------------------- */
+
+
+/* -------------------- База данных "Интернет-магазин книг", часть 2 -------------------- */
+
+
+/* -------------------- База данных "Интернет-магазин книг", часть 3 -------------------- */
+
+
+/* -------------------- База данных "Тестирование" -------------------- */
