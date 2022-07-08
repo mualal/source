@@ -629,14 +629,341 @@ FROM author
 
 /* -------------------- Запросы корректировки, соединение таблиц -------------------- */
 
+DROP TABLE IF EXISTS author;
+CREATE TABLE author(
+      author_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name_author VARCHAR(50)
+);
+
+INSERT INTO author(name_author)
+VALUES ('Булгаков М.А.'),
+       ('Достоевский Ф.М.'),
+       ('Есенин С.А.'),
+       ('Пастернак Б.Л.'),
+       ('Лермонтов М.Ю.');
+
+DROP TABLE IF EXISTS genre;
+CREATE TABLE genre (
+      genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name_genre VARCHAR(50)
+);
+
+INSERT INTO genre(name_genre)
+VALUES ('Роман'),
+       ('Поэзия'),
+       ('Приключения');
+
+DROP TABLE IF EXISTS book;
+CREATE TABLE book(
+    book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(50),
+    author_id INT,
+    genre_id INT,
+    price DECIMAL(8, 2),
+    amount INT,
+    FOREIGN KEY (author_id) REFERENCES author (author_id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genre (genre_id) ON DELETE SET NULL
+);
+
+INSERT INTO book(title,author_id,genre_id,price,amount)
+VALUES ("Мастер и Маргарита",1,1,670.99,3),
+       ("Белая гвардия",1,1,540.50,5),
+       ("Идиот",2,1,460.00,10),
+       ("Братья Карамазовы",2,1,799.01,3),
+       ("Игрок",2,1,480.50,10),
+       ("Стихотворения и поэмы",3,2,650.00,15),
+       ("Черный человек",3,2,570.20,6),
+       ("Лирика",4,2,518.99,2);
+
+DROP TABLE IF EXISTS supply;
+CREATE TABLE IF NOT EXISTS supply(
+  supply_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  title VARCHAR(50),
+  author VARCHAR(30),
+  price DECIMAL(8, 2),
+  amount INT
+);
+
+INSERT INTO supply(title, author, price, amount)
+VALUES
+    ("Доктор Живаго","Пастернак Б.Л.",380.80,4),
+    ("Черный человек","Есенин С.А.",570.20,6),
+    ("Белая гвардия", "Булгаков М.А.",540.50,7),
+    ("Идиот", "Достоевский Ф.М.",360.80,3),
+    ("Стихотворения и поэмы","Лермонтов М.Ю.",255.90,4),
+    ("Остров сокровищ","Стивенсон Р.Л.",599.99,5);
+
+
+/* запросы на обновление, связанные таблицы */
+/* MySQL only*/
+UPDATE book
+     INNER JOIN author ON author.author_id = book.author_id
+     INNER JOIN supply ON book.title = supply.title
+                         and supply.author = author.name_author
+SET book.amount = book.amount + supply.amount,
+    supply.amount = 0,
+    book.price = (book.price*book.amount+supply.price*supply.amount)/(book.amount+supply.amount)
+WHERE book.price <> supply.price;
+SELECT * FROM book;
+
+/* запросы на добавление связанные таблицы */
+/* MySQL only */
+INSERT INTO author(name_author)
+SELECT supply.author
+FROM
+    author
+    RIGHT JOIN supply on author.name_author = supply.author
+WHERE name_author IS NULL;
+
+/* запрос на добавление связанные таблицы */
+INSERT INTO book(title, author_id, price, amount)
+SELECT title, author_id, price, amount
+FROM
+    author
+    INNER JOIN supply ON author.name_author = supply.author
+WHERE amount <> 0;
+SELECT * FROM book;
+
+/* запрос на обновление, вложенные запросы */
+UPDATE book
+SET genre_id =
+      (
+       SELECT genre_id
+       FROM genre
+       WHERE name_genre = 'Поэзия'
+      )
+WHERE title = "Стихотворения и поэмы" AND author_id = (SELECT author_id FROM author WHERE name_author = "Лермонтов М.Ю.");
+UPDATE book
+SET genre_id =
+      (
+       SELECT genre_id
+       FROM genre
+       WHERE name_genre = 'Приключения'
+      )
+WHERE title = "Остров сокровищ" AND author_id = (SELECT author_id FROM author WHERE name_author = "Стивенсон Р.Л.");
+SELECT * FROM book;
+
+/* каскадное удаление записей связанных таблиц */
+DELETE FROM author
+WHERE author_id IN (SELECT author_id
+                      FROM book
+                      GROUP BY author_id
+                      HAVING SUM(amount) < 20
+                     );
+SELECT * FROM book;
+
+/* удаление записей главной таблицы с сохранением записей в зависимой */
+DELETE FROM genre
+WHERE genre_id IN (SELECT genre_id
+                      FROM book
+                      GROUP BY genre_id
+                      HAVING COUNT(title) < 4
+                     );
+
+/* удаление записей, использование связанных таблиц */
+DELETE FROM author
+USING book
+      INNER JOIN author ON author.author_id = book.author_id
+WHERE book.genre_id=(SELECT genre_id FROM genre WHERE name_genre="Поэзия");
+
 
 /* -------------------- База данных "Интернет-магазин книг", запросы на выборку -------------------- */
+
+/* запросы на основе трёх и более связанных таблиц */
+SELECT buy.buy_id, book.title, book.price, buy_book.amount
+FROM
+    client
+    INNER JOIN buy ON client.client_id = buy.client_id
+    INNER JOIN buy_book ON buy_book.buy_id = buy.buy_id
+    INNER JOIN book ON buy_book.book_id=book.book_id
+WHERE client.name_client = "Баранов Павел"
+ORDER BY buy.buy_id, book.title;
+
+
+SELECT author.name_author, book.title, COUNT(buy_book.buy_id) AS "Количество"
+FROM
+    buy_book
+    RIGHT JOIN book ON book.book_id = buy_book.book_id
+    INNER JOIN author ON book.author_id = author.author_id
+GROUP BY book.title, author.name_author
+ORDER BY author.name_author, book.title;
+
+
+SELECT city.name_city, COUNT(buy.buy_id) AS "Количество"
+FROM buy
+      INNER JOIN client ON buy.client_id = client.client_id
+      INNER JOIN city ON client.city_id = city.city_id
+GROUP BY city.name_city
+ORDER BY 2 DESC, 1;
+
+
+SELECT buy_step.buy_id, buy_step.date_step_end
+FROM buy_step
+      INNER JOIN step ON step.step_id = buy_step.step_id
+WHERE step.step_id = 1 AND buy_step.date_step_end IS NOT NULL;
+
+
+SELECT buy.buy_id, client.name_client, SUM(buy_book.amount*book.price) AS "Стоимость"
+FROM buy_book
+      INNER JOIN book ON buy_book.book_id = book.book_id
+      INNER JOIN buy ON buy_book.buy_id = buy.buy_id
+      INNER JOIN client ON buy.client_id = client.client_id
+GROUP BY buy_book.buy_id
+ORDER BY 1;
+
+
+SELECT buy_step.buy_id, step.name_step
+FROM buy_step
+      INNER JOIN step ON buy_step.step_id = step.step_id
+WHERE buy_step.date_step_beg IS NOT NULL AND buy_step.date_step_end IS NULL
+ORDER BY 1;
+
+
+SELECT buy.buy_id, DATEDIFF(buy_step.date_step_end, buy_step.date_step_beg) AS "Количество_дней", IF(DATEDIFF(buy_step.date_step_end, buy_step.date_step_beg)>city.days_delivery,DATEDIFF(buy_step.date_step_end, buy_step.date_step_beg)-city.days_delivery,0) AS "Опоздание"
+FROM buy_step
+     INNER JOIN buy ON buy_step.buy_id=buy.buy_id
+     INNER JOIN client ON buy.client_id=client.client_id
+     INNER JOIN city ON client.city_id=city.city_id
+     INNER JOIN step ON buy_step.step_id=step.step_id
+WHERE step.name_step = "Транспортировка" AND buy_step.date_step_end IS NOT NULL;
+
+
+SELECT DISTINCT client.name_client
+FROM buy_book
+     INNER JOIN book ON buy_book.book_id=book.book_id
+     INNER JOIN author ON book.author_id=author.author_id
+     INNER JOIN buy ON buy_book.buy_id=buy.buy_id
+     INNER JOIN client ON buy.client_id=client.client_id
+WHERE author.name_author = "Достоевский Ф.М."
+ORDER BY 1;
+
+
+SELECT genre.name_genre, SUM(buy_book.amount) AS "Количество"
+FROM buy_book
+     INNER JOIN book ON buy_book.book_id=book.book_id
+     INNER JOIN genre ON book.genre_id=genre.genre_id
+GROUP BY genre.name_genre
+HAVING SUM(buy_book.amount) = (SELECT MAX(sum_amount)
+                               FROM (SELECT SUM(buy_book.amount) AS sum_amount
+                                     FROM buy_book
+                                          INNER JOIN book ON buy_book.book_id=book.book_id
+                                          INNER JOIN genre ON book.genre_id=genre.genre_id
+                                     GROUP BY genre.name_genre) query_in);
+
+
+SELECT YEAR(buy_archive.date_payment) AS "Год", MONTHNAME(buy_archive.date_payment) AS "Месяц", SUM(buy_archive.price*buy_archive.amount) AS "Сумма"
+FROM
+    buy_archive
+GROUP BY YEAR(buy_archive.date_payment), MONTHNAME(buy_archive.date_payment)
+UNION ALL
+SELECT YEAR(buy_step.date_step_end), MONTHNAME(buy_step.date_step_end), SUM(book.price*buy_book.amount)
+FROM
+    book
+    INNER JOIN buy_book USING(book_id)
+    INNER JOIN buy USING(buy_id)
+    INNER JOIN buy_step USING(buy_id)
+    INNER JOIN step USING(step_id)
+WHERE buy_step.date_step_end IS NOT Null and step.name_step = "Оплата"
+GROUP BY YEAR(buy_step.date_step_end), MONTHNAME(buy_step.date_step_end)
+ORDER BY 2,1;
+
+
+SELECT Название AS title, SUM(Количество) AS "Количество", SUM(Количество*Цена) AS "Сумма" FROM
+(SELECT book.title AS "Название", buy_archive.amount AS "Количество", buy_archive.price AS "Цена"
+FROM buy_archive
+     INNER JOIN book ON buy_archive.book_id=book.book_id
+UNION ALL
+SELECT book.title, buy_book.amount, book.price
+FROM
+    book
+    INNER JOIN buy_book USING(book_id)
+    INNER JOIN buy USING(buy_id)
+    INNER JOIN buy_step USING(buy_id)
+    INNER JOIN step USING(step_id)
+WHERE buy_step.date_step_end IS NOT Null and step.name_step = "Оплата") query_in
+GROUP BY Название
+ORDER BY 3 DESC;
 
 
 /* -------------------- База данных "Интернет-магазин книг", запросы корректировки -------------------- */
 
+INSERT INTO client(name_client, city_id, email)
+SELECT "Попов Илья", city_id, "popov@test"
+FROM city
+WHERE name_city LIKE "Москва";
+
+
+INSERT INTO buy(buy_description, client_id)
+SELECT "Связаться со мной по вопросу доставки", client_id
+FROM client
+WHERE name_client = "Попов Илья";
+
+
+INSERT INTO buy_book(buy_id, book_id, amount)
+SELECT 5, book_id, 2
+FROM book
+WHERE author_id = (SELECT author_id FROM author WHERE name_author = "Пастернак Б.Л.") AND title="Лирика";
+INSERT INTO buy_book(buy_id, book_id, amount)
+SELECT 5, book_id, 1
+FROM book
+WHERE author_id = (SELECT author_id FROM author WHERE name_author = "Булгаков М.А.") AND title="Белая гвардия";
+
+
+UPDATE book, buy_book
+SET book.amount = book.amount - buy_book.amount
+WHERE buy_book.buy_id = 5 AND book.book_id = buy_book.book_id;
+SELECT * FROM book;
+
+
+CREATE TABLE buy_pay AS
+SELECT book.title, author.name_author, book.price, buy_book.amount, buy_book.amount*book.price AS Стоимость
+FROM buy_book
+     INNER JOIN book ON buy_book.book_id=book.book_id
+     INNER JOIN author ON book.author_id=author.author_id
+WHERE buy_book.buy_id=5
+ORDER BY book.title;
+SELECT * FROM buy_pay;
+
+
+CREATE TABLE buy_pay AS
+SELECT buy_book.buy_id, SUM(buy_book.amount) AS Количество, SUM(buy_book.amount*book.price) AS Итого
+FROM buy_book
+     INNER JOIN book ON buy_book.book_id=book.book_id
+GROUP BY buy_book.buy_id
+HAVING buy_book.buy_id=5;
+SELECT * FROM buy_pay;
+
+
+INSERT INTO buy_step(buy_id, step_id, date_step_beg, date_step_end)
+SELECT buy.buy_id, step.step_id, NULL, NULL
+FROM step CROSS JOIN buy
+WHERE buy.buy_id=5;
+SELECT * FROM buy_step;
+
+
+UPDATE buy_step
+SET date_step_beg="2020-04-12"
+WHERE buy_id=5 AND step_id=1;
+SELECT * FROM buy_step
+WHERE buy_id=5;
+
+
+UPDATE buy_step
+SET date_step_end="2020-04-13"
+WHERE buy_id=5 AND step_id=(SELECT step_id
+                            FROM step
+                            WHERE name_step = 'Оплата');
+UPDATE buy_step
+SET date_step_beg="2020-04-13"
+WHERE buy_id=5 AND step_id=(SELECT step_id + 1
+                            FROM step
+                            WHERE name_step = 'Оплата');
+SELECT * FROM buy_step
+WHERE buy_id=5;
+
 
 /* -------------------- База данных "Тестирование", запросы на выборку -------------------- */
+
 
 
 /* -------------------- База данных "Тестирование", запросы корректировки -------------------- */
