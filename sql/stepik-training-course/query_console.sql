@@ -964,12 +964,113 @@ WHERE buy_id=5;
 
 /* -------------------- База данных "Тестирование", запросы на выборку -------------------- */
 
+SELECT student.name_student, attempt.date_attempt, attempt.result
+FROM attempt
+     INNER JOIN student ON attempt.student_id=student.student_id
+     INNER JOIN subject ON attempt.subject_id=subject.subject_id
+WHERE subject.name_subject="Основы баз данных"
+ORDER BY 3 DESC;
 
+
+SELECT subject.name_subject, COUNT(attempt.attempt_id) AS "Количество", ROUND(AVG(attempt.result),2) AS "Среднее"
+FROM attempt
+     RIGHT JOIN subject ON attempt.subject_id=subject.subject_id
+GROUP BY subject.name_subject
+ORDER BY 3 DESC;
+
+
+SELECT DISTINCT student.name_student, attempt.result
+FROM attempt
+     INNER JOIN student ON attempt.student_id=student.student_id
+WHERE attempt.result = (SELECT MAX(result)
+                        FROM attempt)
+ORDER BY 1;
+
+
+SELECT student.name_student, subject.name_subject, DATEDIFF(MAX(attempt.date_attempt),MIN(attempt.date_attempt)) AS "Интервал"
+FROM attempt
+     INNER JOIN student ON attempt.student_id=student.student_id
+     INNER JOIN subject ON attempt.subject_id=subject.subject_id
+GROUP BY student.name_student, subject.name_subject
+HAVING Интервал > 0
+ORDER BY 3;
+
+
+SELECT subject.name_subject, COUNT(DISTINCT attempt.student_id) AS "Количество"
+FROM attempt
+     RIGHT JOIN subject ON attempt.subject_id=subject.subject_id
+GROUP BY subject.name_subject
+ORDER BY 2 DESC, 1;
+
+
+SELECT question.question_id, question.name_question
+FROM question
+     INNER JOIN subject ON question.subject_id=subject.subject_id
+WHERE subject.name_subject="Основы баз данных"
+ORDER BY RAND()
+LIMIT 3;
+
+
+SELECT question.name_question, answer.name_answer, IF(answer.is_correct, "Верно", "Неверно") AS "Результат"
+FROM testing
+     INNER JOIN question ON testing.question_id=question.question_id
+     INNER JOIN answer ON testing.answer_id=answer.answer_id
+WHERE testing.attempt_id=7;
+
+
+SELECT student.name_student, subject.name_subject, attempt.date_attempt, ROUND(SUM(answer.is_correct)/3*100,2) AS "Результат"
+FROM testing
+     INNER JOIN attempt ON testing.attempt_id=attempt.attempt_id
+     INNER JOIN student ON attempt.student_id=student.student_id
+     INNER JOIN subject ON attempt.subject_id=subject.subject_id
+     INNER JOIN answer ON testing.answer_id=answer.answer_id
+GROUP BY student.name_student, subject.name_subject, attempt.date_attempt
+ORDER BY 1, 3 DESC;
+
+
+SELECT subject.name_subject, CONCAT(LEFT(question.name_question,30),"...") AS "Вопрос", COUNT(answer.is_correct) AS "Всего_ответов", ROUND(SUM(answer.is_correct)/COUNT(answer.is_correct)*100,2) AS "Успешность"
+FROM answer
+     INNER JOIN question ON answer.question_id=question.question_id
+     RIGHT JOIN subject ON question.subject_id=subject.subject_id
+     INNER JOIN testing ON answer.answer_id=testing.answer_id
+GROUP BY subject.name_subject, question.name_question
+ORDER BY 1, 4 DESC, 2;
 
 /* -------------------- База данных "Тестирование", запросы корректировки -------------------- */
 
+INSERT INTO attempt(student_id, subject_id, date_attempt)
+SELECT (SELECT student_id FROM student WHERE student.name_student="Баранов Павел"),
+        (SELECT subject_id FROM subject WHERE subject.name_subject="Основы баз данных"),
+        NOW();
+SELECT * FROM attempt;
+
+
+INSERT INTO testing(attempt_id, question_id)
+SELECT attempt.attempt_id, question.question_id
+FROM attempt
+     INNER JOIN question ON attempt.subject_id=question.subject_id
+WHERE attempt.attempt_id = (SELECT MAX(attempt_id)
+                           FROM attempt)
+ORDER BY RAND()
+LIMIT 3;
+SELECT * FROM testing;
+
+
+UPDATE attempt
+SET attempt.result=(SELECT ROUND(SUM(answer.is_correct)/COUNT(answer.answer_id)*100,0)
+                   FROM testing
+                        INNER JOIN answer ON testing.answer_id=answer.answer_id
+                   WHERE testing.attempt_id=8)
+WHERE attempt.attempt_id=8;
+SELECT * FROM attempt;
+
+DELETE FROM attempt
+WHERE DATEDIFF(attempt.date_attempt, "2020-05-01") < 0;
+SELECT * FROM attempt;
+SELECT * FROM testing;
 
 /* -------------------- База данных "Абитуриент", запросы на выборку -------------------- */
+
 
 
 /* -------------------- База данных "Абитуриент", запросы корректировки -------------------- */
