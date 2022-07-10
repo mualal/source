@@ -482,6 +482,14 @@ SET fine.date_payment = payment.date_payment, fine.sum_fine = IF(DATEDIFF(paymen
 WHERE fine.name = payment.name AND fine.number_plate = payment.number_plate AND fine.violation = payment.violation AND fine.date_payment IS NULL
 
 
+UPDATE fine, (SELECT name, number_plate, violation
+FROM fine
+GROUP BY name, number_plate, violation
+HAVING COUNT(fine.violation)>1) AS new_query
+SET fine.sum_fine = fine.sum_fine*2
+WHERE fine.date_payment IS NULL AND fine.name=new_query.name;
+
+
 CREATE TABLE back_payment AS
 SELECT name, number_plate, violation, sum_fine, date_violation
 FROM fine
@@ -616,6 +624,35 @@ FROM
 GROUP BY name_author
 HAVING COUNT(DISTINCT genre_id)=1
 ORDER BY name_author;
+
+/* Вложенные запросы в операторах соединения */
+SELECT book.title, name_author, name_genre, book.price, book.amount
+FROM
+    author
+    INNER JOIN book ON author.author_id = book.author_id
+    INNER JOIN genre ON  book.genre_id = genre.genre_id
+GROUP BY book.title, name_author,name_genre, genre.genre_id, book.price, book.amount
+HAVING genre.genre_id IN
+         (/* выбираем автора, если он пишет книги в самых популярных жанрах*/
+          SELECT query_in_1.genre_id
+          FROM
+              ( /* выбираем код жанра и количество произведений, относящихся к нему */
+                SELECT genre_id, SUM(amount) AS sum_amount
+                FROM book
+                GROUP BY genre_id
+               )query_in_1
+          INNER JOIN
+              ( /* выбираем запись, в которой указан код жанр с максимальным количеством книг */
+                SELECT genre_id, SUM(amount) AS sum_amount
+                FROM book
+                GROUP BY genre_id
+                ORDER BY sum_amount DESC
+                LIMIT 1
+               ) query_in_2
+          ON query_in_1.sum_amount= query_in_2.sum_amount
+         )
+ORDER BY 1;
+
 
 /* TODO: изменить данные в таблице supply перед последующим объединением */
 
@@ -1071,9 +1108,151 @@ SELECT * FROM testing;
 
 /* -------------------- База данных "Абитуриент", запросы на выборку -------------------- */
 
+SELECT enrollee.name_enrollee
+FROM program_enrollee
+     INNER JOIN program ON program_enrollee.program_id=program.program_id
+     INNER JOIN enrollee ON program_enrollee.enrollee_id=enrollee.enrollee_id
+WHERE program.name_program="Мехатроника и робототехника"
+ORDER BY 1;
 
+
+SELECT program.name_program
+FROM program_subject
+     INNER JOIN program ON program_subject.program_id=program.program_id
+     INNER JOIN subject ON program_subject.subject_id=subject.subject_id
+WHERE subject.name_subject="Информатика"
+ORDER BY 1 DESC;
+
+
+SELECT subject.name_subject, COUNT(enrollee_subject.enrollee_id) AS "Количество", MAX(enrollee_subject.result) AS "Максимум", MIN(enrollee_subject.result) AS "Минимум", ROUND(AVG(enrollee_subject.result), 1) AS "Среднее"
+FROM enrollee_subject
+     INNER JOIN subject ON enrollee_subject.subject_id=subject.subject_id
+GROUP BY 1
+ORDER BY 1;
+
+
+SELECT program.name_program
+FROM program_subject
+     INNER JOIN program ON program_subject.program_id=program.program_id
+GROUP BY program.name_program
+HAVING MIN(program_subject.min_result) >= 40
+ORDER BY 1;
+
+
+SELECT program.name_program, program.plan
+FROM program
+WHERE program.plan = (SELECT MAX(program.plan)
+                     FROM program);
+
+
+SELECT enrollee.name_enrollee, IF(SUM(achievement.bonus) IS NULL, 0, SUM(achievement.bonus)) AS "Бонус"
+FROM enrollee_achievement
+     RIGHT JOIN enrollee ON enrollee_achievement.enrollee_id=enrollee.enrollee_id
+     LEFT JOIN achievement ON enrollee_achievement.achievement_id=achievement.achievement_id
+GROUP BY enrollee.name_enrollee
+ORDER BY 1;
+
+
+SELECT department.name_department, program.name_program, program.plan, COUNT(program_enrollee.program_enrollee_id) AS "Количество", ROUND(COUNT(program_enrollee.program_enrollee_id)/program.plan,2) AS "Конкурс"
+FROM program_enrollee
+     INNER JOIN program ON program_enrollee.program_id=program.program_id
+     INNER JOIN department ON program.department_id=department.department_id
+GROUP BY department.name_department, program.name_program, program.plan
+ORDER BY 5 DESC;
+
+
+SELECT DISTINCT program.name_program
+FROM program_subject
+     INNER JOIN subject ON program_subject.subject_id=subject.subject_id
+     INNER JOIN program ON program_subject.program_id=program.program_id
+WHERE subject.name_subject IN ("Информатика", "Математика")
+GROUP BY program.name_program
+HAVING COUNT(subject.name_subject)=2
+ORDER BY 1;
+
+
+SELECT program.name_program, enrollee.name_enrollee, SUM(enrollee_subject.result) AS "itog"
+FROM enrollee
+     INNER JOIN program_enrollee ON enrollee.enrollee_id=program_enrollee.enrollee_id
+     INNER JOIN program ON program_enrollee.program_id=program.program_id
+     INNER JOIN program_subject ON program.program_id=program_subject.program_id
+     INNER JOIN subject ON program_subject.subject_id=subject.subject_id
+     INNER JOIN enrollee_subject ON subject.subject_id=enrollee_subject.subject_id AND enrollee_subject.enrollee_id=enrollee.enrollee_id
+GROUP BY program.name_program, enrollee.name_enrollee
+ORDER BY 1, 3 DESC;
+
+
+SELECT program.name_program, enrollee.name_enrollee
+FROM enrollee
+     INNER JOIN program_enrollee ON enrollee.enrollee_id=program_enrollee.enrollee_id
+     INNER JOIN program ON program_enrollee.program_id=program.program_id
+     INNER JOIN program_subject ON program.program_id=program_subject.program_id
+     INNER JOIN subject ON program_subject.subject_id=subject.subject_id
+     INNER JOIN enrollee_subject ON subject.subject_id=enrollee_subject.subject_id AND enrollee_subject.enrollee_id=enrollee.enrollee_id
+WHERE enrollee_subject.result<program_subject.min_result
+GROUP BY 1,2
+ORDER BY 1,2;
 
 /* -------------------- База данных "Абитуриент", запросы корректировки -------------------- */
+
+CREATE TABLE applicant AS
+SELECT program.program_id, enrollee.enrollee_id, SUM(enrollee_subject.result) AS "itog"
+FROM enrollee
+     INNER JOIN program_enrollee ON enrollee.enrollee_id=program_enrollee.enrollee_id
+     INNER JOIN program ON program_enrollee.program_id=program.program_id
+     INNER JOIN program_subject ON program.program_id=program_subject.program_id
+     INNER JOIN subject ON program_subject.subject_id=subject.subject_id
+     INNER JOIN enrollee_subject ON subject.subject_id=enrollee_subject.subject_id AND enrollee_subject.enrollee_id=enrollee.enrollee_id
+GROUP BY program.program_id, enrollee.enrollee_id
+ORDER BY 1, 3 DESC;
+SELECT * FROM applicant;
+
+
+DELETE FROM applicant
+USING applicant
+      INNER JOIN program_subject ON applicant.program_id=program_subject.program_id
+      INNER JOIN enrollee_subject ON applicant.enrollee_id=enrollee_subject.enrollee_id AND enrollee_subject.subject_id=program_subject.subject_id
+WHERE enrollee_subject.result<program_subject.min_result;
+SELECT * FROM applicant;
+
+
+UPDATE applicant
+       INNER JOIN (SELECT enrollee.enrollee_id, IF(SUM(achievement.bonus) IS NULL, 0, SUM(achievement.bonus)) AS "Бонус"
+FROM enrollee_achievement
+     RIGHT JOIN enrollee ON enrollee_achievement.enrollee_id=enrollee.enrollee_id
+     LEFT JOIN achievement ON enrollee_achievement.achievement_id=achievement.achievement_id
+GROUP BY enrollee.enrollee_id
+ORDER BY 1) query_in ON applicant.enrollee_id = query_in.enrollee_id
+SET applicant.itog=applicant.itog+query_in.Бонус;
+SELECT * FROM applicant;
+
+
+CREATE TABLE applicant_order AS
+SELECT program_id, enrollee_id, itog
+FROM applicant
+ORDER BY 1, 3 DESC;
+DROP TABLE applicant;
+SELECT * FROM applicant_order;
+
+
+ALTER TABLE applicant_order ADD str_id INTEGER FIRST;
+
+
+SET @num_pr := 1;
+SET @row_num := 0;
+UPDATE applicant_order
+SET str_id = IF(program_id = @num_pr, @row_num := @row_num + 1, @row_num := 1 AND @num_pr := program_id);
+SELECT * FROM applicant_order;
+
+
+CREATE TABLE student AS
+SELECT program.name_program, enrollee.name_enrollee, applicant_order.itog
+FROM applicant_order
+     INNER JOIN enrollee ON applicant_order.enrollee_id=enrollee.enrollee_id
+     INNER JOIN program ON applicant_order.program_id=program.program_id
+WHERE applicant_order.str_id<=program.plan
+ORDER BY 1, 3 DESC;
+SELECT * FROM student;
 
 
 /* -------------------- База данных "Учебная аналитика по курсу", -------------------- */
