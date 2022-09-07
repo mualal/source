@@ -30,7 +30,29 @@
   <tbody>
     <tr>
       <td>
-        <b>2022</b>
+        <b>2022 <br> (2-e полугодие)</b>
+      </td>
+      <td>
+        <a href="https://mualal.github.io/source/tex/reservoir-hydrodynamic-modelling-2022/main.pdf">Гидродинамическое моделирование</a>
+        <br><br>
+      </td>
+      <td>
+        ...
+      </td>
+      <td>
+        <a href="https://mualal.github.io/source/research/autumn2022/main.pdf">Осень</a>
+        <br><br>
+      </td>
+      <td>
+        ...
+      </td>
+      <td>
+        ...
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>2022 <br> (1-е полугодие)</b>
       </td>
       <td>
         <a href="https://mualal.github.io/source/tex/poromechanics/main.pdf">Введение в механику пористых сред</a>
