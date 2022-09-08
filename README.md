@@ -47,7 +47,7 @@
         ...
       </td>
       <td>
-        ...
+        <a href="https://github.com/mualal/computer-vision-with-python">Изучение основ компьютерного зрения</a>
       </td>
     </tr>
     <tr>
