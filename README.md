@@ -48,6 +48,8 @@
       </td>
       <td>
         <a href="https://github.com/mualal/computer-vision-with-python">Изучение основ компьютерного зрения</a>
+        <br><br>
+        <a href="https://github.com/mualal/oil-gas-software-experiments">Эксперименты с нефтегазовым ПО</a>
       </td>
     </tr>
     <tr>
