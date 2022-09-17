@@ -52,15 +52,15 @@
 1) Набор уравнений:
 \begin{itemize}
 	\item неразрывность потока
-	\beq
+	\beq\label{Continuity}
 	\frac{\partial\left(\rho_f\varphi\right)}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi \pmb{v_f}\right)=q_f(\pmb{x})
 	\eeq
 	\item закон Дарси
-	\beq
+	\beq\label{Darcy}
 	\pmb{W}=-\frac{k}{\mu_f}\cdot\pmb{\nabla} p
 	\eeq
 	\item сжимаемость флюида
-	\beq
+	\beq\label{Compressibility}
 	p-p_0=K_f\frac{\rho_f-\rho_f^0}{\rho_f^0}
 	\eeq
 \end{itemize}
@@ -73,23 +73,36 @@
 
 \subsubsection{Уравнение пьезопроводности (без упругости пласта)}
 
-В предположении неподвижности скелета ($v_s\approx0$) верно равенство $W\approx\varphi v_f$. Подставляя в закон Дарси, получаем:
-\beq
+В предположении неподвижности скелета ($\pmb{v_s}\approx \pmb{0}$ и $\varphi(t)=\textrm{const}$) верно равенство $\pmb{W}\approx\varphi \pmb{v_f}$. Подставляя в закон Дарси \eqref{Darcy}, получаем:
+\beq\label{DarcyWithSkeletNotMoving}
 \varphi \pmb{v_f}=-\frac{k}{\mu_f}\cdot\pmb{\nabla} p
 \eeq
 
-Условие сжимаемости флюида перепишем в дифференциальной форме:
-\beq
+Условие сжимаемости флюида \eqref{Compressibility} перепишем в дифференциальной форме:
+\beq\label{CompressibilityDiff}
 \frac{\partial p}{\partial t}=\frac{K_f}{\rho_f^0}\frac{\partial\rho_f}{\partial t}
 \eeq
 
-Подставляя в уравнение неразрывности потока, получаем:
-\beq
-1
+Учитывая предположение о неподвижности скелета, перепишем уравнение неразрывности потока:
+\beq\label{ContinuityWithSkeletNotMoving}
+\varphi\frac{\partial\rho_f}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi\pmb{v_f}\right)=q_f(\pmb{x})
 \eeq
+
+Подставляя \eqref{DarcyWithSkeletNotMoving} и \eqref{CompressibilityDiff} в \eqref{ContinuityWithSkeletNotMoving}, при отсутствии источникового слагаемого ($q_f(\pmb{x})=0$) получаем:
+\beq
+\varphi\frac{\rho_f^0}{K_f}\frac{\partial p}{\partial t}-\pmb{\nabla}\cdot\left(\rho_f\frac{k}{\mu_f}\pmb{\nabla} p\right)=0
+\eeq
+
+При дополнительном условии слабосжимаемости флюида ($\rho_f\approx\rho_f^0=\textrm{const}$) получаем:
+\beq
+\frac{\partial p}{\partial t}=\frac{kK_f}{\mu_f\varphi}\pmb{\nabla}^2p
+\eeq
+
+Это уравнение пьезопроводности (без упругости пласта), полученное в приближении слабосжимаемого флюида, неподвижного и недеформируемого пласта.
 
 \subsubsection{Уравнение пьезопроводности (в случае упругого пласта)}
 
+Задача со звёздочкой.
 
 \subsection{Пороупругость}
 
