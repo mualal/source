@@ -33,11 +33,13 @@
         <b>2022 <br> (2-e полугодие)</b>
       </td>
       <td>
-        <a href="https://mualal.github.io/source/tex/reservoir-hydrodynamic-modelling-2022/main.pdf">Гидродинамическое моделирование</a>
+        <a href="https://mualal.github.io/source/tex/reservoir-hydrodynamic-modelling-2022/main.pdf">Гидродинамическое моделирование (ГДМ)</a>
         <br><br>
+        <a href="https://mualal.github.io/source/tex/phys-chem-fluids-properties-2022/main.pdf">Физико-химические свойства пластовых флюидов</a>
       </td>
       <td>
-        ...
+        <a href="https://mualal.github.io/source/tex/reservoir-hydrodynamic-modelling-2022/hdm_problems_solving/hdm_problems_solving_Muravtsev.pdf">ГДМ (задачи)</a>
+        <br><br>
       </td>
       <td>
         <a href="https://mualal.github.io/source/research/autumn2022/main.pdf">Осень</a>
