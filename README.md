@@ -96,7 +96,7 @@
         <b>2021</b>
       </td>
       <td>
-        <a href="https://mualal.github.io/source/tex/geomechanics/main.pdf">Геомеханика</a>
+        <a href="https://mualal.github.io/source/tex/geomechanics2021/main.pdf">Геомеханика</a>
         <br><br>
       </td>
       <td>
