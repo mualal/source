@@ -45,6 +45,8 @@ top=20mm,
 \usepackage{csquotes}
 \usepackage{fancyhdr}
 \usepackage{fancyvrb}
+\usepackage{subcaption}
+\usepackage{adjustbox}
 \usepackage[breakable, skins]{tcolorbox}
 
 \pagestyle{fancy}
@@ -818,6 +820,14 @@ END
 \end{figure}
 
 
+\begin{figure}[H]
+\center
+\includegraphics[width=.6\textwidth]{tnav_head_box_pressure_map}
+\caption{Распределение давления -- визуализация tNavigator}
+\label{fig:tnav_fwct_box_model}
+\end{figure}
+
+
 \newpage
 \section{Задание от 05.10.2022}
 
@@ -953,26 +963,36 @@ EQUIL1260  159.6  1252  0  4*  0  /
 \label{fig:initial_reserves_plot}
 \end{figure}
 
-\begin{figure}[H]
-\center
-\includegraphics[width=\textwidth]{saturation_1_model_1}
-\caption{Начальное распределение нефтенасыщенности при $P_c=-0.1$ бар -- визуализация tNavigator}
-\label{fig:saturation_1_model_1}
-\end{figure}
 
 \begin{figure}[H]
-\center
-\includegraphics[width=\textwidth]{saturation_2_model_1}
-\caption{Начальное распределение нефтенасыщенности при $P_c=0$ бар -- визуализация tNavigator}
-\label{fig:saturation_2_model_1}
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:saturation_1_model_1}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{saturation_1_model_1}
+	\end{subfigure}
+\hfill %выровнять по ширине
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:saturation_2_model_1}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{saturation_2_model_1}
+	\end{subfigure}
+\\[20pt]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:saturation_3_model_1}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{saturation_3_model_1}
+\end{subfigure}%
+\hfill %выровнять по ширине
+\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:saturation_4_model_1}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{saturation_4_model_1}
+\end{subfigure}
+\captionsetup{justification=centering} %центрировать
+\caption{Начальное распределение нефтенасыщенности: ({\itshape a}) $P_c=-0.1\text{ бар}$; ({\itshape b}) $P_c=0\text{ бар}$; \\({\itshape c}) $P_c=0.1\text{ бар}$; ({\itshape d}) $P_c=0.3\text{ бар}$} 
+\label{fig:initial_saturation}
 \end{figure}
 
-\begin{figure}[H]
-\center
-\includegraphics[width=\textwidth]{saturation_3_model_1}
-\caption{Начальное распределение нефтенасыщенности при $P_c=0.1$ бар -- визуализация tNavigator}
-\label{fig:saturation_3_model_1}
-\end{figure}
 
 \subsection{Инициализация EQUIL + SWATINIT}
 
@@ -1020,29 +1040,22 @@ ARITHMETICSWCR=-0.04705*LOG(PERMX)+0.52721SOWCR=-0.01289*LOG(PERMX)+0.27396KR
 \subsection{Секция SCHEDULE}
 Секция \textbf{SCHEDULE} собрана в т-Навигаторе с помощью опции Загрузить данные по скважинам.
 
-В ноябре 2006 года давление вблизи скважины PR\_08 падает ниже давления насыщения и расчёт останавливается.
-
-\begin{figure}[H]
-\center
-\includegraphics[width=\textwidth]{rates_model_01}
-\caption{График дебитов нефти и воды (суммарно со всех скважин) -- визуализация tNavigator}
-\label{fig:rates_model_01}
-\end{figure}
-
-\begin{figure}[H]
-\center
-\includegraphics[width=\textwidth]{pressure_nov_2006_model_01}
-\caption{Распределение давлений 01/11/2006 -- визуализация tNavigator}
-\label{fig:pressure_nov_2006_model_01}
-\end{figure}
-
-
 Дополнительно можем собрать секцию \textbf{SCHEDULE} в ПО SCHEDULE (поставляемом вместе с Eclipse-ом) и подключить её к data-файлу с моделью (в секции \textbf{SCHEDULE}):
 \begin{eclrun}
 INCLUDE'INC\SCHEDULE.SCH' /
 \end{eclrun}
 
 При таком подходе в рассматриваемом примере результат совпадает с результатом в т-Навигаторе.
+
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{rates_model_schedule}
+\caption{Фактические (исторические) и рассчитанные графики дебитов нефти и воды (суммарно со всех скважин по месторождению) для исходной модели}
+\label{fig:history_and_calculate}
+\end{figure}
+
+Из рис. \ref{fig:history_and_calculate} видим, что для исходной модели адаптация не проводилась: рассчитанные значения дебитов нефти существенно занижены, а рассчитанные значения дебитов воды завышены относительно фактических (исторических) значений.
 
 \newpage
 \section{Задание от 26.10.2022}
@@ -1064,6 +1077,77 @@ INCLUDE'INC\SCHEDULE.SCH' /
 	\,\,\,\,\,\,\,\mu_{\text{oil}}=5.2\,\text{мПа}\cdot\text{с}$$
 \end{itemize}
 
+Результат расчёта моделей с разными наборами исходных данных представлен на рис. \ref{fig:rates_variations} и рис. \ref{fig:nakop_variations}.
+
+\begin{figure}[H]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:rates_variations_1}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.9\linewidth]{rates_default_model}
+	\end{subfigure}
+\hfill %выровнять по ширине
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:rates_variations_2}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.9\linewidth]{rates_anizotropy_model}
+	\end{subfigure}
+\\[20pt]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:rates_variations_3}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.9\linewidth]{rates_ofp_model}
+\end{subfigure}%
+\hfill %выровнять по ширине
+\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:rates_variations_4}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.9\linewidth]{rates_pvt_model}
+\end{subfigure}
+\captionsetup{justification=centering} %центрировать
+\caption{Графики зависимости дебитов нефти и воды от времени: ({\itshape a}) исходная модель; ({\itshape b}) с анизотропией 0.1; ({\itshape c}) с ОФП Sample 4; ({\itshape d}) с уточнёнными PVT-свойствами} 
+\label{fig:rates_variations}
+\end{figure}
+
+
+\begin{figure}[H]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:nakop_variations_1}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{nakop_default_model}
+	\end{subfigure}
+\hfill %выровнять по ширине
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:nakop_variations_2}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{nakop_anizotropy_model}
+	\end{subfigure}
+\\[20pt]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:nakop_variations_3}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{nakop_ofp_model}
+\end{subfigure}%
+\hfill %выровнять по ширине
+\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:nakop_variations_4}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{nakop_pvt_model}
+\end{subfigure}
+\captionsetup{justification=centering} %центрировать
+\caption{Графики зависимости накопленной нефти и воды от времени: ({\itshape a}) исходная модель; ({\itshape b}) с анизотропией 0.1; ({\itshape c}) с ОФП Sample 4; ({\itshape d}) с уточнёнными PVT-свойствами} 
+\label{fig:nakop_variations}
+\end{figure}
+
+Из полученных графиков видим, что отсутствие исследования анизотропии проницаемости (расчёт с анизотропией 0.1) совсем слабо повлияло на результат (а именно, на дебиты и накопленную добычу нефти и воды).
+
+Изменение таблицы ОФП для системы вода-нефть существенно повлияло на итоговые результаты.
+При этом рассчитанные результаты (суммарно по всему месторождению) стали ближе к историческим данным.
+
+Уточнение PVT-свойств нефти тоже существенно повлияло на результат расчёта.
+
+Из проведённых экспериментов с разными наборами исходных данных замечаем, что для адаптации модели разумно попытаться варьировать параметры ОФП и PVT-свойства.
+\newpage
+
 \subsection{Адаптация ГДМ}
 
 Требуется:
@@ -1072,6 +1156,21 @@ INCLUDE'INC\SCHEDULE.SCH' /
 	\item просчитать модель, определить основные невязки
 	\item варьируя различные параметры, садаптировать модель
 \end{itemize}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{model_not_adapt}
+\caption{Рассчитанные и исторические графики дебитов нефти, воды и жидкости (суммарно со всех скважин по месторождению) для исходной модели}
+\label{fig:history_before_adaptation}
+\end{figure}
+
+Из рис. \ref{fig:history_before_adaptation} видим, что рассчитанные и исторические значения дебитов жидкости практически совпадают, а рассчитанные и исторические значения дебитов нефти/воды сильно отличаются друг от друга.
+Дополнительно проверены зависимости дебитов для каждой из скважин в модели -- ситуация аналогична, т.е. по жидкости история и расчёт практически совпадают, а по дебитам воды/нефти есть большие невязки расчёта с историей работы скважин. 
+
+Далее будем проводить адаптацию модели с целью минимизации невязок рассчитанных и исторических дебитов воды/нефти.
+
+При адаптации модели для достижения поставленной цели варьируются параметры модели (исходные данные), обладающие неопределённостью.
+
 
 
 \newpage
