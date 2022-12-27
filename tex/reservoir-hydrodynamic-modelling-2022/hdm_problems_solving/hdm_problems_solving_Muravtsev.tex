@@ -1170,10 +1170,130 @@ INCLUDE'INC\SCHEDULE.SCH' /
 Далее будем проводить адаптацию модели с целью минимизации невязок рассчитанных и исторических дебитов воды/нефти.
 
 При адаптации модели для достижения поставленной цели варьируются параметры модели (исходные данные), обладающие неопределённостью.
+\\
+\newline
+Выбраны следующие параметры для варьирования:
+\begin{enumerate}[parsep=-5pt]
+	\item Множители проницаемости по отчётным регионам
+	\item Коэффициент анизотропии
+	\item Критические водонасыщенности (SWCR)
+	\item Критические нефтенасыщенности (SOWCR)
+	\item ОФП воды при критической нефтенасыщенности (KRWR)
+	\item ОФП нефти при критической водонасыщенности (KRORW)
+\end{enumerate}
 
+С помощью Латинского гиперкуба выбраны значения каждого из параметров для каждого из планируемых экспериментов (расчётов модели).
 
+Далее выбрана модель с наименьшими невязками.
+Таблица невязок построенных моделей представлена на рис. \ref{fig:nevyazky}.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{nevyazky}
+\caption{Таблица невязок построенных моделей}
+\label{fig:nevyazky}
+\end{figure}
+
+Допустимые невязки: 20\% по нефти, 20\% по воде, 5\% по жидкости.
+
+На рис. \ref{fig:krossplot_oil}-\ref{fig:krossplot_liquid} представлены кроссплоты расчёт-факт по состоянию на 1 октября 2011 (последний месяц с имеющимися историческими данными).
+В другие даты картина примерно аналогична.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{krossplot_oil}
+\caption{Кроссплот расчёт-факт для дебитов нефти -- 1 октября 2011}
+\label{fig:krossplot_oil}
+\end{figure}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{krossplot_water}
+\caption{Кроссплот расчёт-факт для дебитов воды -- 1 октября 2011}
+\label{fig:krossplot_water}
+\end{figure}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{krossplot_liquid}
+\caption{Кроссплот расчёт-факт для дебитов жидкости -- 1 октября 2011}
+\label{fig:krossplot_liquid}
+\end{figure}
+
+Видим, что критерию адаптации по дебиту нефти удовлетворяют 8 скважин из 9; критерию адаптации по дебиту воды удовлетворяют 5 скважин из 9; а критерию адаптации по жидкости удовлетворяют все скважины.
+
+Далее на рис. \ref{fig:adapted_wells_1}-\ref{fig:adapted_wells_2} приведены графики зависимости дебитов воды и нефти для каждой и скважин от времени (расчёт проведён на адаптированной модели).
+
+\begin{figure}[H]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw1}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{aw1}
+	\end{subfigure}
+\hfill %выровнять по ширине
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw2}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{aw2}
+	\end{subfigure}
+\\[20pt]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw3}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{aw3}
+\end{subfigure}%
+\hfill %выровнять по ширине
+\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw4}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{aw4}
+\end{subfigure}
+\\[20pt]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw5}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{aw5}
+	\end{subfigure}
+\hfill %выровнять по ширине
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw6}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{aw6}
+	\end{subfigure}
+\captionsetup{justification=centering} %центрировать
+\caption{Графики зависимости дебитов нефти и воды от времени для каждой из скважин модели: ({\itshape a}) PR\_01; ({\itshape b}) PR\_02; ({\itshape c}) PR\_03; ({\itshape d}) PR\_04; ({\itshape e}) PR\_05; ({\itshape f}) PR\_06} 
+\label{fig:adapted_wells_1}
+\end{figure}
+
+\begin{figure}[H]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw7}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{aw7}
+	\end{subfigure}
+\hfill %выровнять по ширине
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw8}}%
+	\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+		\centering
+		\includegraphics[width=.95\linewidth]{aw8}
+	\end{subfigure}
+\\[20pt]
+	\adjustbox{minipage=1.3em}{\subcaption{}\label{fig:aw9}}%
+\begin{subfigure}[t]{\dimexpr.5\linewidth-1.3em\relax}
+	\centering
+	\includegraphics[width=.95\linewidth]{aw9}
+\end{subfigure}%
+\captionsetup{justification=centering} %центрировать
+\caption{Графики зависимости дебитов нефти и воды от времени для каждой из скважин модели: ({\itshape a}) PR\_07; ({\itshape b}) PR\_08; ({\itshape c}) PR\_09} 
+\label{fig:adapted_wells_2}
+\end{figure}
+
+Из построенных графиков видим, что теперь (после проведённой адаптации) рассчитанные значения дебитов воды и нефти достаточно хорошо согласуются с историческими данными.
 
 \newpage
+
+
+
 \section{Задание от 09.11.2022}
 
 Решить уравнение фильтрации однофазной жидкости в одномерном пласте, используя явную схему метода конечных разностей.
