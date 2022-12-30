@@ -45,6 +45,7 @@ top=20mm,
 \usepackage{tikz}
 \usepackage{csquotes}
 \usepackage{fancyhdr}
+\usepackage{comment}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -55,6 +56,7 @@ top=20mm,
 \floatstyle{plaintop}
 \usepackage{enumitem}
 \setlength{\parindent}{0pt}
+\setcounter{section}{-1}
 
 \graphicspath{{./img/}}
 \newcommand{\myPictWidth}{.95\textwidth}
@@ -73,6 +75,8 @@ top=20mm,
 	\and
 	Кайгородов С.В.\thanks{лектор, Высшая школа теоретической механики, Санкт-Петербургский Политехнический университет. Дополнительные материалы к лекциям \href{https://csspbstu-my.sharepoint.com/:f:/g/personal/muravtsev_aa_edu_spbstu_ru/Epiacj6WFMBHqIF6E3YQgCMB7yi5NAA1ycqFLqrTZMhJ4w?e=i2agP0}{доступны по ссылке}.}}
 	\maketitle
+	\subfile{parts/exam}
+	\newpage
 	\subfile{parts/2022_09_07}
 	\newpage
 	\subfile{parts/2022_09_12}
@@ -83,7 +87,8 @@ top=20mm,
 	\newpage
 	\subfile{parts/2022_09_21}
 	\newpage
-	\subfile{parts/2022_09_28}
+	%\subfile{parts/2022_09_28}
+	\subfile{parts/2022_09_28_modified}
 	\newpage
 	\subfile{parts/2022_10_05}
 	\newpage
