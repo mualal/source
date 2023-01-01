@@ -17,8 +17,12 @@ video_to_gif/
 *.idx
 *.pytxcode
 *.pyc
+*.bak
+*.fdb_latexmk
+*.fls
 .venv/
 __pycache__/
 .texpadtmp
+
 
 !.gitignore
