@@ -1,0 +1,216 @@
+\begin{document}
+
+\subsection{Раскрыть суть уравнения пьезопроводности, как выводится уравнение пьезопроводности для "<неупругого пласта">? Что такое коэффициент пьезопроводности?}
+
+Уравнение пьезопроводности -- основное уравнение гидродинамики, с помощью которого описывается процесс фильтрации жидкости в пористых средах.
+\\
+
+Уравнение пьезопроводности строится на трёх уравнениях: на уравнении неразрывности потока (т.е. уравнении переноса массы, записанном в дифференциальной форме), на законе Дарси и на соотношении для сжимаемости флюида.
+\\
+
+Набор исходных уравнений для вывода уравнения пьезопроводности:
+\begin{itemize}
+	\item неразрывность потока
+	\beq\label{Continuity0}
+	\frac{\partial\left(\rho_f\varphi\right)}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi \pmb{v_f}\right)=q_f(\pmb{x})
+	\eeq
+	\item закон Дарси
+	\beq\label{Darcy0}
+	\pmb{W}=-\frac{k}{\mu_f}\cdot\pmb{\nabla} p
+	\eeq
+	\item сжимаемость флюида
+	\beq\label{Compressibility0}
+	p-p_0=K_f\frac{\rho_f-\rho_f^0}{\rho_f^0}
+	\eeq
+\end{itemize}
+\ \\
+
+\textbf{Вывод уравнения пьезопроводности в векторной форме (быстрый, но не совсем строгий вывод)}
+
+В предположении неподвижности скелета ($\pmb{v_s}\approx \pmb{0}$ и $\varphi(t)=\textrm{const}$) верно равенство $\pmb{W}\approx\varphi \pmb{v_f}$.
+Подставляя это выражение в закон Дарси \eqref{Darcy0}, получаем:
+\beq\label{DarcyWithSkeletNotMoving0}
+\varphi \pmb{v_f}=-\frac{k}{\mu_f}\cdot\pmb{\nabla} p
+\eeq
+
+Условие сжимаемости флюида \eqref{Compressibility0} перепишем в дифференциальной форме:
+\beq\label{CompressibilityDiff0}
+\frac{\partial p}{\partial t}=\frac{K_f}{\rho_f^0}\frac{\partial\rho_f}{\partial t}
+\eeq
+
+Учитывая предположение о неподвижности скелета, перепишем уравнение неразрывности потока:
+\beq\label{ContinuityWithSkeletNotMoving0}
+\varphi\frac{\partial\rho_f}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi\pmb{v_f}\right)=q_f(\pmb{x})
+\eeq
+
+Подставляя \eqref{DarcyWithSkeletNotMoving0} и \eqref{CompressibilityDiff0} в \eqref{ContinuityWithSkeletNotMoving0}, при отсутствии источникового слагаемого ($q_f(\pmb{x})=0$) получаем:
+\beq
+\varphi\frac{\rho_f^0}{K_f}\frac{\partial p}{\partial t}-\pmb{\nabla}\cdot\left(\rho_f\frac{k}{\mu_f}\pmb{\nabla} p\right)=0
+\eeq
+
+При дополнительном условии слабосжимаемости флюида ($\rho_f\approx\rho_f^0=\textrm{const}$) получаем:
+\beq
+\frac{\partial p}{\partial t}=\frac{kK_f}{\mu_f\varphi}\pmb{\nabla}^2p
+\eeq
+
+Это уравнение пьезопроводности (без упругости пласта), полученное в приближении слабосжимаемого флюида, неподвижного и недеформируемого пласта.
+\\
+
+\textbf{Вывод уравнения пьезопроводности в покомпонентной форме с обезразмериванием (от Шеля Е.В.)}
+
+Запишем ЗСМ для флюида:
+\beq
+\frac{\partial r_f}{\partial t}+\partial_i\left(r_f v_i^f\right)=0
+\eeq
+
+Закон Дарси в "<школьной"> форме:
+\beq
+Q=-\frac{\Delta p}{L}\frac{k}{\mu}S
+\eeq
+
+Закон Дарси в дифференциальной форме:
+\beq\label{DarcyDiffShel0}
+W_i=-\frac{k_{ij}}{\mu}\partial_j p,
+\eeq
+где $W_i=\varphi v_i^f$ -- потоковая относительная скорость флюида.
+
+Учитывая связь эффективной и истинной плотностей ($r_f=\varphi\rho_f$), перепишем ЗСМ для флюида:
+\beq\label{ContinuityShel0}
+\frac{\partial\left(\rho_f\varphi\right)}{\partial t}+\partial_i\left(\rho_f\varphi v_i^f\right)=0
+\eeq
+
+Подставляя \eqref{DarcyDiffShel0} в \eqref{ContinuityShel0}, получаем:
+\beq\label{GeneralPiezo0}
+\frac{\partial\left(\rho_f\varphi\right)}{\partial t}-\partial_i\left(\rho_f\frac{k_{ij}}{\mu}\partial_j p\right)=0
+\eeq
+
+--------------------------------------------------------------------
+
+Замыкающее соотношение (связь плотности флюида и давления):
+\beq\label{Zam10}
+\rho_f=\rho_f^0\left(1+c_f\left(p-p_0\right)\right),
+\eeq
+где $c_f$ -- сжимаемость флюида (1/Па).
+
+
+Замыкающее соотношение (связь пористости и давления):
+\beq\label{Zam20}
+\varphi=\varphi^0+c_{\text{п}}\left(p-p_0\right),
+\eeq
+где $c_{\text{п}}$ -- сжимаемость пор (не равно сжимаемости породы).
+
+--------------------------------------------------------------------
+
+Продифференцируем по времени замыкающее соотношение \eqref{Zam10}:
+\beq\label{DiffZam10}
+\frac{\partial\rho_f}{\partial t}=c_f\rho_f^0\frac{\partial p}{\partial t}
+\eeq
+
+Продифференцируем по пространству замыкающее соотношение \eqref{Zam10}:
+\beq\label{GradZam10}
+\partial_i\rho_f=c_f\rho_f^0\partial_i p
+\eeq
+
+Продифференцируем по времени замыкающее соотношение \eqref{Zam20}:
+\beq\label{DiffZam20}
+\frac{\partial\varphi}{\partial t}=c_\text{п}\frac{\partial p}{\partial t}
+\eeq
+
+Продифференцируем по пространству замыкающее соотношение \eqref{Zam20}:
+\beq\label{GradZam20}
+\partial_i\varphi=c_\text{п}\partial_i p
+\eeq
+
+--------------------------------------------------------------------
+
+Раскрывая производные произведений в \eqref{GeneralPiezo0}, получаем:
+\beq\label{OpenGeneralContinuity0}
+\frac{\partial\rho_f}{\partial t}\varphi+\rho_f\frac{\partial\varphi}{\partial t}-\frac{k_{ij}}{\mu}\partial_j p\,\partial_i\rho_f-\rho_f\partial_j p\,\partial_i\!\left(\frac{k_{ij}}{\mu}\right)-\rho_f\frac{k_{ij}}{\mu}\left(\partial_i\partial_j p\right)=0
+\eeq
+
+Подставляя \eqref{DiffZam10}, \eqref{GradZam10}, \eqref{DiffZam20} и \eqref{GradZam20} в \eqref{OpenGeneralContinuity0}, получаем:
+\begin{multline}\label{Expanded0}
+c_f\rho_f^0\frac{\partial p}{\partial t}\varphi+\rho_f c_\text{п}\frac{\partial p}{\partial t}-\frac{k_{ij}}{\mu}\partial_j p\,c_f\rho_f^0\,\partial_i p-\frac{\rho_f}{\mu}\partial_j p\,\partial_i k_{ij}+\\+\rho_f\,\partial_j p\,k_{ij}\frac{\partial\mu}{\partial p}\frac{1}{\mu^2}\partial_i p-\rho_f\frac{k_{ij}}{\mu}\left(\partial_i\partial_j p\right)=0
+\end{multline}
+
+--------------------------------------------------------------------
+
+Перед анализом физических уравнений всегда делают масштабный анализ, чтобы понять, какие слагаемые в уравнении важны, а какие не важны (пример: уравнение Навье-Стокса с числами Струхаля, Эйлера, Рейнольдса, Фруда).
+
+Спойлер: ГДМ симуляторы не решают уравнение пьезопроводности в классическом виде, а решают закон сохранения массы, в который они подставляют закон Дарси.
+
+Далее необходимо выделить характерные масштабные факторы, обезразмерив каждую из функций в уравнении.
+
+Введём безразмерное давление $\tilde{p}$ такое, что:
+\beq
+p=\tilde{p}\cdot p_0,
+\eeq
+где $p_0$ -- пластовое давление.
+
+Введём безразмерное расстояние $\tilde{r}$ такое, что:
+\beq
+\vec{r}=\tilde{r}\cdot L,
+\eeq
+где $L$ -- некое характерное расстояние (например, между скважинами).
+
+Введём безразмерную проницаемость $\tilde{k}_{ij}$ такую, что:
+\beq
+k_{ij}=\tilde{k}_{ij}\cdot k_0,
+\eeq
+где $k_0$ -- некая характерная проницаемость.
+
+Введём безразмерную вязкость $\tilde{\mu}$ такую, что:
+\beq
+\mu=\tilde{\mu}\cdot\mu_0,
+\eeq
+где $\mu_0$ -- некая характерная вязкость.
+
+Все безразмерные функции (с волной) порядка единицы.
+
+--------------------------------------------------------------------
+
+Перепишем \eqref{Expanded0} в введённых безразмерных величинах, разделив обе части этого уравнения на $\rho_f^0$:
+\begin{multline}
+\frac{\partial p}{\partial t}\left(\varphi c_f+\frac{\rho_f}{\rho_f^0}\cdot c_\text{п}\right)-\frac{k_0}{\mu_0}\frac{p_0^2}{L^2}c_f\frac{\tilde{k}_{ij}}{\tilde{\mu}}\,\tilde{\partial}_i\tilde{p}\,\tilde{\partial}_j\tilde{p}-\frac{\rho_f}{\rho_f^0}\frac{k_0\,p_0}{\mu_0L^2}\frac{\tilde{k}_{ij}}{\tilde{\mu}}\,\tilde{\partial}_j\tilde{p}\,\tilde{\partial}_i\tilde{k}_{ij}+\\+\frac{\rho_f}{\rho_f^0}\frac{p_0\,k_0}{L^2\mu_0}\,\tilde{\partial}_j\tilde{p}\,\tilde{k}_{ij}\frac{\partial\tilde{\mu}}{\partial\tilde{p}}\frac{1}{\tilde{\mu}^2}\,\tilde{\partial}_i\tilde{p}-\frac{\rho_f}{\rho_f^0}\frac{k_0}{\mu_0}\frac{p_0}{L^2}\,\frac{\tilde{k}_{ij}}{\tilde{\mu}}\left(\tilde{\partial}_i\tilde{\partial}_j\tilde{p}\right)=0
+\end{multline}
+
+Вынесли все масштабные множители. Далее делим обе части уравнения на множитель перед старшей производной $\left(\text{на }\frac{k_0\,p_0}{\mu_0\,L^2}\right)$, т.е. обезразмериваем уравнение:
+\begin{multline}\label{PiezoEqDiv0}
+\frac{\mu_0L^2}{k_0p_0}\cdot\frac{\partial p}{\partial t}\left(\varphi c_f+\frac{\rho_f}{\rho_f^0}\cdot c_\text{п}\right)-p_0c_f\frac{\tilde{k}_{ij}}{\tilde{\mu}}\,\tilde{\partial}_i\tilde{p}\,\tilde{\partial}_j\tilde{p}-\frac{\rho_f}{\rho_f^0}\frac{\tilde{k}_{ij}}{\tilde{\mu}}\,\tilde{\partial}_j\tilde{p}\,\tilde{\partial}_i\tilde{k}_{ij}+\\+\frac{\rho_f}{\rho_f^0}\frac{\partial\tilde{\mu}}{\partial\tilde{p}}\frac{1}{\tilde{\mu}^2}\tilde{k}_{ij}\,\tilde{\partial}_j\tilde{p}\,\tilde{\partial}_i\tilde{p}-\frac{\rho_f}{\rho_f^0}\frac{\tilde{k}_{ij}}{\tilde{\mu}}\left(\tilde{\partial}_i\tilde{\partial}_j\tilde{p}\right)=0
+\end{multline}
+
+--------------------------------------------------------------------
+
+Сделаем 3 важных приближения:
+\begin{enumerate}
+	\item $p_0 c_f\ll 1$ (прикинем: сжимаемость воды порядка $10^{-5}\text{ атм}^{-1}=10^{-10}\text{ Па}^{-1}$; характерные значения давлений на глубинах, равных нескольким километрам, составляют сотни атмосфер; таким образом, произведение порядка $10^{-3}$, что много меньше единицы; но такое приближение не работает для газа: для него рассматриваемое произведение порядка единицы); это приближение фактически равносильно приближению $\rho_f\approx\rho_f^0$;
+	\item $\tilde{\partial}_i\tilde{k}_{ij}\ll 1$ (считаем, что на характерном масштабе задачи по данному направлению проницаемость изменяется незначительно, не больше 10 процентов);
+	\item $\dfrac{\partial\tilde{\mu}}{\partial\tilde{p}}\ll 1$ (считаем, что отмасштабированный график проницаемости от давления пологий -- этот факт подтверждается экспериментально -- вязкость слабо зависит от давления)
+\end{enumerate}
+
+Тогда уравнение \eqref{PiezoEqDiv0} перепишется в следующем виде (убрали слагаемые с пренебрежимо малыми множителями в рамках сделанных приближений и вернулись от безразмерных функций с волной к обычным функциям):
+\beq
+\frac{\partial p}{\partial t}\underbrace{\left(\varphi c_f+c_\text{п}\right)}_{c_t}-\frac{k_{ij}}{\mu}\partial_i\partial_j p=0
+\eeq
+(заметим, что если есть анизотропия проницаемости, то лапласиана в уравнении не будет).
+
+Получаем классическое уравнение пьезопроводности:
+\beq
+\frac{\partial p}{\partial t}-\frac{k_{ij}}{\mu c_t}\partial_i\partial_j p=0,
+\eeq
+где $c_t$ -- это полная сжимаемость.
+
+Замечание. Но есть литература, в которой $c_t=c_f+\frac{c_\text{п}}{\varphi}$, тогда уравнение пьезопроводности будет выглядеть так:
+\beq
+\frac{\partial p}{\partial t}-\frac{k_{ij}}{\mu\varphi c_t}\partial_i\partial_j p=0
+\eeq
+
+--------------------------------------------------------------------
+
+Пусть тензор проницаемости изотропен $k_{ij}=k_0\cdot\delta_{ij}$, тогда:
+\beq
+\frac{\partial p}{\partial t}-\frac{k_0}{\mu c_t}\delta_{ij}\,\partial_i\partial_j p=0\Leftrightarrow\frac{\partial p}{\partial t}-\frac{k_0}{\mu c_t}\Delta p=0
+\eeq
+(получили всем известный вид уравнения пьезопроводности).
+
+\end{document}
