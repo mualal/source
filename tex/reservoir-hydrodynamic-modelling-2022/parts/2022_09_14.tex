@@ -165,20 +165,25 @@ P(r,t)\approx p_i-\frac{1}{2}\frac{qB\mu}{2\pi kh}\left[\ln\frac{kt}{\varphi\mu 
 \subsection{Задача 2}
 
 \includegraphics[width=\textwidth]{task2}
-
-Вариант 16.
+\textbf{Радиус исследований}
 
 \beq
-r_{inv}=0.037\sqrt{\frac{kt}{\varphi \mu c_t}}=0.037\sqrt{\frac{0.032\text{ Да}\cdot 7343\cdot 60\text{ с}}{0,14\cdot 0.10\text{ Пз}\cdot 20\cdot 10^{-4}\dfrac{\text{1}}{\text{атм}}}}\approx 830\text{ см}=8.3\text{ м}
+r_{inv}=0.037\sqrt{\frac{kt}{\varphi \mu c_t}}=0.037\sqrt{\frac{32\text{ мДа}\cdot 7343\text{ мин}}{0.14\cdot 10\text{ сПз}\cdot 20\cdot 10^{-4}\dfrac{\text{1}}{\text{атм}}}}\approx 338.95\text{ м}
+\eeq
+График зависимости радиуса исследования от произведения проницаемости и времени построен по ссылке: \href{https://colab.research.google.com/github/mualal/notebooks-source/blob/master/7_exploration_radius.ipynb}{OPEN IN COLAB}.
+\\
+
+\textbf{Решение обратной задачи}
+
+Зададим радиус исследования $r_{inv}=100\text{ м}$, тогда:
+\beq
+kt=\varphi\mu c_t\left(\dfrac{r_{inv}}{0.037}\right)^2=0.14\cdot 10\text{ сПз}\cdot 20\cdot 10^{-4}\frac{1}{\text{атм}}\cdot \left(\frac{100\text{ м}}{0.037}\right)^{\!2}\approx 20452.89\text{ мДа}\cdot\text{мин}
+\eeq
+При проницаемости $k=32\text{ мДа}$, время исследования будет составлять:
+\beq
+t\approx\frac{20452.89\text{ мДа}\cdot\text{мин}}{32\text{ мДа}}\approx 639 \text{ мин}\approx10.65\text{ ч}.
 \eeq
 
-График зависимости радиуса исследования от произведения проницаемости и времени построен по ссылке: \href{https://colab.research.google.com/github/mualal/notebooks-source/blob/master/7_exploration_radius.ipynb}{Open in Colab}.
-
-%Проведём проверку размерностей, выражая каждую через основные единицы системы НПГ:
-
-%\beq
-%\sqrt{\frac{}{}}
-%\eeq
 
 \subsection{Вывод уравнения пьезопроводности без упругости пласта (от Шеля Е.В.)}
 
