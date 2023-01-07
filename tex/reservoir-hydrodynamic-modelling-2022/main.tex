@@ -53,13 +53,17 @@ top=20mm,
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\leftmark}
+%\fancyhead[L]{\leftmark \\ \rightmark}
+%\fancyhead[R]{\thepage}
+%\fancyhead[R]{\rightmark}
 \fancyfoot[C]{\thepage}
+%\fancyfoot[L]{\rightmark}
 
 \usepackage{float}
 \floatstyle{plaintop}
 \usepackage{enumitem}
 \setlength{\parindent}{0pt}
-\setcounter{section}{-1}
+%\setcounter{section}{-1}
 
 \graphicspath{{./img/}}
 \newcommand{\myPictWidth}{.95\textwidth}

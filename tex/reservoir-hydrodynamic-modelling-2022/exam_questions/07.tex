@@ -12,7 +12,7 @@
 \begin{itemize}
 	\item неразрывность потока
 	\beq\label{Continuity0}
-	\frac{\partial\left(\rho_f\varphi\right)}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi \pmb{v_f}\right)=q_f(\pmb{x})
+	\frac{\partial\left(\rho_f\varphi\right)}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi \, \pmb{v_f}\right)=q_f(\pmb{x})
 	\eeq
 	\item закон Дарси
 	\beq\label{Darcy0}
@@ -40,7 +40,7 @@
 
 Учитывая предположение о неподвижности скелета, перепишем уравнение неразрывности потока:
 \beq\label{ContinuityWithSkeletNotMoving0}
-\varphi\frac{\partial\rho_f}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi\pmb{v_f}\right)=q_f(\pmb{x})
+\varphi\frac{\partial\rho_f}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi \, \pmb{v_f}\right)=q_f(\pmb{x})
 \eeq
 
 Подставляя \eqref{DarcyWithSkeletNotMoving0} и \eqref{CompressibilityDiff0} в \eqref{ContinuityWithSkeletNotMoving0}, при отсутствии источникового слагаемого ($q_f(\pmb{x})=0$) получаем:
