@@ -45,7 +45,10 @@ top=20mm,
 \usepackage{tikz}
 \usepackage{csquotes}
 \usepackage{fancyhdr}
+\usepackage{fancyvrb}
 \usepackage{comment}
+\usepackage{adjustbox}
+\usepackage[breakable, skins]{tcolorbox}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -64,6 +67,15 @@ top=20mm,
 \newcommand{\beq}{\begin{equation}}
 \newcommand{\eeq}{\end{equation}}
 
+\newenvironment{eclrun}
+{\VerbatimEnvironment
+\begin{tcolorbox}[breakable,boxrule=0.5pt,colframe=gray!50]
+\begin{Verbatim}
+}
+{
+\end{Verbatim}	
+\end{tcolorbox}
+}
 
 \begin{document}
 	\subfile{parts/general_info}
