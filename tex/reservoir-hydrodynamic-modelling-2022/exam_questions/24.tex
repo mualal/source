@@ -15,6 +15,50 @@
 (перечислены известные названия, но одни из них могут быть частными случаями других: например, метод прогонки -- частный случай метода Гаусса)
 \\
 
+\textbf{СЛАУ в общем виде}
+
+\includegraphics[width=\textwidth]{slau}
+
+\begin{figure}[H]
+\textbf{Подробное описание метода Гаусса}
+\center
+\includegraphics[width=\textwidth]{slau_gauss1}
+\end{figure}
+
+
+\begin{figure}[H]
+\center
+\includegraphics[width=\textwidth]{slau_gauss2}
+\end{figure}
+\ \\
+
+
+\begin{figure}[H]
+\textbf{Пример решения СЛАУ методом Гаусса}
+\center
+\includegraphics[width=\textwidth]{slau_gauss_example1}
+\end{figure}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.85\textwidth]{slau_gauss_example2}
+\end{figure}
+
+\begin{figure}[H]
+\textbf{Описание метода обратной матрицы}
+\center
+\includegraphics[width=.85\textwidth]{slau_inv_matrix}
+\end{figure}
+\ \\
+
+
+\begin{figure}[H]
+\textbf{Подробное описание метода прогонки}
+\center
+\includegraphics[width=.85\textwidth]{slau_marching}
+\end{figure}
+\ \\
+
 Итерационные способы решения СЛАУ:
 
 1) метод простой итерации (метод Якоби);
@@ -22,5 +66,17 @@
 2) метод Зейделя
 
 (недостаток итерационных методов: решение получаем с заданной точностью в результате последовательных приближений (в сравнении: а при использовании прямых методов в предположении отсутствия ошибок округления получаем точное решение за конечное число арифметических действий); преимущество итерационных методов: могут быть легко расширены (приспособлены) для решения нелинейных уравнений)
+
+
+%Метод прогонки применяется для решения систем уравнений с трёхдиагональной (ленточной) матрицей.
+%Такая система уравнений записывается в виде:
+%\beq
+%a_ix_{i-1}+b_ix_i+c_ix_{i+1}=d_i,
+%\eeq 
+%где $i=1,2,3,...,n; a_1=0; c_n=0$
+
+%Является частным случаем метода Гаусса и состоит из прямого и обратного хода.
+
+
 
 \end{document}

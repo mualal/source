@@ -3,7 +3,7 @@
 \subsection{Вывод уравнения пьезопроводности для "<упругого пласта">.}
 
 Для \textbf{упругого изотропного пласта} можем записать известные соотношения пороупругости:
-\begin{itemize}[parsep=-5pt]
+\begin{itemize}
 \item на тензор полных напряжений \\
 \beq
 \pmb{T}=\sigma^0\pmb{I}+\left(\lambda I_1(\pmb{\varepsilon})-b\Delta p\right)\pmb{I}+2\mu\pmb{\varepsilon},
@@ -21,17 +21,17 @@
 \end{itemize}
 
 Для \textbf{флюида} запишем:
-\begin{itemize}[parsep=-5pt]
+\begin{itemize}
 	\item закон Дарси \\
 	\beq
 	\pmb{W}=-\frac{k}{\mu_f}\cdot\pmb{\nabla} p,
 	\eeq
-	где $\pmb{W}=\pmb{v_f}-\pmb{v_s}$; $k$ -- проницаемость пласта; $\mu_f$ -- вязкость флюида; $\pmb{\nabla} p$ -- градиент давления
-	\item условие на сжимаемость флюида
+	где $\pmb{W}=\varphi\left(\pmb{v_f}-\pmb{v_s}\right)$; $k$ -- проницаемость пласта; $\mu_f$ -- вязкость флюида; $\pmb{\nabla} p$ -- градиент давления
+	\item соотношение на сжимаемость флюида
 	\beq
 	p-p_0=K_f\frac{\rho_f-\rho_f^0}{\rho_f^0},
 	\eeq
-	где $\dfrac{1}{K_f}$ -- сжимаемость флюида
+	где $\dfrac{1}{K_f}$ -- сжимаемость флюида ($K_f$ -- объёмный модуль упругости флюида)
 	\item уравнение неразрывности потока при отсутствии источникового слагаемого (уравнение переноса массы, записанное в дифференциальной форме):
 	\beq
 	\frac{\partial\left(\rho_f\varphi\right)}{\partial t}+\pmb{\nabla}\cdot\left(\rho_f\varphi\,\pmb{v_f}\right)=0
