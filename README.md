@@ -30,6 +30,28 @@
   <tbody>
     <tr>
       <td>
+        <b>2023</b>
+      </td>
+      <td>
+        <a href="https://mualal.github.io/source/tex/hydraulic-fracturing-2021/main.pdf">Гидроразрыв пласта</a>
+        <br><br>
+      </td>
+      <td>
+        ...
+      </td>
+      <td>
+        <a href="https://mualal.github.io/source/research/spring2023/main.pdf">Весна</a>
+        <br><br>
+      </td>
+      <td>
+        ...
+      </td>
+      <td>
+        ...
+      </td>
+    </tr>
+    <tr>
+      <td>
         <b>2022 <br> (2-e полугодие)</b>
       </td>
       <td>
