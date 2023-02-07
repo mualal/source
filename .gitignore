@@ -24,5 +24,7 @@ video_to_gif/
 __pycache__/
 .texpadtmp
 
+tex/hydraulic-fracturing-2021/Screenshots/
+
 
 !.gitignore
