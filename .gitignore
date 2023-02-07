@@ -25,6 +25,7 @@ __pycache__/
 .texpadtmp
 
 tex/hydraulic-fracturing-2021/Screenshots/
+tex/hydraulic-fracturing-2021/HF_slides.pdf
 
 
 !.gitignore
