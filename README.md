@@ -33,7 +33,7 @@
         <b>2023</b>
       </td>
       <td>
-        <a href="https://mualal.github.io/source/tex/hydraulic-fracturing-2021/main.pdf">Гидроразрыв пласта</a>
+        <a href="https://mualal.github.io/hydrofracturing/lectures-notes/main.pdf">Гидроразрыв пласта</a>
         <br><br>
       </td>
       <td>
