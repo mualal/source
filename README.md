@@ -40,14 +40,15 @@
         ...
       </td>
       <td>
-        <a href="https://mualal.github.io/source/research/spring2023/main.pdf">Весна</a>
+        <a href="https://mualal.github.io/hydrofracturing/vkr/main.pdf">Весна</a>
         <br><br>
+        <a href="https://mualal.github.io/hydrofracturing/vkr-notes/main.pdf">Весенние заметки</a>
       </td>
       <td>
         ...
       </td>
       <td>
-        ...
+        <a href="https://github.com/mualal/ya-profi-preparation">Подготовка к олимпиаде по математическому моделированию и по робототехнике</a>
       </td>
     </tr>
     <tr>
