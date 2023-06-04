@@ -45,7 +45,7 @@
         <a href="https://mualal.github.io/hydrofracturing/vkr-notes/main.pdf">Весенние заметки</a>
       </td>
       <td>
-        ...
+        <a href="https://mualal.github.io/hydrofracturing/vkr-presentation/main.pdf">К выпускной квалификационной работе</a>
       </td>
       <td>
         <a href="https://github.com/mualal/ya-profi-preparation">Подготовка к олимпиаде по математическому моделированию и по робототехнике</a>
