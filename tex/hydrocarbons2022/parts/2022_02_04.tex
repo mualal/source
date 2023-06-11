@@ -1,14 +1,16 @@
 \documentclass[main.tex]{subfiles}
 
 \begin{document}
-\section{\textcolor{red}{Семинар 04.02.2022}}
+%\section{\textcolor{red}{Семинар 04.02.2022}}
+\section{Семинар 04.02.2022}
 
 Краткий план.\\
 
 1 часть. Заводнение терригенных и карбонатных коллекторов. Практический курс длительностью 4 интенсива по 8 часов. Режимы работы скважины в пласте. Режимы работы пласта. Формулы для производительности скважин, регулярные и нерегулярные системы разработки. Модели вытеснения. Факторы, влияющие на эффективность вытеснения. Разбор кейсов.
 
 И тест по окончании курса.\\
-2 часть. Продолжение методов математической физики.
+
+2 часть. Продолжение методов математической физики.
 
 Анизотропия, работа в неоднородных коллекторах, учёт многофазности течения, псевдо-функции Баклея-Леверетта, вязкость зависит от давления, следовательно, нелинейность, и необходимы симплектические численные схемы для решения нелинейных уравнений.
 
@@ -18,7 +20,8 @@
 
 
 \subsection{Закон фильтрации}
-\includegraphics[width=\textwidth]{slide1_00006}
+%\includegraphics[width=\textwidth]{slide1_00006}
+\includegraphics[width=\textwidth,page=6]{WellProductivity.pdf}
 
 Уравнение пьезопроводности:
 \beq
@@ -26,7 +29,8 @@
 \eeq
 где $\kappa=\dfrac{k}{\varphi\mu C_t}$ -- коэффициент пьезопроводности.
 
-\insertslide{slide1_00007}
+%\insertslide{slide1_00007}
+\insertproductivityslide{7}
 
 Откуда появляются другие виды закона фильтрации?\\
 
@@ -37,36 +41,55 @@
 (*) Книга \href[pdfnewwindow=true]{https://mualal.github.io/source/tex/hydrocarbons2022/articles/Barenblatt-Fluid-Motion.pdf}{доступна по ссылке}
 
 \subsection{Стадии разработки месторождения}
-\includegraphics[width=\textwidth]{slide1_00009}
+%\includegraphics[width=\textwidth]{slide1_00009}
+\includegraphics[width=\textwidth,page=9]{WellProductivity.pdf}
 
 4 основные стадии разработки месторождения. Есть ещё нулевая стадия (уровень геологоразведочных работ).
 
-\insertslide{slide1_00010}
+%\insertslide{slide1_00010}
+\insertproductivityslide{10}
 
-\insertslide{slide1_00011}
+%\insertslide{slide1_00011}
+\insertproductivityslide{11}
 
 \subsection{Режимы работы пласта}
-\includegraphics[width=\textwidth]{slide1_00012}
+%\includegraphics[width=\textwidth]{slide1_00012}
+\includegraphics[width=\textwidth,page=12]{WellProductivity.pdf}
 
 Режимы работы пласта отражают энергию, за счёт которой нефть движется к забою скважины.\\
 
 SAGD = парогравитационный дренаж. В пласт битума (ближе к подошве) забуривают горизонтальную скважину. На расстоянии 5-10 м сверху от неё параллельно бурится паронагнетательная скважина. За счёт неё вырабатывается расширяющаяся паровая камера, и битум стекает по краям этой паровой камеры в добывающую скважину.
 
-\subsection{Режимы работы скважины в пласте}
-\includegraphics[width=\textwidth]{slide1_00013}
 
-\insertslide{slide1_00014}
+\subsection{Режимы работы скважины в пласте}
+%\includegraphics[width=\textwidth]{slide1_00013}
+\includegraphics[width=\textwidth,page=13]{WellProductivity.pdf}
 
-\insertslide{slide1_00015}
+%\insertslide{slide1_00014}
+\insertproductivityslide{14}
 
-\insertslide{slide1_00016}
+%\insertslide{slide1_00015}
+\insertproductivityslide{15}
 
-\insertslide{slide1_00017}
+%\insertslide{slide1_00016}
+\insertproductivityslide{16}
+
+%\insertslide{slide1_00017}
+\insertproductivityslide{17}
 Соотношение воронки депрессии скважины к границам области дренирования.Упражнение (длительность неустановившегося режима)
 
 \begin{listing}[h]
 \begin{minted}[frame=single,breaklines]{Python}
-C_t = 3E-4  # 1/атмphi = 0.2  # долиmu = 3  # сПзr_b = 1000  # мk = 100E-3  # Дарсиkappa = k / (phi * mu * C_t)h = 10T = 35 * r_b**2 / kappaprint('Длительность неустановившегося режима ', T / (60 * 60 * 24), 'суток')
+C_t = 3E-4  # 1/атм
+phi = 0.2  # доли
+mu = 3  # сПз
+r_b = 1000  # м
+k = 100E-3  # Дарси
+kappa = k / (phi * mu * C_t)
+h = 10
+
+T = 35 * r_b**2 / kappa
+print('Длительность неустановившегося режима ', T / (60 * 60 * 24), 'суток')
 \end{minted}
 \end{listing}
 
@@ -81,19 +104,25 @@ C_t = 3E-4  # 1/атмphi = 0.2  # долиmu = 3  # сПзr_b = 1000  # мk
 Среднее время вывода скважины на режим составляет 7 суток.
 
 \subsection{Формула Дюпюи}
-\includegraphics[width=\textwidth]{slide1_00020}
+%\includegraphics[width=\textwidth]{slide1_00020}
+\includegraphics[width=\textwidth,page=20]{WellProductivity.pdf}
 
-\insertslide{slide1_00021}
+%\insertslide{slide1_00021}
+\insertproductivityslide{21}
 
-\insertslide{slide1_00022}
+%\insertslide{slide1_00022}
+\insertproductivityslide{22}
 
 \subsection{Общая формула производительности скважины в пласте сложной формы}
 
-\includegraphics[width=\textwidth]{slide1_00023}
+%\includegraphics[width=\textwidth]{slide1_00023}
+\includegraphics[width=\textwidth,page=23]{WellProductivity.pdf}
 
-\insertslide{slide1_00024}
+%\insertslide{slide1_00024}
+\insertproductivityslide{24}
 
-\insertslide{slide1_00025}
+%\insertslide{slide1_00025}
+\insertproductivityslide{25}
 
 Классические форм-факторы получены при отсутствии перетока на границе пласта и постоянном дебите на скважине.
 
@@ -101,15 +130,18 @@ C_t = 3E-4  # 1/атмphi = 0.2  # долиmu = 3  # сПзr_b = 1000  # мk
 
 (*) Статья \href[pdfnewwindow=true]{https://mualal.github.io/source/tex/hydrocarbons2022/articles/dietz1965.pdf}{доступна по ссылке}
 
-\insertslide{slide1_00026}
+%\insertslide{slide1_00026}
+\insertproductivityslide{26}
 
 Если на скважине задано постоянное давление, то форм-факторы отличаются от классических.
 
-\insertslide{slide1_00027}
+%\insertslide{slide1_00027}
+\insertproductivityslide{27}
 
 (*) Статья \href[pdfnewwindow=true]{https://mualal.github.io/source/tex/hydrocarbons2022/articles/helmy1998.pdf}{доступна по ссылке}
 
-\insertslide{slide1_00028}
+%\insertslide{slide1_00028}
+\insertproductivityslide{28}
 
 Пунктирная линия = постоянное давление на границе пласта (ППД), которое организуется расстановкой нагнетательных и добывающих скважин в шахматном порядке.
 
@@ -117,13 +149,16 @@ C_t = 3E-4  # 1/атмphi = 0.2  # долиmu = 3  # сПзr_b = 1000  # мk
 
 (*) Статья \href[pdfnewwindow=true]{https://mualal.github.io/source/tex/hydrocarbons2022/articles/larsen1984.pdf}{доступна по ссылке}
 
-\insertslide{slide1_00029}
+%\insertslide{slide1_00029}
+\insertproductivityslide{29}
 
 (*) Статья \href[pdfnewwindow=true]{https://mualal.github.io/source/tex/hydrocarbons2022/articles/larsen1984.pdf}{доступна по ссылке}
 
-\insertslide{slide1_00030}
+%\insertslide{slide1_00030}
+\insertproductivityslide{30}
 
-\insertslide{slide1_00031}
+%\insertslide{slide1_00031}
+\insertproductivityslide{31}
 
 \begin{listing}[h]
 \begin{minted}[frame=single,breaklines]{Python}
@@ -133,8 +168,10 @@ C_t = 3E-4  # 1/атмphi = 0.2  # долиmu = 3  # сПзr_b = 1000  # мk
 \end{listing}
 
 
-\insertslide{slide1_00032}
+%\insertslide{slide1_00032}
+\insertproductivityslide{32}
 
-\insertslide{slide1_00038}
+%\insertslide{slide1_00038}
+\insertproductivityslide{38}
 
 \end{document}
