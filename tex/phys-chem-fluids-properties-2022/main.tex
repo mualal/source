@@ -61,8 +61,23 @@ top=20mm,
 \newcommand{\beq}{\begin{equation}}
 \newcommand{\eeq}{\end{equation}}
 
+\newenvironment{nohyphen}
+  {\tolerance=1
+   \emergencystretch=\maxdimen
+   \hyphenpenalty=10000
+   \hbadness=10000}
+  {\par}
 
 \begin{document}
+	
+	\textbf{О курсе лекций.}
+	
+	Курс лекций "<Физико-химические свойства пластовых флюидов"> читается на магистерской программе "<Математическое моделирование процессов нефтегазодобычи"> в Высшей Школе Теоретической Механики и Математической Физики в Санкт-Петербургском Политехническом университете Петра Великого.
+	
+	Автор курса: Александр Иосифович Брусиловский.
+	
+	Видеозаписи лекций курса доступны по ссылке: \href{https://csspbstu-my.sharepoint.com/:f:/g/personal/muravtsev_aa_edu_spbstu_ru/Epiacj6WFMBHqIF6E3YQgCMB7yi5NAA1ycqFLqrTZMhJ4w?e=i2agP0}{GO TO RECORDINGS}.
+	
 	\tableofcontents
 	\title{Физико-химические свойства пластовых флюидов\\Конспект лекций}
 	\author{Муравцев А.А.\thanks{конспектирует; email: almuravcev@yandex.ru}

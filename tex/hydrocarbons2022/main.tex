@@ -72,9 +72,27 @@ top=20mm,
 \newcommand{\insertproductivityslide}[1]{\newpage\includegraphics[width=\textwidth, page=#1]{WellProductivity.pdf}}
 \newcommand{\insertwaterfloodingslide}[1]{\newpage\includegraphics[width=\textwidth, page=#1]{Waterflooding.pdf}}
 
+\newenvironment{nohyphen}
+  {\tolerance=1
+   \emergencystretch=\maxdimen
+   \hyphenpenalty=10000
+   \hbadness=10000}
+  {\par}
+
 
 \begin{document}
 	%\large
+	\begin{nohyphen}
+
+	\textbf{О курсах лекций.}
+	
+	Курсы лекций "<Методы математической физики в нефтяном инжиниринге"> и "<Заводнение терригенных и карбонатных коллекторов"> читаются на магистерской программе "<Математическое моделирование процессов нефтегазодобычи"> в Высшей Школе Теоретической Механики и Математической Физики в Санкт-Петербургском Политехническом университете Петра Великого.
+	
+	Автор курсов: Евгений Викторович Юдин.
+	
+	Видеозаписи лекций курсов доступны по ссылке: \href{https://csspbstu-my.sharepoint.com/:f:/g/personal/muravtsev_aa_edu_spbstu_ru/Epiacj6WFMBHqIF6E3YQgCMB7yi5NAA1ycqFLqrTZMhJ4w?e=i2agP0}{GO TO RECORDINGS}.
+	\end{nohyphen}
+	
 	\tableofcontents
 	\title{Заводнение терригенных и карбонатных коллекторов\\Конспект лекций}
 	\author{Муравцев А.А.\thanks{конспектирует; email: almuravcev@yandex.ru}
@@ -104,4 +122,6 @@ top=20mm,
 	\subfile{parts/2022_05_06}
 	\newpage
 	\subfile{parts/2022_05_20}
+	\newpage
+	\subfile{parts/2022_05_20_test}
 \end{document}
