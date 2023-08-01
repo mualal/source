@@ -21,8 +21,8 @@
 \usepackage{geometry}
 \geometry{
 a4paper,
-total={170mm, 257mm},
-left=20mm,
+total={182mm, 257mm},
+left=14mm,
 top=20mm,
 }
 
@@ -45,10 +45,15 @@ top=20mm,
 \usepackage{csquotes}
 \usepackage{fancyhdr}
 
+\usepackage{tocloft}
+\setlength{\cftsubsecindent}{0pt}
+\setlength{\cftsubsubsecindent}{0pt}
+
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\leftmark}
 \fancyfoot[C]{\thepage}
+\fancyhead[R]{\hyperlink{page.1}{\textcolor{violet}{Вернуться к содержанию}}}
 
 \usepackage{float}
 \floatstyle{plaintop}
@@ -68,6 +73,8 @@ top=20mm,
    \hbadness=10000}
   {\par}
 
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
 \begin{document}
 	
 	\textbf{О курсе лекций.}
@@ -81,6 +88,7 @@ top=20mm,
 	\end{nohyphen}
 	\setlength{\parindent}{10mm}
 	
+	\vspace*{7mm}
 	\tableofcontents
 	\title{Физико-химические свойства пластовых флюидов\\Конспект лекций}
 	\author{Муравцев А.А.\thanks{конспектирует; email: almuravcev@yandex.ru}
